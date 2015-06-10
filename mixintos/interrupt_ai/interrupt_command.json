@@ -1,0 +1,14 @@
+{
+   "type" : "command",
+
+   "name": "interrupt",
+   "tooltip": "Interrupt",
+   "description": "Send the ai back to stonehearth:top",
+   "icon": "file(interrupt_command.jpg)",
+
+   "action": "call",
+   "function": "debugtools:interrupt_ai",
+   "args": [
+      "{{self}}"
+   ]
+}

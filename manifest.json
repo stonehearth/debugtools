@@ -1,0 +1,59 @@
+{
+   "info" :{
+      "name" : "Stonehearth Debug Tools",
+      "version" : 1
+   },
+
+   "mixintos_" : {
+      "stonehearth:mixins:base_human" : [
+         "file(mixintos/interrupt_ai)"
+      ]
+   },
+
+   "ui" :  {
+      "html" : [
+         "file(/ui/campaign_browser/campaign_browser.html)",
+         "file(/ui/entity_inspector/entity_inspector.html)",
+         "file(/ui/object_browser/object_browser.html)",
+         "file(/ui/perfmon/perfmon.html)",
+         "file(/ui/item_dropper/item_dropper.html)"
+      ],
+      "js" : [
+         "file(ui/debug_dock/debug_dock.js)",      
+         "file(/ui/console/debug_console_commands.js)",
+         "file(/ui/campaign_browser/campaign_browser.js)",
+         "file(/ui/entity_inspector/entity_inspector.js)",
+         "file(/ui/object_browser/object_browser.js)",
+         "file(/ui/perfmon/perfmon.js)",
+         "file(/ui/item_dropper/item_dropper.js)"
+      ],
+      "less" : [
+         "file(/html/font-awesome-4.3.0/css/font-awesome.min.css)",
+         "file(/ui/debug_dock/debug_dock.less)",      
+         "file(/ui/campaign_browser/campaign_browser.less)",
+         "file(/ui/entity_inspector/entity_inspector.less)",
+         "file(/ui/object_browser/object_browser.less)",
+         "file(/ui/perfmon/perfmon.less)",
+         "file(/ui/item_dropper/item_dropper.less)"
+      ]
+   },
+
+   "functions" : {
+      "interrupt_ai": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"
+      },
+      "create_and_place_entity": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "client"
+      },
+      "create_entity": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"
+      },
+      "add_exp_command": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"
+      }
+   }
+}

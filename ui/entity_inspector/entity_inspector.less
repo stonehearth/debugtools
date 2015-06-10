@@ -1,0 +1,96 @@
+#entityInspectorIcon {
+   .debugDockIcon;
+   background: url('./images/icon.png');
+}
+
+#entityInspectorFrameInfo {
+   .debug; 
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   //font-size: 16px;
+   //line-height: 13px;
+   //background: rgba(0,0,0,0.5);
+   //color: #fff;
+   //font-family: "munro_smallregular";
+}
+
+#entityInspector {
+   .debug; 
+   position: absolute;
+   top: 10px;
+   left: 0px;
+   //font-size: 18px;
+   //line-height: 13px;
+   min-width: 250px;
+   //background: rgba(0,0,0,0.5);
+   //color: #fff;
+   //font-family: "munro_smallregular";
+
+   #legend {
+      padding-top: 10px;
+   }
+
+   #content {
+      max-height: 900px;
+      overflow-y: scroll;
+   }
+
+   input {
+      width: 130px;
+      font-size: 10px;
+      color: #000;
+      background: #fff;
+      padding: 0 0 0 4px;
+      border: 1px solid #333;
+   }
+
+   .button {
+      position: relative;
+      top: -6px;
+   }
+
+   #collapse {
+      position: absolute;
+      top: 8px;
+      right: 4px;
+   }
+
+   .row {
+      &:hover {
+         background: rgba(1,1,1,0.2);
+      }
+   }
+
+   .activity {
+      color: #808080;
+   }
+
+   .thinking {
+      color: #FF9536;
+   }
+   .ready {
+      color: #D0D000;
+   }
+   .stopped {
+      color: #D02828;
+   }
+   .stopped-waiting {
+      color: #D02828;
+   }
+   .stopped-not_selected {
+      color: #C05050;
+   }
+   .started {
+      color: #00B028;
+   }
+   .running {
+      color: #00FF30;
+   }
+   .finished {
+      color: #508050;
+   }
+   .dead {
+      color: #C0C0C0;
+   }
+}

@@ -1,0 +1,75 @@
+<script type="text/x-handlebars" data-template-name="entityInspectorIcon">
+   <div id="entityInspectorIcon"></div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="entityInspectorFrameInfo">
+   <div id="entityInspectorFrameInfo">
+      {{#if action}}
+         activity: {{action.does}}<br>
+         action: {{action.name}}<br>
+         args: {{action.args}}<br>
+         state: {{parsed_state}}<br>
+         priority: {{action.priority}}
+      {{/if}}
+      {{#if activity}}
+         activity name: {{activity.name}}<br>
+         {{args}}
+      {{/if}}
+   </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="entityInspector">
+   {{#if ai.inspect_frame}}
+   {{ render "entityInspectorFrameInfo" ai.inspect_frame }}
+   {{/if}}
+   <div id="entityInspector">
+      <div class="header">
+         AI Inspector
+         <a href='#'><div class=close>close window</div></a>
+      </div>
+      <div id="content">
+         {{#if view.model.debug_info }}
+            {{#view "stonehearthAiThread" uriBinding="view.model.debug_info" }}
+               {{ view "stonehearthExecutionFrame" uriBinding="view.model.execution_frame" }}
+            {{/view}}
+         {{/if}}
+      </div>
+      <div id="legend">
+         Key:
+         <span class="thinking">thinking</span>,
+         <span class="ready">ready</span>,
+         <span class="stopped-waiting">stopped (waiting)</span>,
+         <span class="stopped-not_selected">stopped (not selected)</span>,
+         <span class="started">started</span>,
+         <span class="running">running</span>,
+         <span class="finished">finished</span>,
+         <span class="dead">dead</span>
+      </div>
+   </div> 
+</script>
+
+<script type="text/x-handlebars" data-template-name="executionFrame">
+   <div class="row" {{bind-attr row_id="id"}}>
+      {{{view.model.id}}} 
+      <span id="state" {{bind-attr class="view.model.state"}} {{bind-attr style="view.styleOverride"}}>{{{view.model.activity.name}}} </span>
+   </div>
+
+   {{#each unit in view.model.execution_units}}
+      {{#view "stonehearthExecutionUnit" uriBinding="unit" }}
+         <div class="row" {{bind-attr row_id="id"}}>
+            {{{view.model.id}}} 
+            <span id="state" {{bind-attr class="view.model.state"}} {{bind-attr style="view.styleOverride"}}>{{{view.model.action.name}}} </span>
+            <span id="activity" class="activity"> - {{{view.model.action.does}}} </span> <br>
+            {{#if view.model.progress }}
+            {{{view.model.id}}} <span {{bind-attr style="view.styleOverride"}}>{{{view.model.progress}}}</span>
+            {{/if}}
+         </div> 
+         {{#each frame in view.model.action.execution_frames}}
+            {{ view "stonehearthExecutionFrame" uriBinding="frame" }}
+         {{/each}}
+         {{#each frame in view.model.execution_frames}}
+            {{ view "stonehearthExecutionFrame" uriBinding="frame" }}
+         {{/each}}
+      {{/view}}
+   {{/each}}
+</script>

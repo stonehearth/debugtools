@@ -1,0 +1,56 @@
+#campaignBrowserIcon {
+   .debugDockIcon;
+   background: url('./images/icon.png');
+}
+
+#game_master {
+   .debug;
+   position: absolute;
+   top: 10px;
+   left: 720px;
+   min-width: 250px;
+
+
+   #content {
+      background-color: #fff;
+
+      .node circle {
+         fill: white;
+         stroke: #607d8b;
+         stroke-width: 2.5px;
+         &:hover {
+            fill: white;
+            stroke: #78909c;
+         }
+      }
+      .node text {
+         stroke: #263238;
+         text-anchor: middle;
+      }
+
+      .link {
+         fill: none;
+         stroke: #4dd0e1;
+         stroke-width: 5.5px;
+      }
+   }
+   
+   input {
+      width: 130px;
+      font-size: 10px;
+      color: #000;
+      background: #fff;
+      padding: 0 0 0 4px;
+      border: 1px solid #333;
+   }
+
+   .button {
+      position: relative;
+      top: -6px;
+      color: #fff;
+   }
+
+   #toolbar {
+      text-align: right;
+   }
+}

@@ -1,0 +1,9 @@
+{
+   "components" : {
+      "stonehearth:commands" : {
+         "commands" : [        
+            "file(interrupt_command.json)"
+         ]
+      }
+   }
+}
