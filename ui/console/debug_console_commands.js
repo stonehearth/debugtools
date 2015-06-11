@@ -15,7 +15,7 @@ $(document).ready(function(){
 
    radiant.console.register('add_exp', {
       call: function(cmdobj, fn, args) {
-         var xpAmount = JSON.parse(args[0]);
+         var xpAmount = parseInt(args[0]);
          if (selected && xpAmount && xpAmount > 0) {
             return radiant.call('debugtools:add_exp_command', selected, xpAmount);
          }
@@ -23,4 +23,17 @@ $(document).ready(function(){
       },
       description: "Adds experience points to the currently selected entity's job. Usage: add_exp 1000"
    });
+
+   radiant.console.register('set_attr', {
+      call: function(cmdobj, fn, args) {
+         var attribute = args[0];
+         var val = parseInt(args[1]);
+         if (selected && attribute && val > 0) {
+            return radiant.call('debugtools:set_attr_command', selected, attribute, val);
+         }
+         return false;
+      },
+      description: "Sets the attribute on the selected entity to the specified value. Usage: set_attr health 10"
+   });
+
 });

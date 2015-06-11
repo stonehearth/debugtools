@@ -54,6 +54,10 @@
       "add_exp_command": {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"
+      },
+      "set_attr_command": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"
       }
    }
 }

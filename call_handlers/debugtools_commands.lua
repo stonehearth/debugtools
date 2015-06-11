@@ -58,4 +58,13 @@ function Commands:add_exp_command(session, response, entity, exp)
    return true
 end
 
+function Commands:set_attr_command(session, response, entity, attribute, value)
+   local attribute_component = entity:get_component('stonehearth:attributes')
+   if not attribute_component then
+      return false
+   end
+   attribute_component:set_attribute(attribute, value)
+   return true
+end
+
 return Commands
