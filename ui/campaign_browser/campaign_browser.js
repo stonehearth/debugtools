@@ -7,8 +7,13 @@ App.StonehearthCampaignBrowserIcon = App.View.extend({
    classNames: ['debugDockIcon'],
 
    didInsertElement: function() {
-      this.$().click(function() {
-         App.debugView.addView(App.StonehearthGameMasterView)   
+      var self = this;
+      self._gameMasterView = null;
+      self.$().click(function() {
+         if (self._gameMasterView) {
+            self._gameMasterView.destroy();
+         }
+         self._gameMasterView = App.debugView.addView(App.StonehearthGameMasterView)
       })
    }
 });
@@ -22,18 +27,33 @@ var D3Node = SimpleClass.extend({
       self._tree = container;
       self._children = [];
       self._visible = true;
+      self.x0 = 0;
+      self.y0 = 0;
 
       // d3 defaults for where to find tree data
       self.name = 'loading...';
+   },
 
-      // trace the root of the tree.
-      this._trace = new RadiantTrace(uri)
-         .progress(function(o) {
-            self._update(o);
+   start_trace: function() {
+      var self = this;
+
+      if (!self._trace) {
+         // trace uri
+         self._trace = new RadiantTrace(self._uri)
+            .progress(function(o) {
+               self._update(o);
+            })
+            .fail(function(o) {
+               console.log('failed to trace game master node', o)
+            })
+      }
+
+      // Tell are children to start tracing
+      if (self._children) {
+         $.each(self._children, function(i, child) {
+            child.start_trace();
          })
-         .fail(function(o) {
-            console.log('failed to trace game master node', o)
-         })
+      }
    },
 
    toggle: function() {
@@ -62,7 +82,9 @@ var D3Node = SimpleClass.extend({
             found = found || (child_node._uri == uri);
          });
          if (!found) {
-            self._children.push(new D3Node(self._tree, uri));
+            var node = new D3Node(self._tree, uri);
+            self._children.push(node);
+            node.start_trace();
          }
          if (self._visible) {
             self._tree._update(self);
@@ -73,8 +95,8 @@ var D3Node = SimpleClass.extend({
 
    destroy: function() {
       // destroy all my children.
-      if (this.children) {
-         $.each(this.children, function(i, child) {
+      if (this._children) {
+         $.each(this._children, function(i, child) {
             child.destroy();
          })
       }
@@ -89,6 +111,7 @@ var D3Node = SimpleClass.extend({
 var D3CollapsableTree = SimpleClass.extend({
    init : function(options) {      
       var self = this;
+
       var width = 1000, height = 500;
 
       var m = [20, 120, 20, 120];   // margin...
@@ -98,9 +121,9 @@ var D3CollapsableTree = SimpleClass.extend({
       self.options = options;
       self._width = w;
       self._height = h;
+
       self._root = new D3Node(self, options.root_node_uri, options);
       self._nextId = 1;
-
       self._root.x0 = h / 2;
       self._root.y0 = 0;
 
@@ -118,6 +141,7 @@ var D3CollapsableTree = SimpleClass.extend({
       self._diagonal = d3.svg.diagonal()
                         .projection(function(d) { return [d.y, d.x]; });
 
+      self._root.start_trace();
       self._update(self._root);
    },
 
@@ -269,7 +293,9 @@ App.StonehearthGameMasterView = App.View.extend({
    },
 
    destroy: function() {
-      this._node_browser.destroy();
+      if (this._node_browser) {
+         this._node_browser.destroy();
+      }
       this._super();
    },
 });
