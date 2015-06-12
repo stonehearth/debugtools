@@ -1,5 +1,7 @@
-local Commands = class()
+local Point3 = _radiant.csg.Point3
 local InterruptAi = require 'mixintos.interrupt_ai.interrupt_ai'
+
+local Commands = class()
 
 function Commands:interrupt_ai(session, response, entity)
    stonehearth.ai:add_custom_action(entity, InterruptAi)
@@ -67,8 +69,12 @@ function Commands:set_attr_command(session, response, entity, attribute, value)
    return true
 end
 
-function Commands:reset_location_command(session, response, entity)
+function Commands:reset_location_command(session, response, entity, x, y, z)
    local location = radiant.entities.get_world_grid_location(entity)
+   if x and y and z then
+      location = Point3(x, y, z)
+   end
+
    local placement_point = radiant.terrain.find_placement_point(location, 1, 4)
    radiant.terrain.place_entity(entity, placement_point)
    return true

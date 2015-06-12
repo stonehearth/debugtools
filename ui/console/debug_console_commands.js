@@ -38,12 +38,15 @@ $(document).ready(function(){
 
    radiant.console.register('reset_location', {
       call: function(cmdobj, fn, args) {
+         var x = parseInt(args[0]);
+         var y = parseInt(args[1]);
+         var z = parseInt(args[2]);
          if (selected) {
-            return radiant.call('debugtools:reset_location_command', selected);
+            return radiant.call('debugtools:reset_location_command', selected, x, y, z);
          }
          return false;
       },
-      description: "Sets the attribute on the selected entity to the specified value. Usage: set_attr health 10"
+      description: "Resets the entity's location to a proper one on the ground. Can also pass in a new location. Usage: reset_location {optional x y z}"
    });
 
 });
