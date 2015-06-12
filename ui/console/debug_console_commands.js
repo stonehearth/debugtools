@@ -36,4 +36,14 @@ $(document).ready(function(){
       description: "Sets the attribute on the selected entity to the specified value. Usage: set_attr health 10"
    });
 
+   radiant.console.register('reset_location', {
+      call: function(cmdobj, fn, args) {
+         if (selected) {
+            return radiant.call('debugtools:reset_location_command', selected);
+         }
+         return false;
+      },
+      description: "Sets the attribute on the selected entity to the specified value. Usage: set_attr health 10"
+   });
+
 });

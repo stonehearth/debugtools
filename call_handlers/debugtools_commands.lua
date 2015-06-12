@@ -67,4 +67,11 @@ function Commands:set_attr_command(session, response, entity, attribute, value)
    return true
 end
 
+function Commands:reset_location_command(session, response, entity)
+   local location = radiant.entities.get_world_grid_location(entity)
+   local placement_point = radiant.terrain.find_placement_point(location, 1, 4)
+   radiant.terrain.place_entity(entity, placement_point)
+   return true
+end
+
 return Commands
