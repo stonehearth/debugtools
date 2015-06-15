@@ -62,6 +62,10 @@
       "reset_location_command": {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"
-      }  
+      },
+      "change_score_command": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"
+      }
    }
 }

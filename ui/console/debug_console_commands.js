@@ -49,4 +49,16 @@ $(document).ready(function(){
       description: "Resets the entity's location to a proper one on the ground. Can also pass in a new location. Usage: reset_location {optional x y z}"
    });
 
+   radiant.console.register('change_score', {
+      call: function(cmdobj, fn, args) {
+         var scoreName = args[0];
+         var val = parseInt(args[1]);
+         if (selected && scoreName) {
+            return radiant.call('debugtools:change_score_command', selected, scoreName, val);
+         }
+         return false;
+      },
+      description: "Changes the specified score on the selected entity by the specified amount. Usage: change_score nutrition -10"
+   });
+
 });

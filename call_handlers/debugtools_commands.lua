@@ -80,4 +80,18 @@ function Commands:reset_location_command(session, response, entity, x, y, z)
    return true
 end
 
+function Commands:change_score_command(session, response, entity, scoreName, value)
+   local score_component = entity:get_component('stonehearth:score')
+   if not score_component then
+      return false
+   end
+   if not score_component:has_score(scoreName) then
+      return false
+   end
+   
+   score_component:change_score(scoreName, value)
+   return true
+end
+
+
 return Commands
