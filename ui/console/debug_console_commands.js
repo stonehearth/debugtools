@@ -28,7 +28,7 @@ $(document).ready(function(){
       call: function(cmdobj, fn, args) {
          var attribute = args[0];
          var val = parseInt(args[1]);
-         if (selected && attribute && val > 0) {
+         if (selected && attribute && val != NaN) {
             return radiant.call('debugtools:set_attr_command', selected, attribute, val);
          }
          return false;
