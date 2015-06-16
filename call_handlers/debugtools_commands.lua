@@ -93,5 +93,13 @@ function Commands:change_score_command(session, response, entity, scoreName, val
    return true
 end
 
+function Commands:reset_scores_command(session, response, entity)
+   local score_component = entity:get_component('stonehearth:score')
+   if not score_component then
+      return false
+   end   
+   score_component:reset_all_scores()
+   return true
+end
 
 return Commands

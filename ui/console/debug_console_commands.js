@@ -61,4 +61,14 @@ $(document).ready(function(){
       description: "Changes the specified score on the selected entity by the specified amount. Usage: change_score nutrition -10"
    });
 
+   radiant.console.register('reset_scores', {
+      call: function(cmdobj, fn, args) {
+         if (selected) {
+            return radiant.call('debugtools:reset_scores_command', selected);
+         }
+         return false;
+      },
+      description: "Resets all the scores on the specified entity to their starting values. Usage: reset_scores"
+   });
+
 });
