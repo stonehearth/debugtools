@@ -1,3 +1,7 @@
 {
-   
+   "tooltip_icon_entity_inspector" : "AI Inspector",
+   "tooltip_icon_campaign_browser" : "Campaign Browser",
+   "tooltip_icon_item_dropper" : "Item Stamper",
+   "tooltip_icon_object_browser" : "Object Browser",
+   "tooltip_icon_perfmon" : "Performance Monitor"
 }

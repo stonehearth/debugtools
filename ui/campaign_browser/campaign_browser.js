@@ -8,6 +8,7 @@ App.StonehearthCampaignBrowserIcon = App.View.extend({
 
    didInsertElement: function() {
       var self = this;
+      $('#campaignBrowserIcon').tooltipster({content: i18n.t('debugtools:tooltip_icon_campaign_browser')});
       self._gameMasterView = null;
       self.$().click(function() {
          if (self._gameMasterView) {
