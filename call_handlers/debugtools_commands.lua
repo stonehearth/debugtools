@@ -102,4 +102,9 @@ function Commands:reset_scores_command(session, response, entity)
    return true
 end
 
+function Commands:add_buff_command(session, response, entity, buff_uri)
+   radiant.entities.add_buff(entity, buff_uri)
+   return true
+end
+
 return Commands

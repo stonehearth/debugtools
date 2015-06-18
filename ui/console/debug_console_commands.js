@@ -68,7 +68,18 @@ $(document).ready(function(){
          }
          return false;
       },
-      description: "Resets all the scores on the specified entity to their starting values. Usage: reset_scores"
+      description: "Resets all the scores on the selected entity to their starting values. Usage: reset_scores"
+   });
+
+   radiant.console.register('add_buff', {
+      call: function(cmdobj, fn, args) {
+         var buffUri = args[0];
+         if (selected) {
+            return radiant.call('debugtools:add_buff_command', selected, buffUri);
+         }
+         return false;
+      },
+      description: "Add the specified buff uri to the currently selected entity. Usage: add_buff stonehearth:buffs:starving"
    });
 
 });
