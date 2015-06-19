@@ -82,4 +82,15 @@ $(document).ready(function(){
       description: "Add the specified buff uri to the currently selected entity. Usage: add_buff stonehearth:buffs:starving"
    });
 
+   radiant.console.register('promote_to', {
+      call: function(cmdobj, fn, args) {
+         var job = args[0];
+         if (selected) {
+            return radiant.call('debugtools:promote_to_command', selected, job);
+         }
+         return false;
+      },
+      description: "Instantly promote the selected hearthling to the specified job. Usage: promote_to footman"
+   });
+
 });
