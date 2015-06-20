@@ -2,6 +2,8 @@ $(document).on('stonehearthReady', function(){
    App.debugDock.addToDock(App.StonehearthItemDropperIcon);
 });
 
+var itemDropperInitialValue = "stonehearth:resources:wood:oak_log";
+
 App.StonehearthItemDropperIcon = App.View.extend({
    templateName: 'itemDropperIcon',
    classNames: ['debugDockIcon'],
@@ -24,11 +26,14 @@ App.StonehearthItemDropperView = App.View.extend({
 
    didInsertElement: function() {
       var self = this;
+
       this._super();
 
       this.$().draggable();
 
-      this.$('#input').focus();
+      this.$('#uriInput')
+         .attr("value", itemDropperInitialValue)
+         .focus();
 
       var doPlaceEntity = function(uri, iconic) {
          radiant.call('debugtools:create_and_place_entity', uri, iconic)
@@ -47,6 +52,7 @@ App.StonehearthItemDropperView = App.View.extend({
       this.$('#uriInput').keypress(function(e) {
          if (e.which == 13) { // return
             var uri = self.$('#uriInput').val();
+            itemDropperInitialValue = uri;
             var iconic = self.$('#iconicCheckbox').is(':checked');
             doPlaceEntity(uri, iconic);
          }
@@ -54,6 +60,7 @@ App.StonehearthItemDropperView = App.View.extend({
 
       this.$('#makeButton').click(function() {
          var uri = self.$('#uriInput').val();
+         itemDropperInitialValue = uri;
          var iconic = self.$('#iconicCheckbox').is(':checked');
          doPlaceEntity(uri, iconic);
       });
