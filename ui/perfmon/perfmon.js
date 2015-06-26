@@ -7,7 +7,7 @@ App.StonehearthPerfmonIcon = App.View.extend({
    classNames: ['debugDockIcon'],
 
    didInsertElement: function() {
-      $('#perfmonIcon').tooltipster({content: i18n.t('debugtools:tooltip_icon_perfmon')});
+      $('#perfmonIcon').tooltipster();
       this.$().click(function() {
          App.debugView.addView(App.StonehearthPerfmonView)
       })

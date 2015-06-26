@@ -9,7 +9,7 @@ App.StonehearthObjectBrowserIcon = App.View.extend({
    classNames: ['debugDockIcon'],
 
    didInsertElement: function() {
-      $('#objectBrowserIcon').tooltipster({content: i18n.t('debugtools:tooltip_icon_object_browser')});
+      $('#objectBrowserIcon').tooltipster();
       this.$().click(function() {
          App.debugView.addView(App.StonehearthObjectBrowserView, { trackSelected: true })
       })

@@ -9,8 +9,7 @@ App.StonehearthEntityInspectorIcon = App.View.extend({
    classNames: ['debugDockIcon'],
 
    didInsertElement: function() {
-      var tooltip = i18n.t('debugtools:tooltip_icon_entity_inspector');
-      $('#entityInspectorIcon').tooltipster({content: tooltip});
+      $('#entityInspectorIcon').tooltipster();
       this.$().click(function() {
          App.debugView.addView(App.StonehearthEntityInspectorView);
       })

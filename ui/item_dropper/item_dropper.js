@@ -9,7 +9,7 @@ App.StonehearthItemDropperIcon = App.View.extend({
    classNames: ['debugDockIcon'],
 
    didInsertElement: function() {
-      $('#itemDropperIcon').tooltipster({content: i18n.t('debugtools:tooltip_icon_item_dropper')});
+      $('#itemDropperIcon').tooltipster();
       this.$().click(function() {
          App.debugView.addView(App.StonehearthItemDropperView);
       })
