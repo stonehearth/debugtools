@@ -85,7 +85,7 @@ function Commands:change_score_command(session, response, entity, scoreName, val
    if not score_component then
       return false
    end
-   if not score_component:has_score(scoreName) then
+   if score_component:get_score(scoreName) == nil then
       return false
    end
    
