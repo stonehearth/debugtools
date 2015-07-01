@@ -136,4 +136,23 @@ function Commands:add_citizen_command(session, response, entity, job)
    return true
 end
 
+function Commands:add_gold_console_command(session, response, gold_amount)
+   local inventory = stonehearth.inventory:get_inventory(session.player_id)
+
+   if inventory == nil then
+      response:reject('there is no inventory for player ' .. session.player_id)
+      return
+   end
+
+   if (gold_amount > 0) then
+      -- give gold to the player
+      inventory:add_gold(gold_amount)
+   else
+      -- deduct gold from the player
+      gold_amount = -gold_amount;
+      inventory:subtract_gold(gold_amount)
+   end
+   response:resolve({'added gold chests next to town banner'})
+end
+
 return Commands

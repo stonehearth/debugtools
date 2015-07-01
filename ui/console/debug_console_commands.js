@@ -8,7 +8,7 @@ $(document).ready(function(){
    radiant.console.register('add_gold', {
       call: function(cmdobj, fn, args) {
          var goldAmount = JSON.parse(args[0]);
-         return radiant.call_obj('stonehearth.inventory', 'add_gold_console_command', goldAmount);
+         return radiant.call('debugtools:add_gold_console_command', goldAmount);
       },
       description: "Adds gold to the current player's inventory. A negative value will subtract gold. Usage: add_gold 1000"
    });

@@ -82,6 +82,10 @@
       "add_citizen_command": {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"         
+      },
+      "add_gold_console_command": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server" 
       }
    }
 }
