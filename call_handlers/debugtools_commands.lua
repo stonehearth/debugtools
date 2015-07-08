@@ -155,4 +155,15 @@ function Commands:add_gold_console_command(session, response, gold_amount)
    response:resolve({'added gold chests next to town banner'})
 end
 
+function Commands:dump_backpack_command(session, response, entity)
+   local storage = entity:get_component('stonehearth:storage')
+
+   if not storage then
+      return false
+   end
+
+   storage:_on_kill_event()
+   return true
+end
+
 return Commands

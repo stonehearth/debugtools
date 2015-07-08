@@ -99,4 +99,14 @@ $(document).ready(function(){
       },
       description: "Add a new hearthling to your town. Usage: add_citizen"
    });
+
+   radiant.console.register('dump_backpack', {
+      call: function(cmdobj, fn, args) {
+         if (selected) {
+            return radiant.call('debugtools:dump_backpack_command', selected);
+         }
+      },
+      description: "Instantly drops on to the ground all items in the selected hearthling's backpack. Usage: dump_backpack"
+   });
+
 });

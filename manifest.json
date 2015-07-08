@@ -86,6 +86,10 @@
       "add_gold_console_command": {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server" 
+      },
+      "dump_backpack_command" : {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"          
       }
    }
 }
