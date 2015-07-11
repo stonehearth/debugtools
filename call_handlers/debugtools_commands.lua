@@ -47,6 +47,10 @@ function Commands:create_entity(session, response, uri, iconic, location, rotati
 
    radiant.terrain.place_entity(entity, location, { force_iconic = iconic })
    radiant.entities.turn_to(entity, rotation)
+   local inventory = stonehearth.inventory:get_inventory(session.player_id)
+   if inventory and not inventory:contains_item(entity) then
+      inventory:add_item(entity)
+   end
    
    return true
 end
