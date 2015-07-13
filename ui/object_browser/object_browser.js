@@ -217,7 +217,7 @@ App.StonehearthObjectBrowserRawView = App.View.extend({
                  .replace(/ /g, '&nbsp;')
                  .replace(/\n/g, '<br>')
                  .replace(/"(object:\/\/[^"]*)"/g, '<a class="navlink" href="$1">$1</a>')
-                 //.replace(/(\/[^"]*)/g, '<a href="$1">$1</a>')
+                 .replace(/uri\":&nbsp;\"([^"]*)"/g, 'uri": <a class="navlink" href="$1">$1</a>');
    }.property('model'),
 });
 
