@@ -63,10 +63,11 @@ App.StonehearthEntityInspectorView = App.View.extend({
 
    init: function() {
       this._super();
-
       var self = this;
       $(top).on("radiant_selection_changed.entity_inspector", function (_, data) {
-         self.set('uri', data.selected_entity)
+         if (!self.get('is_pinned_to_entity')) {
+            self.set('uri', data.selected_entity);
+         }         
      });
    },
 
@@ -87,10 +88,17 @@ App.StonehearthEntityInspectorView = App.View.extend({
       this._super(); 
    },
 
-   didInsertElement: function() {
-      var self = this;
-      this.$('.close').click(function() {
-         self.destroy();
-      });
-   }
+   actions: {
+      closeWindow: function () {
+         this.destroy();
+      },
+
+      pinToEntity: function() {
+         this.set('is_pinned_to_entity', true);
+      },
+
+      unPinn: function() {
+         this.set('is_pinned_to_entity', false);
+      }
+   },
 });

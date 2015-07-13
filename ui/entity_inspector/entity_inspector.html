@@ -25,7 +25,14 @@
    <div id="entityInspector">
       <div class="header">
          AI Inspector
-         <a href='#'><div class=close>close window</div></a>
+
+         {{#if view.is_pinned_to_entity}}
+            [<a href="#" {{action "unPinn" target="view"}}>unpin</a>]
+         {{else}}
+            [<a href="#" {{action "pinToEntity" target="view"}}>pin to entity</a>]
+         {{/if}}
+
+         [<a href='#' {{action "closeWindow" target="view"}}>close window</a>]
       </div>
       <div id="content">
          {{#if view.model.debug_info }}
