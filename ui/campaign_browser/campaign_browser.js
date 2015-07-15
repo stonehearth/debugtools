@@ -113,9 +113,9 @@ var D3CollapsableTree = SimpleClass.extend({
    init : function(options) {      
       var self = this;
 
-      var width = 1000, height = 500;
+      var width = 1400, height = 500;
 
-      var m = [20, 120, 20, 120];   // margin...
+      var m = [20, 20, 20, 20];   // margin...
       var w = width  - m[1] - m[3];
       var h = height - m[0] - m[2];
 
@@ -276,7 +276,7 @@ App.StonehearthGameMasterView = App.View.extend({
                      uri: node.data.__self,
                      relativeTo: {
                         top: node.x,
-                        left: node.y,
+                        left: node.y - 700,
                      }
                   });
                }
