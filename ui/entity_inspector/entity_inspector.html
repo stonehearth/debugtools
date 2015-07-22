@@ -32,8 +32,14 @@
             [<a href="#" {{action "pinToEntity" target="view"}}>pin to entity</a>]
          {{/if}}
 
+         {{#if view.pathdata}}
+            [<a href="#" {{action "stepPathfinder" target="view"}}>step pathfinder ({{ view.pathdata.job_id }})</a>]
+         {{else}}
+            [<a href="#" style="color: gray">step pathfinder</a>]
+         {{/if}}
          [<a href='#' {{action "closeWindow" target="view"}}>close window</a>]
       </div>
+
       <div id="content">
          {{#if view.model.debug_info }}
             {{#view "stonehearthAiThread" uriBinding="view.model.debug_info" }}
@@ -68,7 +74,7 @@
             <span id="state" {{bind-attr class="view.model.state"}} {{bind-attr style="view.styleOverride"}}>{{{view.model.action.name}}} </span>
             <span id="activity" class="activity"> - {{{view.model.action.does}}} </span> <br>
             {{#if view.model.progress }}
-            {{{view.model.id}}} <span {{bind-attr style="view.styleOverride"}}>{{{view.model.progress}}}</span>
+               {{{view.model.id}}} <span {{bind-attr class="view.model.pathfinder_data:steppablePath:"}} {{bind-attr style="view.styleOverride"}} {{action 'stepThis' view.model.pathfinder_data target="view"}}>{{{view.model.progress}}}</span>
             {{/if}}
          </div> 
          {{#each frame in view.model.action.execution_frames}}

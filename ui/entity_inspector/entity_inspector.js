@@ -52,6 +52,13 @@ App.StonehearthExecutionUnitView = App.StonehearthAiRowView.extend({
    components: {
       "action": {}
    },
+
+   actions : {
+      stepThis: function(evt) {
+         var d = this.get('model.pathfinder_data');
+         $("#entityInspector").trigger('stepThis', d);
+      }
+   }
 });
 
 // The inspector.  Just call `debug_info` on the ai_component to get the
@@ -69,6 +76,13 @@ App.StonehearthEntityInspectorView = App.View.extend({
             self.set('uri', data.selected_entity);
          }         
      });
+   },
+
+   didInsertElement: function() {
+      var self = this;
+      $("#entityInspector").on('stepThis', function(evt, data) {
+         self.set('pathdata', data);
+      });
    },
 
    _updateAiComponent: function() {
@@ -91,6 +105,13 @@ App.StonehearthEntityInspectorView = App.View.extend({
    actions: {
       closeWindow: function () {
          this.destroy();
+      },
+
+      stepPathfinder: function() {
+         var pathdata = this.get('pathdata');
+         if (pathdata) {
+            radiant.call('radiant:step_path_with_jobid', pathdata.job_id, pathdata.entity_id);
+         }
       },
 
       pinToEntity: function() {
