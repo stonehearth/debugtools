@@ -109,4 +109,20 @@ $(document).ready(function(){
       description: "Instantly drops on to the ground all items in the selected hearthling's backpack. Usage: dump_backpack"
    });
 
+   radiant.console.register('show_untranslated', {
+      stringToBoolean: function(string) {
+         switch(string.toLowerCase()){
+            case "true": case "yes": case "1": return true;
+            case "false": case "no": case "0": case null: return false;
+            default: return Boolean(string);
+         }
+      },
+
+      call: function(cmdobj, fn, args) {
+         var shouldShow = args.length > 0 ? this.stringToBoolean(args[0]) : true;
+         _debug_show_untranslated = shouldShow;
+      },
+      description: "Use to display untranslated strings with *** around them. Usage: show_untranslated true/false"
+   });
+
 });
