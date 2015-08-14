@@ -132,4 +132,12 @@ $(document).ready(function(){
       description: "Clears the json cache so that changed json files on the client will reload again. Usage: hot_reload"
    });
 
+   radiant.console.register('add_journal', {
+      call: function(cmdobj, fn, args) {
+         var journalType = args[0];
+         return radiant.call('debugtools:add_journal', selected, journalType);
+      },
+      description: "Force add a journal entry for the selected hearthling. usage: add_journal dreams"
+   });
+
 });

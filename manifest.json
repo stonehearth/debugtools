@@ -90,6 +90,10 @@
       "dump_backpack_command" : {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"          
+      },
+      "add_journal" : {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"          
       }
    }
 }
