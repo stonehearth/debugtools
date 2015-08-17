@@ -5,14 +5,14 @@
 <script type="text/x-handlebars" data-template-name="entityInspectorFrameInfo">
    <div id="entityInspectorFrameInfo">
       {{#if action}}
-         activity: {{action.does}}<br>
-         action: {{action.name}}<br>
-         args: {{action.args}}<br>
+         activity: {{does}}<br>
+         action: {{name}}<br>
+         args: {{args}}<br>
          state: {{parsed_state}}<br>
-         priority: {{action.priority}}
+         priority: {{priority}}
       {{/if}}
       {{#if activity}}
-         activity name: {{activity.name}}<br>
+         activity name: {{name}}<br>
          {{args}}
       {{/if}}
    </div>
@@ -64,25 +64,13 @@
 <script type="text/x-handlebars" data-template-name="executionFrame">
    <div class="row" {{bind-attr row_id="id"}}>
       {{{view.model.id}}} 
-      <span id="state" {{bind-attr class="view.model.state"}} {{bind-attr style="view.styleOverride"}}>{{{view.model.activity.name}}} </span>
-   </div>
-
-   {{#each unit in view.model.execution_units}}
-      {{#view "stonehearthExecutionUnit" uriBinding="unit" }}
-         <div class="row" {{bind-attr row_id="id"}}>
-            {{{view.model.id}}} 
-            <span id="state" {{bind-attr class="view.model.state"}} {{bind-attr style="view.styleOverride"}}>{{{view.model.action.name}}} </span>
-            <span id="activity" class="activity"> - {{{view.model.action.does}}} </span> <br>
-            {{#if view.model.progress }}
-               {{{view.model.id}}} <span {{bind-attr class="view.model.pathfinder_data:steppablePath:"}} {{bind-attr style="view.styleOverride"}} {{action 'stepThis' view.model.pathfinder_data target="view"}}>{{{view.model.progress}}}</span>
-            {{/if}}
-         </div> 
-         {{#each frame in view.model.action.execution_frames}}
-            {{ view "stonehearthExecutionFrame" uriBinding="frame" }}
-         {{/each}}
-         {{#each frame in view.model.execution_frames}}
-            {{ view "stonehearthExecutionFrame" uriBinding="frame" }}
-         {{/each}}
-      {{/view}}
+      <span id="state" {{bind-attr class="view.model.state"}} {{bind-attr style="view.styleOverride"}}>{{{view.model.name}}} </span>
+      <span id="activity" class="activity"> - {{{view.model.does}}} </span> <br>
+      {{#if view.model.progress }}
+         {{{view.model.id}}} <span {{bind-attr class="view.model.pathfinder_data:steppablePath:"}} {{bind-attr style="view.styleOverride"}} {{action 'stepThis' view.model.pathfinder_data target="view"}}>{{{view.model.progress}}}</span>
+      {{/if}}
+   </div> 
+   {{#each frame in view.model.children}}
+      {{ view "stonehearthExecutionFrame" uriBinding="frame" }}
    {{/each}}
 </script>

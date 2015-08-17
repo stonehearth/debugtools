@@ -44,11 +44,9 @@ App.StonehearthAiRowView = App.View.extend({
 // Execution frame.  Is recursive, so we can't use an inline view
 App.StonehearthExecutionFrameView = App.StonehearthAiRowView.extend({
    templateName: 'executionFrame',
-});
-
-// Execution unit.  We just need to collect the action datastore before
-// rendering...
-App.StonehearthExecutionUnitView = App.StonehearthAiRowView.extend({
+   
+   // Execution unit.  We just need to collect the action datastore before
+   // rendering...
    components: {
       "action": {}
    },
