@@ -172,10 +172,20 @@ function Commands:dump_backpack_command(session, response, entity)
    return true
 end
 
-function Commands:add_journal(session, response, entity, journalType)
+function Commands:add_journal_command(session, response, entity, journalType)
    local journal_data = {entity = entity, description = journalType, probability_override = 100}
    stonehearth.personality:log_journal_entry(journal_data)
    response:resolve({})
+end
+
+function Commands:pasture_reproduce_command(session, response, entity)
+   local pasture = entity:get_component('stonehearth:shepherd_pasture')
+
+   if not pasture then
+      return false
+   end
+
+   return pasture:_reproduce_animal()
 end
 
 return Commands

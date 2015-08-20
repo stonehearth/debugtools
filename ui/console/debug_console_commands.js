@@ -135,9 +135,17 @@ $(document).ready(function(){
    radiant.console.register('add_journal', {
       call: function(cmdobj, fn, args) {
          var journalType = args[0];
-         return radiant.call('debugtools:add_journal', selected, journalType);
+         return radiant.call('debugtools:add_journal_command', selected, journalType);
       },
       description: "Force add a journal entry for the selected hearthling. usage: add_journal dreams"
+   });
+
+   radiant.console.register('reproduce', {
+      call: function(cmdobj, fn, args) {
+         var journalType = args[0];
+         return radiant.call('debugtools:pasture_reproduce_command', selected, journalType);
+      },
+      description: "Select a pasture and force that pasture to reproduce an animal. usage: reproduce"
    });
 
 });
