@@ -98,6 +98,10 @@
       "pasture_reproduce_command" : {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"          
+      },
+      "renew_resource_command" : {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"          
       }
    }
 }

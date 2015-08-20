@@ -188,4 +188,15 @@ function Commands:pasture_reproduce_command(session, response, entity)
    return pasture:_reproduce_animal()
 end
 
+function Commands:renew_resource_command(session, response, entity)
+   local renewable_resource_component = entity:get_component('stonehearth:renewable_resource_node')
+
+   if not renewable_resource_component then
+      return false
+   end
+
+   renewable_resource_component:renew()
+   return true
+end
+
 return Commands

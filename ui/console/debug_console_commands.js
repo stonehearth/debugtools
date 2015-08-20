@@ -143,9 +143,16 @@ $(document).ready(function(){
    radiant.console.register('reproduce', {
       call: function(cmdobj, fn, args) {
          var journalType = args[0];
-         return radiant.call('debugtools:pasture_reproduce_command', selected, journalType);
+         return radiant.call('debugtools:pasture_reproduce_command', selected);
       },
       description: "Select a pasture and force that pasture to reproduce an animal. usage: reproduce"
+   });
+
+   radiant.console.register('renew', {
+      call: function(cmdobj, fn, args) {
+         return radiant.call('debugtools:renew_resource_command', selected);
+      },
+      description: "Renews the selected renewable resource. Ex: make sheep harvestable for wool again. usage: renew"
    });
 
 });
