@@ -148,11 +148,11 @@ $(document).ready(function(){
       description: "Select a pasture and force that pasture to reproduce an animal. usage: reproduce"
    });
 
-   radiant.console.register('renew', {
+   radiant.console.register('grow', {
       call: function(cmdobj, fn, args) {
          return radiant.call('debugtools:renew_resource_command', selected);
       },
-      description: "Renews the selected renewable resource. Ex: make sheep harvestable for wool again. usage: renew"
+      description: "Tells the selected entity to grow. Ex: Make sheep grow wool again or make a lamb grow into a sheep. usage: grow"
    });
 
 });
