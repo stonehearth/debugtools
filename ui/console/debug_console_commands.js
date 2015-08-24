@@ -150,9 +150,16 @@ $(document).ready(function(){
 
    radiant.console.register('grow', {
       call: function(cmdobj, fn, args) {
+         return radiant.call('debugtools:evolve_command', selected);
+      },
+      description: "Tells the selected entity to grow. Ex: Make a lamb grow into a sheep. usage: grow"
+   });
+
+   radiant.console.register('renew', {
+      call: function(cmdobj, fn, args) {
          return radiant.call('debugtools:renew_resource_command', selected);
       },
-      description: "Tells the selected entity to grow. Ex: Make sheep grow wool again or make a lamb grow into a sheep. usage: grow"
+      description: "Tells the selected entity to renew its resource. Ex: Make sheep grow wool again or depleeted silkweed grow. usage: renew"
    });
 
 });
