@@ -172,4 +172,42 @@ function Commands:dump_backpack_command(session, response, entity)
    return true
 end
 
+function Commands:add_journal_command(session, response, entity, journalType)
+   local journal_data = {entity = entity, description = journalType, probability_override = 100}
+   stonehearth.personality:log_journal_entry(journal_data)
+   response:resolve({})
+end
+
+function Commands:pasture_reproduce_command(session, response, entity)
+   local pasture = entity:get_component('stonehearth:shepherd_pasture')
+
+   if not pasture then
+      return false
+   end
+
+   return pasture:_reproduce()
+end
+
+function Commands:renew_resource_command(session, response, entity)
+   local renewable_resource_component = entity:get_component('stonehearth:renewable_resource_component')
+
+   if not renewable_resource_component then
+      return false
+   end
+
+   renewable_resource_component:renew()
+   return true
+end
+
+function Commands:evolve_command(session, response, entity)
+   local evolve_component = entity:get_component('stonehearth:evolve')
+
+   if not evolve_component then
+      return false
+   end
+
+   evolve_component:evolve()
+   return true
+end
+
 return Commands

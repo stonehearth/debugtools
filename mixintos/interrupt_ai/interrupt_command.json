@@ -2,7 +2,7 @@
    "type" : "command",
 
    "name": "interrupt",
-   "tooltip": "Interrupt",
+   "display_name": "Interrupt",
    "description": "Send the ai back to stonehearth:top",
    "icon": "file(interrupt_command.jpg)",
 

@@ -109,4 +109,57 @@ $(document).ready(function(){
       description: "Instantly drops on to the ground all items in the selected hearthling's backpack. Usage: dump_backpack"
    });
 
+   radiant.console.register('show_untranslated', {
+      stringToBoolean: function(string) {
+         switch(string.toLowerCase()){
+            case "true": case "yes": case "1": return true;
+            case "false": case "no": case "0": case null: return false;
+            default: return Boolean(string);
+         }
+      },
+
+      call: function(cmdobj, fn, args) {
+         var shouldShow = args.length > 0 ? this.stringToBoolean(args[0]) : true;
+         _debug_show_untranslated = shouldShow;
+      },
+      description: "Use to display untranslated strings with *** around them. Usage: show_untranslated true/false"
+   });
+
+   radiant.console.register('hot_reload', {
+      call: function(cmdobj, fn, args) {
+         radiant.call("radiant:debug_clear_rm_json_cache");
+      },
+      description: "Clears the json cache so that changed json files on the client will reload again. Usage: hot_reload"
+   });
+
+   radiant.console.register('add_journal', {
+      call: function(cmdobj, fn, args) {
+         var journalType = args[0];
+         return radiant.call('debugtools:add_journal_command', selected, journalType);
+      },
+      description: "Force add a journal entry for the selected hearthling. usage: add_journal dreams"
+   });
+
+   radiant.console.register('reproduce', {
+      call: function(cmdobj, fn, args) {
+         var journalType = args[0];
+         return radiant.call('debugtools:pasture_reproduce_command', selected);
+      },
+      description: "Select a pasture and force that pasture to reproduce an animal. usage: reproduce"
+   });
+
+   radiant.console.register('grow', {
+      call: function(cmdobj, fn, args) {
+         return radiant.call('debugtools:evolve_command', selected);
+      },
+      description: "Tells the selected entity to grow. Ex: Make a lamb grow into a sheep. usage: grow"
+   });
+
+   radiant.console.register('renew', {
+      call: function(cmdobj, fn, args) {
+         return radiant.call('debugtools:renew_resource_command', selected);
+      },
+      description: "Tells the selected entity to renew its resource. Ex: Make sheep grow wool again or depleeted silkweed grow. usage: renew"
+   });
+
 });
