@@ -189,7 +189,7 @@ function Commands:pasture_reproduce_command(session, response, entity)
 end
 
 function Commands:renew_resource_command(session, response, entity)
-   local renewable_resource_component = entity:get_component('stonehearth:renewable_resource_component')
+   local renewable_resource_component = entity:get_component('stonehearth:renewable_resource_node')
 
    if not renewable_resource_component then
       return false
