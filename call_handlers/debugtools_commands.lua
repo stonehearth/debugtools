@@ -189,7 +189,7 @@ function Commands:pasture_reproduce_command(session, response, entity)
 end
 
 function Commands:renew_resource_command(session, response, entity)
-   local renewable_resource_component = entity:get_component('stonehearth:renewable_resource_component')
+   local renewable_resource_component = entity:get_component('stonehearth:renewable_resource_node')
 
    if not renewable_resource_component then
       return false
@@ -199,15 +199,20 @@ function Commands:renew_resource_command(session, response, entity)
    return true
 end
 
-function Commands:evolve_command(session, response, entity)
+function Commands:grow_command(session, response, entity)
    local evolve_component = entity:get_component('stonehearth:evolve')
-
-   if not evolve_component then
-      return false
+   if evolve_component then
+      evolve_component:evolve()
+      return true
+   end
+   
+   local growing_component = entity:get_component('stonehearth:growing')
+   if growing_component then
+      growing_component:_grow()
+      return true
    end
 
-   evolve_component:evolve()
-   return true
+   return false
 end
 
 return Commands
