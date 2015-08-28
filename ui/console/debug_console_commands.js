@@ -36,6 +36,18 @@ $(document).ready(function(){
       description: "Sets the attribute on the selected entity to the specified value. Usage: set_attr health 10"
    });
 
+   radiant.console.register('set', {
+      call: function(cmdobj, fn, args) {
+         var attribute = args[0];
+         var val = parseInt(args[1]);
+         if (selected && attribute && val != NaN) {
+            return radiant.call('debugtools:set_attr_command', selected, attribute, val);
+         }
+         return false;
+      },
+      description: "Sets the attribute on the selected entity to the specified value. Usage: set health 10"
+   });
+
    radiant.console.register('reset_location', {
       call: function(cmdobj, fn, args) {
          var x = parseInt(args[0]);
