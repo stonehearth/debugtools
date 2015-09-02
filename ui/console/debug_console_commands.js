@@ -87,6 +87,9 @@ $(document).ready(function(){
       call: function(cmdobj, fn, args) {
          var buffUri = args[0];
          if (selected) {
+            if (buffUri.indexOf(':') < 0) {
+               buffUri = "stonehearth:buffs:" + buffUri;
+            }
             return radiant.call('debugtools:add_buff_command', selected, buffUri);
          }
          return false;
