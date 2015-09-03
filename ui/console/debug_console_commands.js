@@ -142,6 +142,8 @@ $(document).ready(function(){
 
    radiant.console.register('hot_reload', {
       call: function(cmdobj, fn, args) {
+         radiant.call("debugtools:hot_reload_server");
+         radiant.call("debugtools:hot_reload_client");
          radiant.call("radiant:debug_clear_rm_json_cache");
       },
       description: "Clears the json cache so that changed json files on the client will reload again. Usage: hot_reload"

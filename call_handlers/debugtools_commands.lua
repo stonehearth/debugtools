@@ -172,6 +172,16 @@ function Commands:dump_backpack_command(session, response, entity)
    return true
 end
 
+function Commands:hot_reload_server(session, response, entity)
+   radiant.resources.debug_clear_cached_json()
+   return true
+end
+
+function Commands:hot_reload_client(session, response, entity)
+   radiant.resources.debug_clear_cached_json()
+   return true
+end
+
 function Commands:add_journal_command(session, response, entity, journalType)
    local journal_data = {entity = entity, description = journalType, probability_override = 100}
    stonehearth.personality:log_journal_entry(journal_data)

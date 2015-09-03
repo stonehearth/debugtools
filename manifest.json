@@ -91,6 +91,14 @@
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"          
       },
+      "hot_reload_server" : {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"          
+      },
+      "hot_reload_client" : {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "client"          
+      },
       "add_journal_command" : {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"          
