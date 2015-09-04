@@ -111,9 +111,15 @@ function Commands:add_buff_command(session, response, entity, buff_uri)
    return true
 end
 
-function Commands:remove_buff_command(session, response, entity, buff_uri)
-   radiant.entities.remove_buff(entity, buff_uri)
-   return true
+function Commands:remove_buff_command(session, response, entity, buff_name)
+   if entity and entity:is_valid() then
+      local buff_component = entity:get_component('stonehearth:buffs')
+      if buff_component then
+         buff_component:remove_buff(buff_name, true) -- True for removing all refs for the buff
+         return true
+      end
+   end
+   return false
 end
 
 function Commands:promote_to_command(session, response, entity, job)
