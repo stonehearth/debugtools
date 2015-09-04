@@ -111,6 +111,11 @@ function Commands:add_buff_command(session, response, entity, buff_uri)
    return true
 end
 
+function Commands:remove_buff_command(session, response, entity, buff_uri)
+   radiant.entities.remove_buff(entity, buff_uri)
+   return true
+end
+
 function Commands:promote_to_command(session, response, entity, job)
    if not string.find(job, ':') and not string.find(job, '/') then
       -- as a convenience for autotest writers, stick the stonehearth:job on

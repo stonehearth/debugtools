@@ -4,6 +4,14 @@ $(document).ready(function(){
    $(top).on("radiant_selection_changed.unit_frame", function (_, data) {
       selected = data.selected_entity;
    });
+
+   $(top).on('mode_changed', function(_, mode) {
+      if (mode != 'zones') {
+         if (self._propertyView) {
+            self._propertyView.destroyWithoutDeselect();
+         }
+      }
+   });
    
    radiant.console.register('add_gold', {
       call: function(cmdobj, fn, args) {
@@ -97,6 +105,20 @@ $(document).ready(function(){
       description: "Add the specified buff uri to the currently selected entity. Usage: add_buff stonehearth:buffs:starving"
    });
 
+   radiant.console.register('remove_buff', {
+      call: function(cmdobj, fn, args) {
+         var buffUri = args[0];
+         if (selected) {
+            if (buffUri.indexOf(':') < 0) {
+               buffUri = "stonehearth:buffs:" + buffUri;
+            }
+            return radiant.call('debugtools:remove_buff_command', selected, buffUri);
+         }
+         return false;
+      },
+      description: "Remove the specified buff uri from the currently selected entity. Usage: remove_buff stonehearth:buffs:starving"
+   });
+
    radiant.console.register('promote_to', {
       call: function(cmdobj, fn, args) {
          var job = args[0];
@@ -178,5 +200,4 @@ $(document).ready(function(){
       },
       description: "Tells the selected entity to renew its resource. Ex: Make sheep grow wool again or depleeted silkweed grow. usage: renew"
    });
-
 });
