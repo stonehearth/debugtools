@@ -176,7 +176,7 @@ $(document).ready(function(){
          var journalType = args[0];
          return radiant.call('debugtools:add_journal_command', selected, journalType);
       },
-      description: "Force add a journal entry for the selected hearthling. usage: add_journal dreams"
+      description: "Force add a journal entry for the selected hearthling. Usage: add_journal dreams"
    });
 
    radiant.console.register('reproduce', {
@@ -184,20 +184,27 @@ $(document).ready(function(){
          var journalType = args[0];
          return radiant.call('debugtools:pasture_reproduce_command', selected);
       },
-      description: "Select a pasture and force that pasture to reproduce an animal. usage: reproduce"
+      description: "Select a pasture and force that pasture to reproduce an animal. Usage: reproduce"
    });
 
    radiant.console.register('grow', {
       call: function(cmdobj, fn, args) {
          return radiant.call('debugtools:grow_command', selected);
       },
-      description: "Tells the selected entity to grow. Either farm crops or animals Ex: Make a lamb grow into a sheep. usage: grow"
+      description: "Tells the selected entity to grow. Either farm crops or animals Ex: Make a lamb grow into a sheep. Usage: grow"
    });
 
    radiant.console.register('renew', {
       call: function(cmdobj, fn, args) {
          return radiant.call('debugtools:renew_resource_command', selected);
       },
-      description: "Tells the selected entity to renew its resource. Ex: Make sheep grow wool again or depleeted silkweed grow. usage: renew"
+      description: "Tells the selected entity to renew its resource. Ex: Make sheep grow wool again or depleeted silkweed grow. Usage: renew"
+   });
+
+   radiant.console.register('show_item_ids', {
+      call: function(cmdobj, fn, args) {
+         debug_itemPaletteShowItemIds = !debug_itemPaletteShowItemIds;
+      },
+      description: "Makes it so item palettes will show a list of all the item ids in its list of items. Usage: show_item_ids"
    });
 });
