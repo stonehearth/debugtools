@@ -118,6 +118,10 @@
       "grow_command" : {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"          
+      },
+      "get_all_item_uris_command" : {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"          
       }
    }
 }

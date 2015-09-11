@@ -236,4 +236,22 @@ function Commands:grow_command(session, response, entity)
    return false
 end
 
+function Commands:get_all_item_uris_command(session, response)
+   local all_uris = {}
+   local mods = radiant.resources.get_mod_list()
+   -- for each mod
+   for i, mod in ipairs(mods) do
+      local manifest = radiant.resources.load_manifest(mod)
+      -- for each alias
+      if manifest.aliases then
+         for alias, _ in pairs(manifest.aliases) do
+            -- is it sellable?
+            local full_alias = mod .. ':' .. alias
+            table.insert(all_uris, full_alias)
+         end
+      end
+   end
+   return all_uris
+end
+
 return Commands

@@ -1,8 +1,15 @@
 $(document).on('stonehearthReady', function(){
    App.debugDock.addToDock(App.StonehearthItemDropperIcon);
+   radiant.call('debugtools:get_all_item_uris_command')
+      .done(function(response) {
+         allUris = response;
+      })
+      .fail(function() {
+      });
 });
 
 var itemDropperInitialValue = "stonehearth:resources:wood:oak_log";
+var allUris = {};
 
 App.StonehearthItemDropperIcon = App.View.extend({
    templateName: 'itemDropperIcon',
@@ -33,6 +40,7 @@ App.StonehearthItemDropperView = App.View.extend({
 
       this.$('#uriInput')
          .attr("value", itemDropperInitialValue)
+         .autocomplete({source: allUris})
          .focus();
 
       var doPlaceEntity = function(uri, iconic) {
@@ -70,8 +78,8 @@ App.StonehearthItemDropperView = App.View.extend({
       });
 
       this.$('#itemDropper').position({
-         my: 'right bottom-100',
-         at: 'right bottom',
+         my: 'right-150 top+150',
+         at: 'right top',
          of: $(top)
       });
 
