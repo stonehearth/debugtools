@@ -207,4 +207,11 @@ $(document).ready(function(){
       },
       description: "Makes it so item palettes will show a list of all the item ids in its list of items. Usage: show_item_ids"
    });
+
+   radiant.console.register('decay', {
+      call: function(cmdobj, fn, args) {
+         return radiant.call('debugtools:decay_command', selected);
+      },
+      description: "Make a food decay immediately. Usage: decay"
+   });
 });

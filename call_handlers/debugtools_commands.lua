@@ -254,4 +254,26 @@ function Commands:get_all_item_uris_command(session, response)
    return all_uris
 end
 
+function Commands:decay_command(session, response, entity)
+   local food_container = radiant.entities.get_entity_data(entity, 'stonehearth:food_container')
+   if not food_container then
+      return false
+   end
+   local decay_tuning = food_container.decay
+   local decay = radiant.entities.get_attribute(entity, 'decay')
+   local largest_trigger_value = 0
+
+   for _, decay_stage in pairs(decay_tuning.decay_stages) do
+      -- Find the next decay stage
+      if decay > decay_stage.trigger_decay_value and decay_stage.trigger_decay_value > largest_trigger_value then
+         largest_trigger_value = decay_stage.trigger_decay_value
+      end
+   end
+
+   radiant.entities.set_attribute(entity, 'decay', largest_trigger_value)
+
+
+   return stonehearth.food_decay:increment_decay(entity)
+end
+
 return Commands
