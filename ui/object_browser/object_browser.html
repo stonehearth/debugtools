@@ -130,3 +130,17 @@
    </ul>
 </script>
 
+<script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserDebugCommands">
+   <div id="objectBrowser">
+      <div id="toolbar">
+         <a id="close" href="#" {{action "close" target="view"}} class="button">
+            <i class="fa fa-times fa-fw fa-lg"></i>
+         </a>
+      </div>
+      <ul class="menu">
+         {{#each view.consoleCommands}}
+            <li><a href="#" {{action "doConsoleCommand" this target="view"}}> {{this}} </a></li>
+         {{/each}}
+      </ul>
+   </div>
+</script>

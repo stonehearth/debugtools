@@ -1,8 +1,44 @@
 $(document).ready(function(){
    var selected;
+   var shiftHeld = false;
+   var objectBrowserView = null;
+   var mouseClickPosX = null;
+   var mouseClickPosY = null;
+
+   var showDebugMenu = function() {
+      // Display debug commands available for the selected object
+      if (!objectBrowserView || objectBrowserView.isDestroying || objectBrowserView.isDestroyed) {
+         objectBrowserView = App.debugView.addView(App.stonehearthObjectBrowserDebugCommandsView, { trackSelected: false, posX: mouseClickPosX, posY: mouseClickPosY });
+      }
+      objectBrowserView.navigateTo(selected);
+   }
 
    $(top).on("radiant_selection_changed.unit_frame", function (_, data) {
       selected = data.selected_entity;
+
+      if (!selected) {
+         if (objectBrowserView && !objectBrowserView.isDestroying && !objectBrowserView.isDestroyed) {
+            objectBrowserView.destroy();
+            objectBrowserView = null;
+         }
+      } else if (shiftHeld && selected) {
+         showDebugMenu();
+      }
+   });
+
+
+
+   $(document).click(function(e) {
+      if (e.shiftKey) {
+         shiftHeld = true;
+         mouseClickPosX = e.screenX;
+         mouseClickPosY = e.screenY;
+         if (selected) {
+            showDebugMenu();
+         }
+      } else {
+         shiftHeld = false;
+      }
    });
 
    $(top).on('mode_changed', function(_, mode) {
@@ -227,6 +263,9 @@ $(document).ready(function(){
          }
          return radiant.call('debugtools:decay_command', selected);
       },
-      description: "Make a food decay immediately. Usage: decay"
+      description: "Make a food decay immediately. Usage: decay",
+      test: function(entity) {
+         return true;
+      }
    });
 });

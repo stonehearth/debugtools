@@ -277,7 +277,7 @@ App.StonehearthObjectBrowserBaseView = App.View.extend({
       }
    },
 
-   didInsertElement: function() {      
+   didInsertElement: function() {
       var self = this;
 
       self._super();
@@ -355,3 +355,32 @@ App.StonehearthObjectBrowserCollectionQuestEncounterView = App.StonehearthObject
       },
    }
 });
+
+App.stonehearthObjectBrowserDebugCommandsView = App.StonehearthObjectBrowserView.extend({
+   templateName: 'stonehearthObjectBrowserDebugCommands',
+   didInsertElement: function() {
+      var self = this;
+      self._super();
+      // Generate list of all console commands that apply to the selected entity.
+      var allCommands = radiant.console.getCommands();
+      var possibleCommandsArray = [];
+      radiant.each(allCommands, function(key, command) {
+         if (command.test && command.test(self.get('model'))) {
+            possibleCommandsArray.push(key);
+         }
+      });
+      self.set('consoleCommands', possibleCommandsArray);
+
+      if (self.posX && self.posY) {
+         self.$("#objectBrowser").css({top: self.posY, left: self.posX, position:'absolute'});
+      }
+   },
+   actions: {
+      doConsoleCommand: function(command) {
+         radiant.console.run(command);
+      },
+   }
+});
+
+
+
