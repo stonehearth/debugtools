@@ -173,6 +173,10 @@ $(document).ready(function(){
 
    radiant.console.register('add_journal', {
       call: function(cmdobj, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
+
          var journalType = args[0];
          return radiant.call('debugtools:add_journal_command', selected, journalType);
       },
@@ -181,7 +185,9 @@ $(document).ready(function(){
 
    radiant.console.register('reproduce', {
       call: function(cmdobj, fn, args) {
-         var journalType = args[0];
+         if (!selected) {
+            return "must select something";
+         }
          return radiant.call('debugtools:pasture_reproduce_command', selected);
       },
       description: "Select a pasture and force that pasture to reproduce an animal. Usage: reproduce"
@@ -189,6 +195,9 @@ $(document).ready(function(){
 
    radiant.console.register('grow', {
       call: function(cmdobj, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
          return radiant.call('debugtools:grow_command', selected);
       },
       description: "Tells the selected entity to grow. Either farm crops or animals Ex: Make a lamb grow into a sheep. Usage: grow"
@@ -196,6 +205,9 @@ $(document).ready(function(){
 
    radiant.console.register('renew', {
       call: function(cmdobj, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
          return radiant.call('debugtools:renew_resource_command', selected);
       },
       description: "Tells the selected entity to renew its resource. Ex: Make sheep grow wool again or depleeted silkweed grow. Usage: renew"
@@ -210,6 +222,9 @@ $(document).ready(function(){
 
    radiant.console.register('decay', {
       call: function(cmdobj, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
          return radiant.call('debugtools:decay_command', selected);
       },
       description: "Make a food decay immediately. Usage: decay"
