@@ -139,7 +139,7 @@
       </div>
       <ul class="menu">
          {{#each view.consoleCommands}}
-            <li><a href="#" {{action "doConsoleCommand" this target="view"}}> {{this}} </a></li>
+            <li><a href="#" {{action "doConsoleCommand" this.command target="view"}}> {{this.displayName}} </a></li>
          {{/each}}
       </ul>
    </div>

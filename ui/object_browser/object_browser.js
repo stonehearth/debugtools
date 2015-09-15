@@ -356,17 +356,39 @@ App.StonehearthObjectBrowserCollectionQuestEncounterView = App.StonehearthObject
    }
 });
 
-App.stonehearthObjectBrowserDebugCommandsView = App.StonehearthObjectBrowserView.extend({
+App.stonehearthObjectBrowserDebugCommandsView = App.View.extend({
    templateName: 'stonehearthObjectBrowserDebugCommands',
+   closeOnEsc: true,
+   uriProperty: 'model',
+
+   components: {
+      "uri": {}
+   },
    didInsertElement: function() {
+      this._super();
       var self = this;
-      self._super();
+      var entity = self.get('model');
+      if (entity) {
+         self._modelUpdated();
+         self._initialized = true;
+      }
+   },
+   _modelUpdated: function() {
+      var self = this;
+      if (self._initialized || !self.$("#objectBrowser")) {
+         return;
+      }
+      var entity = self.get('model');
       // Generate list of all console commands that apply to the selected entity.
       var allCommands = radiant.console.getCommands();
       var possibleCommandsArray = [];
       radiant.each(allCommands, function(key, command) {
-         if (command.test && command.test(self.get('model'))) {
-            possibleCommandsArray.push(key);
+         if (command.test && command.test(entity)) {
+            var name = command.debugMenuNameOverride ? command.debugMenuNameOverride : key;
+            possibleCommandsArray.push({
+               displayName: name,
+               command: key
+            });
          }
       });
       self.set('consoleCommands', possibleCommandsArray);
@@ -374,10 +396,14 @@ App.stonehearthObjectBrowserDebugCommandsView = App.StonehearthObjectBrowserView
       if (self.posX && self.posY) {
          self.$("#objectBrowser").css({top: self.posY, left: self.posX, position:'absolute'});
       }
-   },
+   }.observes('model'),
+
    actions: {
       doConsoleCommand: function(command) {
          radiant.console.run(command);
+      },
+      close: function () {
+         this.destroy();
       },
    }
 });

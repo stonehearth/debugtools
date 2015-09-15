@@ -7,10 +7,14 @@ $(document).ready(function(){
 
    var showDebugMenu = function() {
       // Display debug commands available for the selected object
-      if (!objectBrowserView || objectBrowserView.isDestroying || objectBrowserView.isDestroyed) {
-         objectBrowserView = App.debugView.addView(App.stonehearthObjectBrowserDebugCommandsView, { trackSelected: false, posX: mouseClickPosX, posY: mouseClickPosY });
+      if (objectBrowserView && !objectBrowserView.isDestroying && !objectBrowserView.isDestroyed) {
+         objectBrowserView.destroy();
+         objectBrowserView = null;
       }
-      objectBrowserView.navigateTo(selected);
+
+      if (!objectBrowserView || objectBrowserView.isDestroying || objectBrowserView.isDestroyed) {
+         objectBrowserView = App.debugView.addView(App.stonehearthObjectBrowserDebugCommandsView, { uri: selected, posX: mouseClickPosX, posY: mouseClickPosY });
+      }
    }
 
    $(top).on("radiant_selection_changed.unit_frame", function (_, data) {
@@ -25,8 +29,6 @@ $(document).ready(function(){
          showDebugMenu();
       }
    });
-
-
 
    $(document).click(function(e) {
       if (e.shiftKey) {
@@ -60,12 +62,12 @@ $(document).ready(function(){
    radiant.console.register('add_exp', {
       call: function(cmdobj, fn, args) {
          var xpAmount = parseInt(args[0]);
-         if (selected && xpAmount && xpAmount > 0) {
+         if (selected) {
             return radiant.call('debugtools:add_exp_command', selected, xpAmount);
          }
          return false;
       },
-      description: "Adds experience points to the currently selected entity's job. Usage: add_exp 1000"
+      description: "Adds experience points to the currently selected entity's job. If no exp amount is given, will level up to the next level. Usage: add_exp 1000"
    });
 
    radiant.console.register('set_attr', {
@@ -265,7 +267,10 @@ $(document).ready(function(){
       },
       description: "Make a food decay immediately. Usage: decay",
       test: function(entity) {
-         return true;
+         if (entity && entity.get('uri.entity_data.stonehearth:food_container.decay')) {
+            return true;
+         }
+         return false;
       }
    });
 });
