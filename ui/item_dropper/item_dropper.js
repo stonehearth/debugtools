@@ -8,7 +8,7 @@ $(document).on('stonehearthReady', function(){
       });
 });
 
-var itemDropperInitialValue = "stonehearth:resources:wood:oak_log";
+var itemDropperInitialValue = "";
 var allUris = {};
 
 App.StonehearthItemDropperIcon = App.View.extend({
