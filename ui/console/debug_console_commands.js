@@ -67,7 +67,15 @@ $(document).ready(function(){
          }
          return false;
       },
-      description: "Adds experience points to the currently selected entity's job. If no exp amount is given, will level up to the next level. Usage: add_exp 1000"
+      description: "Adds experience points to the currently selected entity's job. If no exp amount is given, will level up to the next level. Usage: add_exp 1000",
+      test: function(entity) {
+         var job = entity.get('stonehearth:job');
+         if (job && job.job_uri != "stonehearth:jobs:worker") {
+            return true;
+         }
+         return false;
+      },
+      debugMenuNameOverride: "Level Up"
    });
 
    radiant.console.register('set_attr', {
@@ -126,7 +134,14 @@ $(document).ready(function(){
          }
          return false;
       },
-      description: "Resets all the scores on the selected entity to their starting values. Usage: reset_scores"
+      description: "Resets all the scores on the selected entity to their starting values. Usage: reset_scores",
+      test: function(entity) {
+         if (entity.get('stonehearth:score')) {
+            return true;
+         }
+         return false;
+      },
+      debugMenuNameOverride: "Reset Morale"
    });
 
    radiant.console.register('add_buff', {
@@ -181,7 +196,14 @@ $(document).ready(function(){
             return radiant.call('debugtools:dump_backpack_command', selected);
          }
       },
-      description: "Instantly drops on to the ground all items in the selected hearthling's backpack. Usage: dump_backpack"
+      description: "Instantly drops on to the ground all items in the selected hearthling's backpack. Usage: dump_backpack",
+      test: function(entity) {
+         if (entity.get('stonehearth:storage') && entity.get('stonehearth:job')) {
+            return true;
+         }
+         return false;
+      },
+      debugMenuNameOverride: "Dump Backpack"
    });
 
    radiant.console.register('show_untranslated', {
@@ -228,7 +250,13 @@ $(document).ready(function(){
          }
          return radiant.call('debugtools:pasture_reproduce_command', selected);
       },
-      description: "Select a pasture and force that pasture to reproduce an animal. Usage: reproduce"
+      description: "Select a pasture and force that pasture to reproduce an animal. Usage: reproduce",
+      test: function(entity) {
+         if (entity.get('stonehearth:shepherd_pasture')) {
+            return true;
+         }
+         return false;
+      }
    });
 
    radiant.console.register('grow', {
@@ -238,7 +266,13 @@ $(document).ready(function(){
          }
          return radiant.call('debugtools:grow_command', selected);
       },
-      description: "Tells the selected entity to grow. Either farm crops or animals Ex: Make a lamb grow into a sheep. Usage: grow"
+      description: "Tells the selected entity to grow. Either farm crops or animals Ex: Make a lamb grow into a sheep. Usage: grow",
+      test: function(entity) {
+         if (entity.get('stonehearth:evolve') || entity.get('stonehearth:growing')) {
+            return true;
+         }
+         return false;
+      }
    });
 
    radiant.console.register('renew', {
@@ -248,7 +282,13 @@ $(document).ready(function(){
          }
          return radiant.call('debugtools:renew_resource_command', selected);
       },
-      description: "Tells the selected entity to renew its resource. Ex: Make sheep grow wool again or depleeted silkweed grow. Usage: renew"
+      description: "Tells the selected entity to renew its resource. Ex: Make sheep grow wool again or depleeted silkweed grow. Usage: renew",
+      test: function(entity) {
+         if (entity.get('stonehearth:renewable_resource_node')) {
+            return true;
+         }
+         return false;
+      }
    });
 
    radiant.console.register('show_item_ids', {
