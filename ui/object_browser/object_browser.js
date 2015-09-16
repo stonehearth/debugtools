@@ -366,8 +366,12 @@ App.stonehearthObjectBrowserDebugCommandsView = App.View.extend({
       "stonehearth:job": {}
    },
    didInsertElement: function() {
-      this._super();
       var self = this;
+      if (self.posX && self.posY) {
+         self.$("#objectBrowser").css({top: self.posY, left: self.posX, position:'absolute'});
+      }
+      self._super();
+      
       var entity = self.get('model');
       if (entity) {
          self._modelUpdated();
@@ -393,10 +397,6 @@ App.stonehearthObjectBrowserDebugCommandsView = App.View.extend({
          }
       });
       self.set('consoleCommands', possibleCommandsArray);
-
-      if (self.posX && self.posY) {
-         self.$("#objectBrowser").css({top: self.posY, left: self.posX, position:'absolute'});
-      }
    }.observes('model'),
 
    actions: {
