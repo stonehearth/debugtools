@@ -78,6 +78,11 @@ App.StonehearthEntityInspectorView = App.View.extend({
 
    didInsertElement: function() {
       var self = this;
+      var selected = App.stonehearthClient.getSelectedEntity();
+      if (selected) {
+         self.set('uri', selected)
+      }
+
       $("#entityInspector").on('stepThis', function(evt, data) {
          self.set('pathdata', data);
       });
