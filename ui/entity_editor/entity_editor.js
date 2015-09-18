@@ -24,7 +24,6 @@ App.StonehearthEntityEditorView = App.View.extend({
       "mob" :{},
       "destination": {},
       "region_collision_shape": {}
-
    },
 
    axis_alignment_flags: {
@@ -65,6 +64,13 @@ App.StonehearthEntityEditorView = App.View.extend({
       }
    }.observes('model.mob.axis_alignment_flags'),
 
+   _getXYZ: function(prefix) {
+      var x = parseFloat($(prefix + '_x').val());
+      var y = parseFloat($(prefix + '_y').val());
+      var z = parseFloat($(prefix + '_z').val());
+      return {x:x, y: y, z:z};
+   },
+
    _getUpdates: function() {
       var self = this;
       var updates = {};
@@ -77,17 +83,17 @@ App.StonehearthEntityEditorView = App.View.extend({
       mobUpdates['axis_alignment_flags'] = flags;
 
       // Model Origin
-      var modelOriginX = parseFloat($('#model_origin_x').val());
-      var modelOriginY = parseFloat($('#model_origin_y').val());
-      var modelOriginZ = parseFloat($('#model_origin_z').val());
-      mobUpdates['model_origin_updates'] = {x:modelOriginX, y: modelOriginY, z:modelOriginZ};
-
-      var regionOriginX = parseFloat($('#region_origin_x').val());
-      var regionOriginY = parseFloat($('#region_origin_y').val());
-      var regionOriginZ = parseFloat($('#region_origin_z').val());
-      mobUpdates['region_origin_updates'] = {x:regionOriginX, y: regionOriginY, z:regionOriginZ};
-
+      mobUpdates['model_origin_updates'] = self._getXYZ('#model_origin');
+      mobUpdates['region_origin_updates'] = self._getXYZ('#region_origin');
       updates['mob'] = mobUpdates;
+
+      var destinationUpdates = {};
+      if (self.get('model.destination.region')) {
+         var min = self._getXYZ('#destination_region_min');
+         var max = self._getXYZ('#destination_region_max');
+         destinationUpdates['region_updates'] = {min: min, max: max};
+      }
+      updates['destination'] = destinationUpdates;
 
       return updates;
    },

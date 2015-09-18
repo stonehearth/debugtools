@@ -1,4 +1,6 @@
 local Point3 = _radiant.csg.Point3
+local Region3 = _radiant.csg.Region3
+local Cube3 = _radiant.csg.Cube3
 local EntityEditorCommands = class()
 
 function EntityEditorCommands:update_entity_command(session, response, entity, options)
@@ -20,6 +22,16 @@ function EntityEditorCommands:update_entity_command(session, response, entity, o
          mob_component:set_region_origin(new_region_origin)
       end
       mob_component:move_to(mob_component:get_world_grid_location())
+   end
+   
+   if options.destination then
+      local destination_component = entity:get_component('destination')
+      if options.destination.region_updates then
+         local region = options.destination.region_updates
+         local new_region = Region3(Cube3(Point3(region.min.x, region.min.y, region.min.z),
+                                 Point3(region.max.x, region.max.y, region.max.z)))
+         -- destination_component:set_region(new_region)
+      end
    end
 
    return true
