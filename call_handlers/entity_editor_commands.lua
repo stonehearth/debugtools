@@ -28,9 +28,11 @@ function EntityEditorCommands:update_entity_command(session, response, entity, o
       local destination_component = entity:get_component('destination')
       if options.destination.region_updates then
          local region = options.destination.region_updates
-         local new_region = Region3(Cube3(Point3(region.min.x, region.min.y, region.min.z),
-                                 Point3(region.max.x, region.max.y, region.max.z)))
-         -- destination_component:set_region(new_region)
+         local existing_region = destination_component:get_region()
+         existing_region:modify(function(cursor)
+            cursor:clear()
+            cursor:add_cube(Cube3(Point3(region.min.x, region.min.y, region.min.z), Point3(region.max.x, region.max.y, region.max.z)))
+         end)
       end
    end
 
