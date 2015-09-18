@@ -32,6 +32,17 @@ App.StonehearthEntityEditorView = App.View.extend({
       'Z': 4
    },
 
+   adjacency_flags: {
+      'FRONT' : 1 << 0,
+      'LEFT' : 1 << 2,
+      'BACK' : 1 << 3,
+      'RIGHT' : 1 << 4,
+      'FRONT_LEFT' : 1 << 5,
+      'FRONT_RIGHT' : 1 << 6,
+      'BACK_LEFT' : 1 << 7,
+      'BACK_RIGHT' : 1 << 8,
+   },
+
    didInsertElement: function() {
       var self = this;
             // for some reason $(top) here isn't [ Window ] like everywhere else.  Why?  Dunno.
@@ -64,6 +75,27 @@ App.StonehearthEntityEditorView = App.View.extend({
       }
    }.observes('model.mob.axis_alignment_flags'),
 
+   _updateAdjacencyFlags: function() {
+      var self = this;
+      var flag = self.get('model.destination.adjacency_flags');
+      radiant.each(self.adjacency_flags, function(flag_name, flag_value) {
+         self.set('adjacency_' + flag_name.toLowerCase(), (flag & flag_value) ? true : false);
+      });
+   }.observes('model.mob.axis_alignment_flags'),
+
+   _getAdjacencyFlags: function() {
+      var self = this;
+      var flag = 0;
+      radiant.each(self.adjacency_flags, function(flag_name, flag_value) {
+         var set = $('#checkbox_adjacency_' + flag_name.toLowerCase()).is(':checked');
+         if (set) {
+            flag = flag | flag_value;
+         }
+      });
+
+      return flag;
+   }.observes('model.mob.axis_alignment_flags'),
+
    _getXYZ: function(prefix) {
       var x = parseFloat($(prefix + '_x').val());
       var y = parseFloat($(prefix + '_y').val());
@@ -93,6 +125,7 @@ App.StonehearthEntityEditorView = App.View.extend({
          var max = self._getXYZ('#destination_region_max');
          destinationUpdates['region_updates'] = {min: min, max: max};
       }
+      destinationUpdates['adjacency_flags'] = self._getAdjacencyFlags();
       updates['destination'] = destinationUpdates;
 
       return updates;
