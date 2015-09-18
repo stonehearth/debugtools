@@ -1,0 +1,41 @@
+<script type="text/x-handlebars" data-template-name="entityEditorIcon">
+   <div id="entityEditorIcon" title="{{i18n debugtools:tooltip_icon_entity_editor}}"></div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="entityEditor">
+   <div id="entityEditor">
+      <div id="toolbar">
+         <a id="close" href="#" {{action "close" target="view"}} class="button">
+            <i class="fa fa-times fa-fw fa-lg"></i>
+         </a>
+         <input type="text" id="uriInput" class="largeInput" {{bind-attr value="view.uri"}}>
+      </div>
+
+      <div id="body">
+         <h2>Mob</h2>
+         <p>
+         Axis Alignment Flags:
+         <input type="checkbox" id="axis_alignment_x" {{bind-attr checked=view.axis_aligned_x}}> X
+         <input type="checkbox" id="axis_alignment_z" {{bind-attr checked=view.axis_aligned_z}}> Z
+          </p>
+
+         <p>
+         Model Origin:
+         <input type="text" id="model_origin_x" class="smallInput" {{bind-attr value="view.model.mob.model_origin.x"}}>
+         <input type="text" id="model_origin_y" class="smallInput" {{bind-attr value="view.model.mob.model_origin.y"}}>
+         <input type="text" id="model_origin_z" class="smallInput" {{bind-attr value="view.model.mob.model_origin.z"}}>
+         </p>
+
+         <p>
+         Region Origin:
+         <input type="text" id="region_origin_x" class="smallInput" {{bind-attr value="view.model.mob.region_origin.x"}}>
+         <input type="text" id="region_origin_y" class="smallInput" {{bind-attr value="view.model.mob.region_origin.y"}}>
+         <input type="text" id="region_origin_z" class="smallInput" {{bind-attr value="view.model.mob.region_origin.z"}}>
+         </p>
+
+         <a id="update" href="#" {{action "updateEntity" target="view"}}>
+            Update
+         </a>
+      </div>
+   </div>
+</script>
