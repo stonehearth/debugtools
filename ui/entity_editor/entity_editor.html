@@ -38,7 +38,7 @@
          <div id="destination">
             <h2>Destination</h2>
             
-            Regions:
+            Regions: (grey lines when you press F11)
             {{#each view.model.destination.region}}
                Index: {{_view.contentIndex}}
                <p>
@@ -55,6 +55,22 @@
                </p>
             {{/each}}
 
+            Adjacency: (red lines when you press F11)
+            <p>
+               Edges:
+               <input type="checkbox" id="checkbox_adjacency_front" {{bind-attr checked=view.adjacency_front}}> Front
+               <input type="checkbox" id="checkbox_adjacency_back" {{bind-attr checked=view.adjacency_back}}> Back
+               <input type="checkbox" id="checkbox_adjacency_left" {{bind-attr checked=view.adjacency_left}}> Left
+               <input type="checkbox" id="checkbox_adjacency_right" {{bind-attr checked=view.adjacency_right}}> Right
+            </p>
+
+            <p>
+               Corners:
+               <input type="checkbox" id="checkbox_adjacency_front_left" {{bind-attr checked=view.adjacency_front_left}}> Upper Left
+               <input type="checkbox" id="checkbox_adjacency_front_right" {{bind-attr checked=view.adjacency_front_right}}> Upper Right
+               <input type="checkbox" id="checkbox_adjacency_back_left" {{bind-attr checked=view.adjacency_back_left}}> Lower Left
+               <input type="checkbox" id="checkbox_adjacency_back_right" {{bind-attr checked=view.adjacency_back_right}}> Lower Right
+            </p>
          </div>
 
          <a id="update" href="#" {{action "updateEntity" target="view"}}>
