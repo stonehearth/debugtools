@@ -3,5 +3,6 @@
    "tooltip_icon_campaign_browser" : "Campaign Browser",
    "tooltip_icon_item_dropper" : "Item Stamper",
    "tooltip_icon_object_browser" : "Object Browser",
-   "tooltip_icon_perfmon" : "Performance Monitor"
+   "tooltip_icon_perfmon" : "Performance Monitor",
+   "tooltip_icon_entity_editor" : "Entity Editor"
 }
