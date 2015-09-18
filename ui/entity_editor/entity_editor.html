@@ -12,26 +12,50 @@
       </div>
 
       <div id="body">
-         <h2>Mob</h2>
-         <p>
-         Axis Alignment Flags:
-         <input type="checkbox" id="axis_alignment_x" {{bind-attr checked=view.axis_aligned_x}}> X
-         <input type="checkbox" id="axis_alignment_z" {{bind-attr checked=view.axis_aligned_z}}> Z
-          </p>
+         <div id="mob">
+            <h2>Mob</h2>
+            <p>
+            Axis Alignment Flags:
+            <input type="checkbox" id="axis_alignment_x" {{bind-attr checked=view.axis_aligned_x}}> X
+            <input type="checkbox" id="axis_alignment_z" {{bind-attr checked=view.axis_aligned_z}}> Z
+             </p>
 
-         <p>
-         Model Origin:
-         <input type="text" id="model_origin_x" class="smallInput" {{bind-attr value="view.model.mob.model_origin.x"}}>
-         <input type="text" id="model_origin_y" class="smallInput" {{bind-attr value="view.model.mob.model_origin.y"}}>
-         <input type="text" id="model_origin_z" class="smallInput" {{bind-attr value="view.model.mob.model_origin.z"}}>
-         </p>
+            <p>
+            Model Origin:
+            <input type="text" id="model_origin_x" class="smallInput" {{bind-attr value="view.model.mob.model_origin.x"}}>
+            <input type="text" id="model_origin_y" class="smallInput" {{bind-attr value="view.model.mob.model_origin.y"}}>
+            <input type="text" id="model_origin_z" class="smallInput" {{bind-attr value="view.model.mob.model_origin.z"}}>
+            </p>
 
-         <p>
-         Region Origin:
-         <input type="text" id="region_origin_x" class="smallInput" {{bind-attr value="view.model.mob.region_origin.x"}}>
-         <input type="text" id="region_origin_y" class="smallInput" {{bind-attr value="view.model.mob.region_origin.y"}}>
-         <input type="text" id="region_origin_z" class="smallInput" {{bind-attr value="view.model.mob.region_origin.z"}}>
-         </p>
+            <p>
+            Region Origin:
+            <input type="text" id="region_origin_x" class="smallInput" {{bind-attr value="view.model.mob.region_origin.x"}}>
+            <input type="text" id="region_origin_y" class="smallInput" {{bind-attr value="view.model.mob.region_origin.y"}}>
+            <input type="text" id="region_origin_z" class="smallInput" {{bind-attr value="view.model.mob.region_origin.z"}}>
+            </p>
+         </div>
+
+         <div id="destination">
+            <h2>Destination</h2>
+            
+            Regions:
+            {{#each view.model.destination.region}}
+               Index: {{_view.contentIndex}}
+               <p>
+               Min:
+               <input type="text" id="destination_region_min_x" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.min.x"}}>
+               <input type="text" id="destination_region_min_y" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.min.y"}}>
+               <input type="text" id="destination_region_min_z" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.min.z"}}>
+               </p>
+               <p>
+               Max:
+               <input type="text" id="destination_region_max_x" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.max.x"}}>
+               <input type="text" id="destination_region_max_y" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.max.y"}}>
+               <input type="text" id="destination_region_max_z" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.max.z"}}>
+               </p>
+            {{/each}}
+
+         </div>
 
          <a id="update" href="#" {{action "updateEntity" target="view"}}>
             Update
