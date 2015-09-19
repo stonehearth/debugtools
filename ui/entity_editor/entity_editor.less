@@ -10,7 +10,6 @@
    left: 720px;
    min-width: 350px;
    
-
    .largeInput {
       width: 180px;
       position: relative;
@@ -32,7 +31,6 @@
       &:hover {
          color: #fc0;
       }
-
    }
 
    .depressed {
@@ -79,6 +77,39 @@
    #body {
       max-height: 900px;
       overflow: auto;
+   }
+
+   #destination {
+      display: none;
+      .has_tooltip {
+         font-family: @debugFontFamily;
+         font-size: 14px;
+      }
+   }
+
+   #adjacency {
+      input[type="checkbox"]{
+         display:none;
+      }
+      input[type="checkbox"] + label {
+          display:inline-block;
+          width:20px;
+          height:20px;
+          padding: 5px;
+          background:white;
+          cursor:pointer;
+      }
+      input[type="checkbox"]:checked + label {
+          background:red;
+      }
+      .center {
+         display:inline-block;
+         width: 22px;
+      }
+   }
+
+   #update{
+      float: right;
    }
 }
 
