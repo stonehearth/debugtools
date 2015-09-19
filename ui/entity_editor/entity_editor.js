@@ -58,6 +58,9 @@ App.StonehearthEntityEditorView = App.View.extend({
       if (selected) {
          self.set('uri', selected)
       }
+
+      $('h3').tooltipster();
+      $('.has_tooltip').tooltipster();
    },
 
    _updateAxisAlignmentFlags: function() {
@@ -81,7 +84,19 @@ App.StonehearthEntityEditorView = App.View.extend({
       radiant.each(self.adjacency_flags, function(flag_name, flag_value) {
          self.set('adjacency_' + flag_name.toLowerCase(), (flag & flag_value) ? true : false);
       });
-   }.observes('model.mob.axis_alignment_flags'),
+
+      $(".checkbox_adjacency").tooltipster();
+   }.observes('model.destination.adjacency_flags'),
+
+   _showHideDestination: function() {
+      if (this.get('model.destination')) {
+         $('#destination').show();
+         var region = this.get('model.destination.region') ? this.get('model.destination.region')[0] : undefined;
+         this.set('destination_region', region);
+      } else {
+         $('#destination').hide();
+      }
+   }.observes('model.destination'),
 
    _getAdjacencyFlags: function() {
       var self = this;
@@ -94,7 +109,7 @@ App.StonehearthEntityEditorView = App.View.extend({
       });
 
       return flag;
-   }.observes('model.mob.axis_alignment_flags'),
+   },
 
    _getXYZ: function(prefix) {
       var x = parseFloat($(prefix + '_x').val());
@@ -119,14 +134,17 @@ App.StonehearthEntityEditorView = App.View.extend({
       mobUpdates['region_origin_updates'] = self._getXYZ('#region_origin');
       updates['mob'] = mobUpdates;
 
-      var destinationUpdates = {};
-      if (self.get('model.destination.region')) {
-         var min = self._getXYZ('#destination_region_min');
-         var max = self._getXYZ('#destination_region_max');
-         destinationUpdates['region_updates'] = {min: min, max: max};
+      if (self.get('model.destination')) {
+         var destinationUpdates = {};
+
+         if (self.get('model.destination.region')) {
+            var min = self._getXYZ('#destination_region_min');
+            var max = self._getXYZ('#destination_region_max');
+            destinationUpdates['region_updates'] = {min: min, max: max};
+         }
+         destinationUpdates['adjacency_flags'] = self._getAdjacencyFlags();
+         updates['destination'] = destinationUpdates;
       }
-      destinationUpdates['adjacency_flags'] = self._getAdjacencyFlags();
-      updates['destination'] = destinationUpdates;
 
       return updates;
    },

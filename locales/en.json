@@ -4,5 +4,13 @@
    "tooltip_icon_item_dropper" : "Item Stamper",
    "tooltip_icon_object_browser" : "Object Browser",
    "tooltip_icon_perfmon" : "Performance Monitor",
-   "tooltip_icon_entity_editor" : "Entity Editor"
+   "tooltip_icon_entity_editor" : "Entity Editor",
+   "entity_editor": {
+      "destination" : {
+         "tooltip_region": "Shows as purple lines when you press F11. This is the region from which we generate the adjacency regions. It should fit all of your entity in a neat square.",
+         "tooltip_region_min": "Front Left Corner (usually y=0)",
+         "tooltip_region_max": "Back Right Corner with y set to height desired for walking up to it (usually y=1)",
+         "tooltip_adjacency": "Shows as red lines when you press F11. This is where a hearthling where try to walk to when they walk up to the entity. Click on a square to set it as considered adjacent to the object or not."
+      }
+   }
 }
