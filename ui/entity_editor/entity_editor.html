@@ -15,20 +15,20 @@
          <div id="mob">
             <h2>Mob</h2>
             <p>
-            <h3>Axis Alignment Flags:</h3>
+            <h3 title="{{i18n debugtools:entity_editor.mob.tooltip_axis_alignment}}">Axis Alignment Flags:</h3>
             <input type="checkbox" id="axis_alignment_x" {{bind-attr checked=view.axis_aligned_x}}> X
             <input type="checkbox" id="axis_alignment_z" {{bind-attr checked=view.axis_aligned_z}}> Z
             </p>
 
             <p>
-            <h3>Model Origin:</h3>
+            <h3 title="{{i18n debugtools:entity_editor.mob.tooltip_model_origin}}">Model Origin:</h3>
             <input type="text" id="model_origin_x" class="smallInput" {{bind-attr value="view.model.mob.model_origin.x"}}>
             <input type="text" id="model_origin_y" class="smallInput" {{bind-attr value="view.model.mob.model_origin.y"}}>
             <input type="text" id="model_origin_z" class="smallInput" {{bind-attr value="view.model.mob.model_origin.z"}}>
             </p>
 
             <p>
-            <h3>Region Origin:</h3>
+            <h3 title="{{i18n debugtools:entity_editor.mob.tooltip_region_origin}}">Region Origin:</h3>
             <input type="text" id="region_origin_x" class="smallInput" {{bind-attr value="view.model.mob.region_origin.x"}}>
             <input type="text" id="region_origin_y" class="smallInput" {{bind-attr value="view.model.mob.region_origin.y"}}>
             <input type="text" id="region_origin_z" class="smallInput" {{bind-attr value="view.model.mob.region_origin.z"}}>
@@ -55,7 +55,7 @@
 
             <div id="adjacency">
                <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_adjacency}}">Adjacency:</label><br>
-               
+
                <input type="checkbox" id="checkbox_adjacency_front_left" {{bind-attr checked=view.adjacency_front_left}}>
                <label class="checkbox_adjacency" for="checkbox_adjacency_front_left" title="Front Left Corner"></label>
 
