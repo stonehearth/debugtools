@@ -33,12 +33,18 @@ App.StonehearthAiRowView = App.View.extend({
       this.set('styleOverride', styleOverride);
    }.observes('model.depth'),
 
-   /* 
+   _checkStuff : function() {
+      var model = this.get('model')
+      if (model && this.get('model.id') == undefined) {
+         console.log('model is', this.get('model'));
+      }
+   }.observes('model').on('init'),
+
    // Uncomment to observe the models as they go flying by
    _onModelUpdated: function() {
       console.log('ai row model is ', this.get('model'));
    }.observes('model').on('init'),
-   // */
+   //
 });
 
 // Execution frame.  Is recursive, so we can't use an inline view
@@ -56,7 +62,7 @@ App.StonehearthExecutionFrameView = App.StonehearthAiRowView.extend({
          var d = this.get('model.pathfinder_data');
          $("#entityInspector").trigger('stepThis', d);
       }
-   }
+   },
 });
 
 // The inspector.  Just call `debug_info` on the ai_component to get the
