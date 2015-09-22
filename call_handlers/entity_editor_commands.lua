@@ -60,4 +60,10 @@ function EntityEditorCommands:update_entity_command(session, response, entity, o
    return true
 end
 
+function EntityEditorCommands:rotate_entity_command(session, response, entity, degrees)
+   if not entity then
+      return false
+   end
+   radiant.entities.turn_to(entity, degrees)
+end
 return EntityEditorCommands

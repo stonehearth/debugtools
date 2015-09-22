@@ -52,6 +52,8 @@ App.StonehearthEntityEditorView = App.View.extend({
       }
    },
 
+   rotation: 0,
+
    didInsertElement: function() {
       var self = this;
             // for some reason $(top) here isn't [ Window ] like everywhere else.  Why?  Dunno.
@@ -218,7 +220,7 @@ App.StonehearthEntityEditorView = App.View.extend({
       },
       updateEntity: function () {
          var self = this;
-         return radiant.call('debugtools:update_entity_command', self.get('uri'), self._getUpdates()); 
+         radiant.call('debugtools:update_entity_command', self.get('uri'), self._getUpdates()); 
       },
       addDestinationRegion: function () {
          var self = this;
@@ -234,7 +236,7 @@ App.StonehearthEntityEditorView = App.View.extend({
          regions.push({min: newMin, max: newMax});
          destinationUpdates['region_updates'] = regions;
          updates['destination'] = destinationUpdates;
-         return radiant.call('debugtools:update_entity_command', self.get('uri'), updates); 
+         radiant.call('debugtools:update_entity_command', self.get('uri'), updates); 
       },
       addCollisionRegion: function () {
          var self = this;
@@ -250,7 +252,7 @@ App.StonehearthEntityEditorView = App.View.extend({
          regions.push({min: newMin, max: newMax});
          collisionUpdates['region_updates'] = regions;
          updates['region_collision_shape'] = collisionUpdates;
-         return radiant.call('debugtools:update_entity_command', self.get('uri'), updates); 
+         radiant.call('debugtools:update_entity_command', self.get('uri'), updates); 
       },
       showMobJson: function() {
          var self = this;
@@ -318,6 +320,14 @@ App.StonehearthEntityEditorView = App.View.extend({
          stringJson = stringJson.substring(2).substring(0, stringJson.length - 4); // remove the opening and closing brackets
          var description = i18n.t("debugtools:entity_editor.destination.json_description");
          self._updateJsonView(description, stringJson);
+      },
+      rotateEntity: function() {
+         var self = this;
+         self.rotation = self.rotation + 90;
+         if (self.rotation >= 360) {
+            self.rotation = self.rotation - 360;
+         }
+         radiant.call('debugtools:rotate_entity_command', self.get('uri'), self.rotation);
       }
    },
 
