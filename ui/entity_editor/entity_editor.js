@@ -280,6 +280,7 @@ App.StonehearthEntityEditorView = App.View.extend({
          mobJson["mob"] = mob;
 
          var stringJson = JSON.stringify(mobJson, null, 3);
+         stringJson = stringJson.substring(2).substring(0, stringJson.length - 4); // remove the opening and closing brackets
          var description = i18n.t("debugtools:entity_editor.mob.json_description");
          self._updateJsonView(description, stringJson);
       },
@@ -314,6 +315,7 @@ App.StonehearthEntityEditorView = App.View.extend({
          }
 
          var stringJson = JSON.stringify(overallJson, null, 3);
+         stringJson = stringJson.substring(2).substring(0, stringJson.length - 4); // remove the opening and closing brackets
          var description = i18n.t("debugtools:entity_editor.destination.json_description");
          self._updateJsonView(description, stringJson);
       }
