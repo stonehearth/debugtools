@@ -12,13 +12,17 @@
       </div>
 
       <div id="body">
-         <div id="mob">
-            <h2>Mob</h2>
-            <p>
+         <div id="mob" class="componentSection">
+            <div class="sectionTitle">
+               <h2>Mob</h2>
+            </div>
+            <a id="showComponentJson" href="#" {{action "showMobJson" target="view"}} class="button showJsonButton" title="Show Json">
+               <div class="showJsonIcon"></div>
+            </a>
+
             <h3 title="{{i18n debugtools:entity_editor.mob.tooltip_axis_alignment}}">Axis Alignment Flags:</h3>
             <input type="checkbox" id="axis_alignment_x" {{bind-attr checked=view.axis_aligned_x}}> X
             <input type="checkbox" id="axis_alignment_z" {{bind-attr checked=view.axis_aligned_z}}> Z
-            </p>
 
             <p>
             <h3 title="{{i18n debugtools:entity_editor.mob.tooltip_model_origin}}">Model Origin:</h3>
@@ -36,13 +40,19 @@
          </div>
 
          <div id="destination" class="optionalComponent">
-            <h2>Destination</h2>
+            <div class="sectionTitle">
+               <h2>Destination</h2>
+            </div>
+            <a id="showComponentJson" href="#" {{action "showDestinationJson" target="view"}} class="button showJsonButton" title="Show Json">
+               <div class="showJsonIcon"></div>
+            </a>
+            
             <div class="regionsSection" id="destinationRegions">
                <div class="regionsSectionTitle">
-                  <div class="regionTitle">
+                  <div class="sectionTitle">
                      <h3 title="{{i18n debugtools:entity_editor.destination.tooltip_region}}">Regions:</h3>
                   </div>
-                  <a id="addDestinationRegion" href="#" {{action "addDestinationRegion" target="view"}} class="button addRegionButton">
+                  <a id="addDestinationRegion" href="#" {{action "addDestinationRegion" target="view"}} class="button addRegionButton" title="Add Region">
                      <div class="addRegionIcon"></div>
                   </a>
                </div>
@@ -106,10 +116,10 @@
             <h2>Collision</h2>
             <div class="regionsSection" id="destinationRegions">
                <div class="regionsSectionTitle">
-                  <div class="regionTitle">
+                  <div class="sectionTitle">
                      <h3 title="{{i18n debugtools:entity_editor.destination.tooltip_region}}">Regions:</h3>
                   </div>
-                  <a id="addCollisionRegion" href="#" {{action "addCollisionRegion" target="view"}} class="button addRegionButton">
+                  <a id="addCollisionRegion" href="#" {{action "addCollisionRegion" target="view"}} class="button addRegionButton" title="Add Region">
                      <div class="addRegionIcon"></div>
                   </a>
                </div>
@@ -140,5 +150,19 @@
             </button>
          </a>
       </div>
+   </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="entityEditorJson">
+   <div id="entityEditorJson">
+      <div id="toolbar">
+         <a id="close" href="#" {{action "close" target="view"}} class="button">
+            <i class="fa fa-times fa-fw fa-lg"></i>
+         </a>
+      </div>
+      <p>{{view.description}}</p>
+      <textarea id="jsonTextArea" rows="20" cols="200" readonly>
+      </textarea>
+      <button id="copyButton">Copy</button>
    </div>
 </script>

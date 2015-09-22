@@ -61,7 +61,10 @@ App.StonehearthEntityEditorView = App.View.extend({
 
       $('h3').tooltipster();
       $('.has_tooltip').tooltipster();
+      $('.button').tooltipster();
+      
       self.$().draggable();
+      self._jsonView = null;
    },
 
    _updateAxisAlignmentFlags: function() {
@@ -105,6 +108,15 @@ App.StonehearthEntityEditorView = App.View.extend({
       }
    }.observes('model.region_collision_shape'),
 
+   _updateJsonView: function(description, stringJson) {
+      if (!self._jsonView || self._jsonView.isDestroyed || self._jsonView.isDestroying) {
+         self._jsonView = App.debugView.addView(App.DebugToolsEntityEditorJsonView, {description: description, json: stringJson});
+      } else {
+         self._jsonView.set('description', description);
+         self._jsonView.set('json', stringJson);
+      }
+   },
+
    _getAdjacencyFlags: function() {
       var self = this;
       var flag = 0;
@@ -116,6 +128,20 @@ App.StonehearthEntityEditorView = App.View.extend({
       });
 
       return flag;
+   },
+
+   _getAdjacencyFlagsArray: function() {
+      var self = this;
+      var flags = [];
+      radiant.each(self.adjacency_flags, function(flag_name, flag_value) {
+         var lowerCase = flag_name.toLowerCase()
+         var set = $('#checkbox_adjacency_' + lowerCase).is(':checked');
+         if (set) {
+            flags.push(lowerCase);
+         }
+      });
+
+      return flags;
    },
 
    _getXYZ: function( prefix) {
@@ -208,6 +234,65 @@ App.StonehearthEntityEditorView = App.View.extend({
          collisionUpdates['region_updates'] = regions;
          updates['region_collision_shape'] = collisionUpdates;
          return radiant.call('debugtools:update_entity_command', self.get('uri'), updates); 
+      },
+      showMobJson: function() {
+         var self = this;
+         var description = i18n.t("debugtools:entity_editor.mob.json_description");
+
+         var mobJson = {};
+         var mob = {};
+         var align_to_grid = [];
+         
+         var axisAlignedX = $('#axis_alignment_x').is(':checked');
+         var axisAlignedZ = $('#axis_alignment_z').is(':checked');
+         if (axisAlignedX) {
+            align_to_grid.push("x");
+         }
+         if (axisAlignedZ) {
+            align_to_grid.push("z");
+         }
+         if (align_to_grid.length > 0) {
+            mob["align_to_grid"] = align_to_grid;
+         }
+
+         var modelOrigin = self._getXYZ('#model_origin');
+         var regionOrigin = self._getXYZ('#region_origin');
+         mob["model_origin"] = modelOrigin;
+         mob["region_origin"] = regionOrigin;
+
+         mobJson["mob"] = mob;
+
+         var stringJson = JSON.stringify(mobJson, null, 3);
+         var description = i18n.t("debugtools:entity_editor.mob.json_description");
+         self._updateJsonView(description, stringJson);
+      },
+      showDestinationJson: function() {
+         var self = this;
+         var overallJson = {};
+         if (self.get('model.destination')) {
+            var destinationComponent = {};
+            if (self.get('model.destination.region')) {
+               destinationComponent['region'] = self._getRegions('.destinationRegion');
+            }
+            var adjacencyFlags = self._getAdjacencyFlags();
+            var defaultFlags = self.adjacency_flags.FRONT | self.adjacency_flags.BACK | self.adjacency_flags.LEFT | self.adjacency_flags.RIGHT;
+            if (adjacencyFlags != defaultFlags) {
+               destinationComponent['adjacency_flags'] = self._getAdjacencyFlagsArray();
+            }
+            overallJson['destination'] = destinationComponent;
+         }
+
+         if (self.get('model.region_collision_shape')) {
+            var collisionRegions = {};
+            if (self.get('model.region_collision_shape.region')) {
+               collisionRegions['region'] = self._getRegions('.collisionRegion');
+            }
+            overallJson['region_collision_shape'] = collisionRegions;
+         }
+
+         var stringJson = JSON.stringify(overallJson, null, 3);
+         var description = i18n.t("debugtools:entity_editor.destination.json_description");
+         self._updateJsonView(description, stringJson);
       }
    },
 
@@ -220,9 +305,6 @@ App.StonehearthEntityEditorView = App.View.extend({
 
 App.DebugToolsRegionItemView = App.View.extend({
    classNames: ['regionItem'],
-
-   components: {
-   },
 
    didInsertElement: function() {
       var self = this;
@@ -244,4 +326,40 @@ App.DebugToolsRegionItemView = App.View.extend({
       return this._getXYZ('#region_max');
    }
 
+});
+
+App.DebugToolsEntityEditorJsonView = App.View.extend({
+   classNames: ['entityJson'],
+   templateName: 'entityEditorJson',
+   json: "{}",
+   didInsertElement: function() {
+      var self = this;
+      self.$().draggable();
+      self.$('#jsonTextArea').val(self.json);
+      self.$('#jsonTextArea').focus(function(e) {
+         radiant.call('stonehearth:enable_camera_movement', false)
+      }).blur(function (e) {
+         radiant.call('stonehearth:enable_camera_movement', true)
+      })
+
+      self.$('#copyButton').click(function() {
+         self.$('#jsonTextArea')[0].select();
+         document.execCommand('copy');
+         window.getSelection().removeAllRanges();
+      });
+   },
+
+   _updateJson: function() {
+      var self = this;
+      var textArea = self.$('#jsonTextArea');
+      if (textArea) {
+         textArea.val(self.json);
+      }
+   }.observes('json'),
+
+   actions: {
+      close: function () {
+         this.destroy();
+      }
+   }
 });
