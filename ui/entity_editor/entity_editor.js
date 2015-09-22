@@ -308,7 +308,7 @@ App.StonehearthEntityEditorView = App.View.extend({
          if (self.get('model.region_collision_shape')) {
             var collisionRegions = {};
             if (self.get('model.region_collision_shape.region')) {
-               var regions = self._getRegions('.destinationRegion');
+               var regions = self._getRegions('.collisionRegion');
                if (regions.length > 0) {
                   collisionRegions['region'] = regions;
                }
