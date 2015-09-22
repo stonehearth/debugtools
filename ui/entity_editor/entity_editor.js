@@ -174,6 +174,7 @@ App.StonehearthEntityEditorView = App.View.extend({
 
       return updates;
    },
+
    actions: {
       close: function () {
          this.destroy();
@@ -181,6 +182,32 @@ App.StonehearthEntityEditorView = App.View.extend({
       updateEntity: function () {
          var self = this;
          return radiant.call('debugtools:update_entity_command', self.get('uri'), self._getUpdates()); 
+      },
+      addDestinationRegion: function () {
+         var self = this;
+         var updates = {};
+         var destinationUpdates = {};
+         var regions = self._getRegions('.destinationRegion');
+         var existing_region = regions[regions.length - 1];
+         var newMin = {x:existing_region.max.x, y:0, z: existing_region.max.z};
+         var newMax = {x:existing_region.max.x + 1, y:1, z: existing_region.max.z + 1};
+         regions.push({min: newMin, max: newMax});
+         destinationUpdates['region_updates'] = regions;
+         updates['destination'] = destinationUpdates;
+         return radiant.call('debugtools:update_entity_command', self.get('uri'), updates); 
+      },
+      addCollisionRegion: function () {
+         var self = this;
+         var updates = {};
+         var collisionUpdates = {};
+         var regions = self._getRegions('.collisionRegion');
+         var existing_region = regions[regions.length - 1];
+         var newMin = {x:existing_region.max.x, y:0, z: existing_region.max.z};
+         var newMax = {x:existing_region.max.x + 1, y:1, z: existing_region.max.z + 1};
+         regions.push({min: newMin, max: newMax});
+         collisionUpdates['region_updates'] = regions;
+         updates['region_collision_shape'] = collisionUpdates;
+         return radiant.call('debugtools:update_entity_command', self.get('uri'), updates); 
       }
    },
 
