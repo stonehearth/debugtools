@@ -7,9 +7,8 @@ function EntityEditorCommands:update_entity_command(session, response, entity, o
    if not entity then
       return false
    end
-   
+   local mob_component = entity:get_component('mob')
    if options.mob then
-      local mob_component = entity:get_component('mob')
       if options.mob.axis_alignment_flags then
          mob_component:set_align_to_grid_flags(options.mob.axis_alignment_flags)
       end
@@ -21,7 +20,7 @@ function EntityEditorCommands:update_entity_command(session, response, entity, o
          local new_region_origin = Point3(options.mob.region_origin_updates.x, options.mob.region_origin_updates.y, options.mob.region_origin_updates.z)
          mob_component:set_region_origin(new_region_origin)
       end
-      mob_component:move_to(mob_component:get_world_grid_location())
+      
    end
    
    if options.destination then
@@ -34,7 +33,12 @@ function EntityEditorCommands:update_entity_command(session, response, entity, o
             cursor:add_cube(Cube3(Point3(region.min.x, region.min.y, region.min.z), Point3(region.max.x, region.max.y, region.max.z)))
          end)
       end
+      if options.destination.adjacency_flags then
+         destination_component:set_adjacency_flags(options.destination.adjacency_flags)
+      end
    end
+   
+   mob_component:move_to(mob_component:get_world_grid_location())
 
    return true
 end

@@ -15,20 +15,20 @@
          <div id="mob">
             <h2>Mob</h2>
             <p>
-            Axis Alignment Flags:
+            <h3 title="{{i18n debugtools:entity_editor.mob.tooltip_axis_alignment}}">Axis Alignment Flags:</h3>
             <input type="checkbox" id="axis_alignment_x" {{bind-attr checked=view.axis_aligned_x}}> X
             <input type="checkbox" id="axis_alignment_z" {{bind-attr checked=view.axis_aligned_z}}> Z
-             </p>
+            </p>
 
             <p>
-            Model Origin:
+            <h3 title="{{i18n debugtools:entity_editor.mob.tooltip_model_origin}}">Model Origin:</h3>
             <input type="text" id="model_origin_x" class="smallInput" {{bind-attr value="view.model.mob.model_origin.x"}}>
             <input type="text" id="model_origin_y" class="smallInput" {{bind-attr value="view.model.mob.model_origin.y"}}>
             <input type="text" id="model_origin_z" class="smallInput" {{bind-attr value="view.model.mob.model_origin.z"}}>
             </p>
 
             <p>
-            Region Origin:
+            <h3 title="{{i18n debugtools:entity_editor.mob.tooltip_region_origin}}">Region Origin:</h3>
             <input type="text" id="region_origin_x" class="smallInput" {{bind-attr value="view.model.mob.region_origin.x"}}>
             <input type="text" id="region_origin_y" class="smallInput" {{bind-attr value="view.model.mob.region_origin.y"}}>
             <input type="text" id="region_origin_z" class="smallInput" {{bind-attr value="view.model.mob.region_origin.z"}}>
@@ -37,28 +37,63 @@
 
          <div id="destination">
             <h2>Destination</h2>
+            <p>
+            <h3 title="{{i18n debugtools:entity_editor.destination.tooltip_region}}">Region:</h3>
+            <div>
+               <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_min}}">Min:</label>
+               <input type="text" id="destination_region_min_x" class="smallInput" {{bind-attr value="view.destination_region.min.x"}}>
+               <input type="text" id="destination_region_min_y" class="smallInput" {{bind-attr value="view.destination_region.min.y"}}>
+               <input type="text" id="destination_region_min_z" class="smallInput" {{bind-attr value="view.destination_region.min.z"}}>
+            </div>
             
-            Regions:
-            {{#each view.model.destination.region}}
-               Index: {{_view.contentIndex}}
-               <p>
-               Min:
-               <input type="text" id="destination_region_min_x" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.min.x"}}>
-               <input type="text" id="destination_region_min_y" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.min.y"}}>
-               <input type="text" id="destination_region_min_z" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.min.z"}}>
-               </p>
-               <p>
-               Max:
-               <input type="text" id="destination_region_max_x" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.max.x"}}>
-               <input type="text" id="destination_region_max_y" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.max.y"}}>
-               <input type="text" id="destination_region_max_z" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="this.max.z"}}>
-               </p>
-            {{/each}}
+            <div>
+            <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_max}}">Max:</label>
+            <input type="text" id="destination_region_max_x" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="view.destination_region.max.x"}}>
+            <input type="text" id="destination_region_max_y" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="view.destination_region.max.y"}}>
+            <input type="text" id="destination_region_max_z" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="view.destination_region.max.z"}}>
+            </div>
 
+            <div id="adjacency">
+               <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_adjacency}}">Adjacency:</label><br>
+
+               <input type="checkbox" id="checkbox_adjacency_front_left" {{bind-attr checked=view.adjacency_front_left}}>
+               <label class="checkbox_adjacency" for="checkbox_adjacency_front_left" title="Front Left Corner"></label>
+
+               <input type="checkbox" id="checkbox_adjacency_front" {{bind-attr checked=view.adjacency_front}}>
+               <label class="checkbox_adjacency" for="checkbox_adjacency_front" title="Front"></label>
+
+               <input type="checkbox" id="checkbox_adjacency_front_right" {{bind-attr checked=view.adjacency_front_right}}>
+               <label class="checkbox_adjacency" for="checkbox_adjacency_front_right" title="Front Right Corner"></label>
+
+               <br>
+
+               <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_left" {{bind-attr checked=view.adjacency_left}}>
+               <label class="checkbox_adjacency" for="checkbox_adjacency_left" title="Left"></label>
+               
+               <label class="center"></label>
+
+               <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_right" {{bind-attr checked=view.adjacency_right}}>
+               <label class="checkbox_adjacency" for="checkbox_adjacency_right" title="Right"></label>
+
+               <br>
+
+               <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_back_left" {{bind-attr checked=view.adjacency_back_left}}>
+               <label class="checkbox_adjacency" for="checkbox_adjacency_back_left" title="Lower Left"></label>
+
+
+               <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_back" {{bind-attr checked=view.adjacency_back}}>
+               <label class="checkbox_adjacency" for="checkbox_adjacency_back" title="Back"></label>
+
+               <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_back_right" {{bind-attr checked=view.adjacency_back_right}}>
+               <label class="checkbox_adjacency" for="checkbox_adjacency_back_right" title="Lower Right"></label>
+            </div>
+            </p>
          </div>
 
          <a id="update" href="#" {{action "updateEntity" target="view"}}>
-            Update
+            <button title="Live update the select entity to have these parameters">
+               Update
+            </button>
          </a>
       </div>
    </div>

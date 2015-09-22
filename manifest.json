@@ -134,5 +134,6 @@
          "controller" : "file(call_handlers/entity_editor_commands.lua)",
          "endpoint" : "server"          
       }
-   }
+   },
+   "default_locale": "en"
 }

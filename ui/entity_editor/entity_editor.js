@@ -32,6 +32,17 @@ App.StonehearthEntityEditorView = App.View.extend({
       'Z': 4
    },
 
+   adjacency_flags: {
+      'FRONT' : 1 << 0,
+      'LEFT' : 1 << 2,
+      'BACK' : 1 << 3,
+      'RIGHT' : 1 << 4,
+      'FRONT_LEFT' : 1 << 5,
+      'FRONT_RIGHT' : 1 << 6,
+      'BACK_LEFT' : 1 << 7,
+      'BACK_RIGHT' : 1 << 8,
+   },
+
    didInsertElement: function() {
       var self = this;
             // for some reason $(top) here isn't [ Window ] like everywhere else.  Why?  Dunno.
@@ -47,6 +58,9 @@ App.StonehearthEntityEditorView = App.View.extend({
       if (selected) {
          self.set('uri', selected)
       }
+
+      $('h3').tooltipster();
+      $('.has_tooltip').tooltipster();
    },
 
    _updateAxisAlignmentFlags: function() {
@@ -63,6 +77,39 @@ App.StonehearthEntityEditorView = App.View.extend({
          self.set('axis_aligned_z', false);
       }
    }.observes('model.mob.axis_alignment_flags'),
+
+   _updateAdjacencyFlags: function() {
+      var self = this;
+      var flag = self.get('model.destination.adjacency_flags');
+      radiant.each(self.adjacency_flags, function(flag_name, flag_value) {
+         self.set('adjacency_' + flag_name.toLowerCase(), (flag & flag_value) ? true : false);
+      });
+
+      $(".checkbox_adjacency").tooltipster();
+   }.observes('model.destination.adjacency_flags'),
+
+   _showHideDestination: function() {
+      if (this.get('model.destination')) {
+         $('#destination').show();
+         var region = this.get('model.destination.region') ? this.get('model.destination.region')[0] : undefined;
+         this.set('destination_region', region);
+      } else {
+         $('#destination').hide();
+      }
+   }.observes('model.destination'),
+
+   _getAdjacencyFlags: function() {
+      var self = this;
+      var flag = 0;
+      radiant.each(self.adjacency_flags, function(flag_name, flag_value) {
+         var set = $('#checkbox_adjacency_' + flag_name.toLowerCase()).is(':checked');
+         if (set) {
+            flag = flag | flag_value;
+         }
+      });
+
+      return flag;
+   },
 
    _getXYZ: function(prefix) {
       var x = parseFloat($(prefix + '_x').val());
@@ -87,13 +134,17 @@ App.StonehearthEntityEditorView = App.View.extend({
       mobUpdates['region_origin_updates'] = self._getXYZ('#region_origin');
       updates['mob'] = mobUpdates;
 
-      var destinationUpdates = {};
-      if (self.get('model.destination.region')) {
-         var min = self._getXYZ('#destination_region_min');
-         var max = self._getXYZ('#destination_region_max');
-         destinationUpdates['region_updates'] = {min: min, max: max};
+      if (self.get('model.destination')) {
+         var destinationUpdates = {};
+
+         if (self.get('model.destination.region')) {
+            var min = self._getXYZ('#destination_region_min');
+            var max = self._getXYZ('#destination_region_max');
+            destinationUpdates['region_updates'] = {min: min, max: max};
+         }
+         destinationUpdates['adjacency_flags'] = self._getAdjacencyFlags();
+         updates['destination'] = destinationUpdates;
       }
-      updates['destination'] = destinationUpdates;
 
       return updates;
    },
