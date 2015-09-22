@@ -16,8 +16,13 @@
             <div class="sectionTitle">
                <h2>Mob</h2>
             </div>
+
             <a id="showComponentJson" href="#" {{action "showMobJson" target="view"}} class="button showJsonButton" title="Show Json">
                <div class="showJsonIcon"></div>
+            </a>
+
+            <a id="rotateButton" href="#" {{action "rotateEntity" target="view"}} class="button rotateButton" title="Rotate Entity">
+               <div class="rotateButtonIcon"></div>
             </a>
 
             <h3 title="{{i18n debugtools:entity_editor.mob.tooltip_axis_alignment}}">Axis Alignment Flags:</h3>
