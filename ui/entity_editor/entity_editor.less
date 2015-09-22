@@ -16,11 +16,26 @@
       background: url('./images/add.png');
    }
 
-   .regionTitle {
+   .showJsonIcon {
+      width: 25px;
+      height: 25px;
+      background: url('./images/show_json.png');
+   }
+
+   .sectionTitle {
       display: inline-block;
    }
 
+   h2{
+      margin-bottom: 10px;
+   }
+
    .addRegionButton{
+      display: inline-block;
+      float: right;
+   }
+
+   .showJsonButton{
       display: inline-block;
       float: right;
    }
@@ -130,6 +145,35 @@
    }
 
    #update{
+      float: right;
+   }
+}
+
+#entityEditorJson {
+   .debug;
+   position: absolute;
+   top: 10px;
+   left: 1100px;
+   width: 300px;
+   height: 425px;
+   #toolbar {
+      display: block;
+      height: 20px;
+
+      #close {
+         position: absolute;
+         top: 8px;
+         right: 4px;
+      }
+   }
+   textarea {
+      width: 280px;
+      font-size: 10px;
+      color: #fff;
+      -webkit-user-select: all;
+   }
+
+   #copyButton {
       float: right;
    }
 }
