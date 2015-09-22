@@ -43,6 +43,15 @@ App.StonehearthEntityEditorView = App.View.extend({
       'BACK_RIGHT' : 1 << 8,
    },
 
+   default_region: {
+      min: {
+         x: 0, y: 0, z: 0
+      },
+      max: {
+         x: 1, y: 1, z: 1
+      }
+   },
+
    didInsertElement: function() {
       var self = this;
             // for some reason $(top) here isn't [ Window ] like everywhere else.  Why?  Dunno.
@@ -159,7 +168,9 @@ App.StonehearthEntityEditorView = App.View.extend({
          if (destinationRegion && destinationRegion.length > 0) {
             var min = regionView.getRegionMin();
             var max = regionView.getRegionMax();
-            allRegions.push({min: min, max: max});
+            if (min && max) {
+               allRegions.push({min: min, max: max});
+            }
          }
       })
       return allRegions;
@@ -215,6 +226,9 @@ App.StonehearthEntityEditorView = App.View.extend({
          var destinationUpdates = {};
          var regions = self._getRegions('.destinationRegion');
          var existing_region = regions[regions.length - 1];
+         if (!existing_region) {
+            existing_region = self.default_region;
+         }
          var newMin = {x:existing_region.max.x, y:0, z: existing_region.max.z};
          var newMax = {x:existing_region.max.x + 1, y:1, z: existing_region.max.z + 1};
          regions.push({min: newMin, max: newMax});
@@ -228,6 +242,9 @@ App.StonehearthEntityEditorView = App.View.extend({
          var collisionUpdates = {};
          var regions = self._getRegions('.collisionRegion');
          var existing_region = regions[regions.length - 1];
+         if (!existing_region) {
+            existing_region = self.default_region;
+         }
          var newMin = {x:existing_region.max.x, y:0, z: existing_region.max.z};
          var newMax = {x:existing_region.max.x + 1, y:1, z: existing_region.max.z + 1};
          regions.push({min: newMin, max: newMax});
@@ -272,7 +289,10 @@ App.StonehearthEntityEditorView = App.View.extend({
          if (self.get('model.destination')) {
             var destinationComponent = {};
             if (self.get('model.destination.region')) {
-               destinationComponent['region'] = self._getRegions('.destinationRegion');
+               var regions = self._getRegions('.destinationRegion');
+               if (regions.length > 0) {
+                  destinationComponent['region'] = regions;
+               }
             }
             var adjacencyFlags = self._getAdjacencyFlags();
             var defaultFlags = self.adjacency_flags.FRONT | self.adjacency_flags.BACK | self.adjacency_flags.LEFT | self.adjacency_flags.RIGHT;
@@ -285,7 +305,10 @@ App.StonehearthEntityEditorView = App.View.extend({
          if (self.get('model.region_collision_shape')) {
             var collisionRegions = {};
             if (self.get('model.region_collision_shape.region')) {
-               collisionRegions['region'] = self._getRegions('.collisionRegion');
+               var regions = self._getRegions('.destinationRegion');
+               if (regions.length > 0) {
+                  collisionRegions['region'] = regions;
+               }
             }
             overallJson['region_collision_shape'] = collisionRegions;
          }
@@ -309,6 +332,7 @@ App.DebugToolsRegionItemView = App.View.extend({
    didInsertElement: function() {
       var self = this;
       $('.has_tooltip').tooltipster();
+      self._deleted = false;
    },
 
    _getXYZ: function(prefix) {
@@ -319,11 +343,25 @@ App.DebugToolsRegionItemView = App.View.extend({
    },
 
    getRegionMin: function() {
+      if (this._deleted) {
+         return null;
+      }
       return this._getXYZ('#region_min');
    },
 
    getRegionMax: function() {
+      if (this._deleted) {
+         return null;
+      }
       return this._getXYZ('#region_max');
+   },
+   
+   actions: {
+      deleteRegion: function (e) {
+         var self = this;
+         self._deleted = true;
+         self.$().hide();
+      }
    }
 
 });
