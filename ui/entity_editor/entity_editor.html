@@ -59,6 +59,9 @@
 
                {{#each view.model.destination.region itemView="debugToolsRegionItem"}}
                   <div class="destinationRegion region">
+                     <a id="deleteRegion" href="#" {{action "deleteRegion" target="view"}} class="has_tooltip button deleteRegionButton" title="Delete This Region">
+                        <div class="deleteRegionIcon"></div>
+                     </a>
                      <div class="minRegion">
                      <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_min}}">Min:</label>
                      <input type="text" id="region_min_x" class="smallInput" {{bind-attr value="this.min.x"}}>
@@ -119,13 +122,16 @@
                   <div class="sectionTitle">
                      <h3 title="{{i18n debugtools:entity_editor.destination.tooltip_region}}">Regions:</h3>
                   </div>
-                  <a id="addCollisionRegion" href="#" {{action "addCollisionRegion" target="view"}} class="button addRegionButton" title="Add Region">
+                  <a id="addCollisionRegion" href="#" {{action "addCollisionRegion" target="view"}} class="button addRegionButton" title="Add Region. Updates immediately">
                      <div class="addRegionIcon"></div>
                   </a>
                </div>
 
                {{#each view.model.region_collision_shape.region itemView="debugToolsRegionItem"}}
                 <div class="collisionRegion region">
+                  <a id="deleteRegion" href="#" {{action "deleteRegion" target="view"}} class="has_tooltip button deleteRegionButton" title="Delete This Region. Doesn't take effect until update">
+                     <div class="deleteRegionIcon"></div>
+                  </a>
                   <div class="minRegion">
                   <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_min}}">Min:</label>
                   <input type="text" id="region_min_x" class="smallInput" {{bind-attr value="this.min.x"}}>
