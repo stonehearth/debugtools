@@ -176,7 +176,7 @@ App.StonehearthPerfmonView = App.View.extend({
       })
 
       counters.sort( function(l, r) { return l.name < r.name })
-      this.set('context.counters_' + counterType, counters)
+      this.set('counters_' + counterType, counters)
    },
 
 });
