@@ -35,23 +35,27 @@
             </p>
          </div>
 
-         <div id="destination">
+         <div id="destination" class="optionalComponent">
             <h2>Destination</h2>
             <p>
-            <h3 title="{{i18n debugtools:entity_editor.destination.tooltip_region}}">Region:</h3>
-            <div>
-               <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_min}}">Min:</label>
-               <input type="text" id="destination_region_min_x" class="smallInput" {{bind-attr value="view.destination_region.min.x"}}>
-               <input type="text" id="destination_region_min_y" class="smallInput" {{bind-attr value="view.destination_region.min.y"}}>
-               <input type="text" id="destination_region_min_z" class="smallInput" {{bind-attr value="view.destination_region.min.z"}}>
-            </div>
-            
-            <div>
-            <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_max}}">Max:</label>
-            <input type="text" id="destination_region_max_x" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="view.destination_region.max.x"}}>
-            <input type="text" id="destination_region_max_y" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="view.destination_region.max.y"}}>
-            <input type="text" id="destination_region_max_z" {{bind-attr index="_view.contentIndex"}} class="smallInput" {{bind-attr value="view.destination_region.max.z"}}>
-            </div>
+            <h3 title="{{i18n debugtools:entity_editor.destination.tooltip_region}}">Regions:</h3>
+
+            {{#each view.model.destination.region itemView="debugToolsRegionItem"}}
+               <div class="destinationRegion region">
+                  <div class="minRegion">
+                  <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_min}}">Min:</label>
+                  <input type="text" id="region_min_x" class="smallInput" {{bind-attr value="this.min.x"}}>
+                  <input type="text" id="region_min_y" class="smallInput" {{bind-attr value="this.min.y"}}>
+                  <input type="text" id="region_min_z" class="smallInput" {{bind-attr value="this.min.z"}}>
+                  </div>
+                  <div class="maxRegion">
+                  <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_max}}">Max:</label>
+                  <input type="text" id="region_max_x" class="smallInput" {{bind-attr value="this.max.x"}}>
+                  <input type="text" id="region_max_y" class="smallInput" {{bind-attr value="this.max.y"}}>
+                  <input type="text" id="region_max_z" class="smallInput" {{bind-attr value="this.max.z"}}>
+                  </div>
+               </div>
+            {{/each}}
 
             <div id="adjacency">
                <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_adjacency}}">Adjacency:</label><br>
@@ -88,6 +92,28 @@
                <label class="checkbox_adjacency" for="checkbox_adjacency_back_right" title="Lower Right"></label>
             </div>
             </p>
+         </div>
+
+         <div id="collision" class="optionalComponent">
+            <h2>Collision</h2>
+            <h3 title="{{i18n debugtools:entity_editor.destination.tooltip_region}}">Regions:</h3>
+            {{#each view.model.region_collision_shape.region itemView="debugToolsRegionItem"}}
+             <div class="collisionRegion region">
+               <div class="minRegion">
+               <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_min}}">Min:</label>
+               <input type="text" id="region_min_x" class="smallInput" {{bind-attr value="this.min.x"}}>
+               <input type="text" id="region_min_y" class="smallInput" {{bind-attr value="this.min.y"}}>
+               <input type="text" id="region_min_z" class="smallInput" {{bind-attr value="this.min.z"}}>
+               </div>
+               <div class="maxRegion">
+               <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_max}}">Max:</label>
+               <input type="text" id="region_max_x" class="smallInput" {{bind-attr value="this.max.x"}}>
+               <input type="text" id="region_max_y" class="smallInput" {{bind-attr value="this.max.y"}}>
+               <input type="text" id="region_max_z" class="smallInput" {{bind-attr value="this.max.z"}}>
+               </div>
+             </div>
+            {{/each}}
+            
          </div>
 
          <a id="update" href="#" {{action "updateEntity" target="view"}}>
