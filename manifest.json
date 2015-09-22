@@ -16,8 +16,8 @@
          "file(/ui/entity_inspector/entity_inspector.html)",
          "file(/ui/object_browser/object_browser.html)",
          "file(/ui/perfmon/perfmon.html)",
-         "file(/ui/item_dropper/item_dropper.html)",
-         "file(/ui/entity_editor/entity_editor.html)"
+         "file(/ui/entity_editor/entity_editor.html)",
+         "file(/ui/item_dropper/item_dropper.html)"
       ],
       "js" : [
          "file(ui/debug_dock/debug_dock.js)",      
@@ -26,8 +26,8 @@
          "file(/ui/entity_inspector/entity_inspector.js)",
          "file(/ui/object_browser/object_browser.js)",
          "file(/ui/perfmon/perfmon.js)",
-         "file(/ui/item_dropper/item_dropper.js)",
-         "file(/ui/entity_editor/entity_editor.js)"
+         "file(/ui/entity_editor/entity_editor.js)",
+         "file(/ui/item_dropper/item_dropper.js)"
       ],
       "less" : [
          "file(/html/font-awesome-4.3.0/css/font-awesome.min.css)",
@@ -36,8 +36,8 @@
          "file(/ui/entity_inspector/entity_inspector.less)",
          "file(/ui/object_browser/object_browser.less)",
          "file(/ui/perfmon/perfmon.less)",
-         "file(/ui/item_dropper/item_dropper.less)",
-         "file(/ui/entity_editor/entity_editor.less)"
+         "file(/ui/entity_editor/entity_editor.less)",
+         "file(/ui/item_dropper/item_dropper.less)"
       ]
    },
 
