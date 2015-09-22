@@ -26,15 +26,32 @@ function EntityEditorCommands:update_entity_command(session, response, entity, o
    if options.destination then
       local destination_component = entity:get_component('destination')
       if options.destination.region_updates then
-         local region = options.destination.region_updates
-         local existing_region = destination_component:get_region()
-         existing_region:modify(function(cursor)
-            cursor:clear()
-            cursor:add_cube(Cube3(Point3(region.min.x, region.min.y, region.min.z), Point3(region.max.x, region.max.y, region.max.z)))
+         local regions = options.destination.region_updates
+         local new_region = _radiant.sim.alloc_region3()
+         new_region:modify(function(cursor)
+            for _, region in ipairs(regions) do
+               cursor:add_cube(Cube3(Point3(region.min.x, region.min.y, region.min.z), Point3(region.max.x, region.max.y, region.max.z)))
+            end
          end)
+         destination_component:set_region(new_region)
       end
       if options.destination.adjacency_flags then
          destination_component:set_adjacency_flags(options.destination.adjacency_flags)
+      end
+   end
+   
+   if options.region_collision_shape then
+      local region_collision_shape_component = entity:get_component('region_collision_shape')
+      if options.region_collision_shape.region_updates then
+         local regions = options.region_collision_shape.region_updates
+         local new_region = _radiant.sim.alloc_region3()
+         new_region:modify(function(cursor)
+            for _, region in ipairs(regions) do
+               cursor:add_cube(Cube3(Point3(region.min.x, region.min.y, region.min.z), Point3(region.max.x, region.max.y, region.max.z)))
+            end
+         end)
+      
+         region_collision_shape_component:set_region(new_region)
       end
    end
    

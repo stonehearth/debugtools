@@ -61,6 +61,7 @@ App.StonehearthEntityEditorView = App.View.extend({
 
       $('h3').tooltipster();
       $('.has_tooltip').tooltipster();
+      self.$().draggable();
    },
 
    _updateAxisAlignmentFlags: function() {
@@ -91,12 +92,18 @@ App.StonehearthEntityEditorView = App.View.extend({
    _showHideDestination: function() {
       if (this.get('model.destination')) {
          $('#destination').show();
-         var region = this.get('model.destination.region') ? this.get('model.destination.region')[0] : undefined;
-         this.set('destination_region', region);
       } else {
          $('#destination').hide();
       }
    }.observes('model.destination'),
+
+   _showHideCollision: function() {
+      if (this.get('model.region_collision_shape')) {
+         $('#collision').show();
+      } else {
+         $('#collision').hide();
+      }
+   }.observes('model.region_collision_shape'),
 
    _getAdjacencyFlags: function() {
       var self = this;
@@ -111,11 +118,25 @@ App.StonehearthEntityEditorView = App.View.extend({
       return flag;
    },
 
-   _getXYZ: function(prefix) {
+   _getXYZ: function( prefix) {
       var x = parseFloat($(prefix + '_x').val());
       var y = parseFloat($(prefix + '_y').val());
       var z = parseFloat($(prefix + '_z').val());
       return {x:x, y: y, z:z};
+   },
+
+   _getRegions: function(regionName) {
+      var regionViews = this.get('childViews');
+      var allRegions = [];
+      radiant.each(regionViews, function(name, regionView) {
+         var destinationRegion = regionView.$(regionName);
+         if (destinationRegion && destinationRegion.length > 0) {
+            var min = regionView.getRegionMin();
+            var max = regionView.getRegionMax();
+            allRegions.push({min: min, max: max});
+         }
+      })
+      return allRegions;
    },
 
    _getUpdates: function() {
@@ -136,14 +157,19 @@ App.StonehearthEntityEditorView = App.View.extend({
 
       if (self.get('model.destination')) {
          var destinationUpdates = {};
-
          if (self.get('model.destination.region')) {
-            var min = self._getXYZ('#destination_region_min');
-            var max = self._getXYZ('#destination_region_max');
-            destinationUpdates['region_updates'] = {min: min, max: max};
+            destinationUpdates['region_updates'] = self._getRegions('.destinationRegion');
          }
          destinationUpdates['adjacency_flags'] = self._getAdjacencyFlags();
          updates['destination'] = destinationUpdates;
+      }
+
+      if (self.get('model.region_collision_shape')) {
+         var collisionUpdates = {};
+         if (self.get('model.region_collision_shape.region')) {
+            collisionUpdates['region_updates'] = self._getRegions('.collisionRegion');
+         }
+         updates['region_collision_shape'] = collisionUpdates;
       }
 
       return updates;
@@ -162,5 +188,33 @@ App.StonehearthEntityEditorView = App.View.extend({
       topElement.off("radiant_selection_changed.object_browser");
       this._super();
    },
+
+});
+
+App.DebugToolsRegionItemView = App.View.extend({
+   classNames: ['regionItem'],
+
+   components: {
+   },
+
+   didInsertElement: function() {
+      var self = this;
+      $('.has_tooltip').tooltipster();
+   },
+
+   _getXYZ: function(prefix) {
+      var x = parseFloat(this.$(prefix + '_x').val());
+      var y = parseFloat(this.$(prefix + '_y').val());
+      var z = parseFloat(this.$(prefix + '_z').val());
+      return {x:x, y: y, z:z};
+   },
+
+   getRegionMin: function() {
+      return this._getXYZ('#region_min');
+   },
+
+   getRegionMax: function() {
+      return this._getXYZ('#region_max');
+   }
 
 });
