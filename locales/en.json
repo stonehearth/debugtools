@@ -16,7 +16,7 @@
       "mob": {
          "tooltip_axis_alignment": "Whether this entity is force aligned to the X or Z axis. If enabled, the entity will usually snap to grid lines (visible when you press z)",
          "tooltip_model_origin": "The center of this model (with scale numbers applied) about which the mesh/actual voxels rotate. This will be 0,0,0 if you model is an even number of voxels. Be sure to center the model in the .qb file. If your model is an odd number of voxels, move larger half of the model into the upper right quadrant in Qubicle Constuctor, multiply 0.5 by the scale of the model to get the new origin. Ex: if scale = 0.1, then origin = -0.05, 0, 0.05",
-         "tooltip_region_origin": "The center of the region of the model. This is the point about which the region for adjacency rotates. If you have a odd length dimension (as in 3 x 3 or 1x1) then your region origin will usually be (0.5, 0, 0.5). If even, set to (0, 0, 0)",
+         "tooltip_region_origin": "The center of the region of the model. This is the point about which the region for adjacency rotates.",
          "json_description": "Paste this as the mob component in the ghost.json of your item. Make sure the ghost is mixed into the root entity."
       }
    }
