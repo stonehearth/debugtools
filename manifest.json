@@ -130,6 +130,10 @@
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"          
       },
+      "start_game_master_command" : {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"          
+      },
       "update_entity_command" : {
          "controller" : "file(call_handlers/entity_editor_commands.lua)",
          "endpoint" : "server"          

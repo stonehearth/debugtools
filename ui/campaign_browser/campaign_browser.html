@@ -5,9 +5,15 @@
 <script type="text/x-handlebars" data-template-name="game_master">
    <div id="game_master">
       <div id="toolbar">
+         {{#if view.notYetStarted}}
+            <a id="start" href="#" {{action "startGameMaster" target="view"}}>
+               start game master
+            </a>
+         {{/if}}
          <a id="close" href="#" {{action "close" target="view"}} class="button">
             <i class="fa fa-times fa-fw fa-lg"></i>
          </a>
+
       </div>
       <div id="content">
       </div>
