@@ -7,7 +7,9 @@ local service_creation_order = {
 
 local function create_service(name)
    local path = string.format('debugtools.services.server.%s.%s_service', name, name)
-   local service = require(path)()
+   local service_path = require(path)
+   assert(service_path, "Could not find a debug tools service. Are you sure your debugtools mod folder is named correctly? It should be 'debugtools' not 'debugtools_master'")
+   local service = service_path()
 
    local saved_variables = debugtools._sv[name]
    if not saved_variables then
