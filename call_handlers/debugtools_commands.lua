@@ -47,7 +47,7 @@ function Commands:create_entity(session, response, uri, iconic, location, rotati
 
    radiant.terrain.place_entity(entity, location, { force_iconic = iconic })
    radiant.entities.turn_to(entity, rotation)
-   local inventory = stonehearth.inventory:get_inventory_from_player_id(session.player_id)
+   local inventory = stonehearth.inventory:get_inventory(session.player_id)
    if inventory and not inventory:contains_item(entity) then
       inventory:add_item(entity)
    end
@@ -158,7 +158,7 @@ function Commands:add_citizen_command(session, response, entity, job)
 end
 
 function Commands:add_gold_console_command(session, response, gold_amount)
-   local inventory = stonehearth.inventory:get_inventory_from_player_id(session.player_id)
+   local inventory = stonehearth.inventory:get_inventory(session.player_id)
 
    if inventory == nil then
       response:reject('there is no inventory for player ' .. session.player_id)
