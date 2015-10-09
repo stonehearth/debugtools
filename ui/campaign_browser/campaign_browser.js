@@ -263,6 +263,10 @@ App.StonehearthGameMasterView = App.View.extend({
       
       radiant.call_obj('stonehearth.game_master', 'get_root_node_command')
          .done(function(o) {
+            if (o.child_nodes.length <= 0) {
+               self.set('notYetStarted', true);
+            }
+
             self._node_browser = new D3CollapsableTree({
                container: this.$('#content')[0],
                root_node_uri: o.__self,
@@ -291,6 +295,10 @@ App.StonehearthGameMasterView = App.View.extend({
       close: function () {
          this.destroy();
       },
+      startGameMaster: function() {
+         radiant.call('debugtools:start_game_master_command');
+         this.set('notYetStarted', false);
+      }
    },
 
    destroy: function() {

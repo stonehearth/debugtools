@@ -280,4 +280,9 @@ function Commands:decay_command(session, response, entity)
    return stonehearth.food_decay:increment_decay(entity)
 end
 
+function Commands:start_game_master_command(session, response, entity)
+   stonehearth.game_master:start()
+   return true
+end
+
 return Commands
