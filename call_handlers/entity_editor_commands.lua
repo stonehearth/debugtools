@@ -65,5 +65,14 @@ function EntityEditorCommands:rotate_entity_command(session, response, entity, d
       return false
    end
    radiant.entities.turn_to(entity, degrees)
+   local destination_component = entity:get_component('destination')
+   if destination_component then
+      destination_component:set_region(destination_component:get_region())
+   end
+
+   local region_collision_shape_component = entity:get_component('region_collision_shape')
+   if region_collision_shape_component then
+      region_collision_shape_component:set_region(region_collision_shape_component:get_region())
+   end
 end
 return EntityEditorCommands

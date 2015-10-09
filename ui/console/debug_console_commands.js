@@ -316,4 +316,15 @@ $(document).ready(function(){
          return false;
       }
    });
+
+   radiant.console.register('get_entity_info', {
+      call: function(cmdobj, fn, args) {
+         if (!args[0]) {
+            return "must provide an entity id";
+         }
+         var id = parseInt(args[0]);
+         return radiant.call_obj('debugtools.entity_tracker', 'get_entity_info_command', id);
+      },
+      description: "Return info about an entity, even if the entity has been destroyed. Pass in id of the entity. Usage: get_entity_info 82215"
+   });
 });
