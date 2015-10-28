@@ -327,4 +327,44 @@ $(document).ready(function(){
       },
       description: "Return info about an entity, even if the entity has been destroyed. Pass in id of the entity. Usage: get_entity_info 82215"
    });
+
+   radiant.console.register('make_hungry', {
+      call: function(cmdobj, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
+         var attribute = 'calories';
+         var val = 0;
+         return radiant.call('debugtools:set_attr_command', selected, attribute, val);
+      },
+      description: "Makes the selected entity hungry if the entity has the calories attribute. The entity will try to eat if it has a calorie observer. Usage: make_hungry",
+      test: function(entity) {
+         var attributes = entity.get('stonehearth:attributes');
+         if (attributes && attributes.attributes && attributes.attributes.calories) {
+            return true;
+         }
+         return false;
+      },
+      debugMenuNameOverride: "Make Hungry"
+   });
+
+   radiant.console.register('make_sleepy', {
+      call: function(cmdobj, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
+         var attribute = 'sleepiness';
+         var val = 25;
+         return radiant.call('debugtools:set_attr_command', selected, attribute, val);
+      },
+      description: "Makes the selected entity exhaustedly sleepy if the entity has the sleepiness attribute. The entity will try to sleep if it has a sleepiness observer. Usage: make_sleepy",
+      test: function(entity) {
+         var attributes = entity.get('stonehearth:attributes');
+         if (attributes && attributes.attributes && attributes.attributes.sleepiness) {
+            return true;
+         }
+         return false;
+      },
+      debugMenuNameOverride: "Make Sleepy"
+   });
 });
