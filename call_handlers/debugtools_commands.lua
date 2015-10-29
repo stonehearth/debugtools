@@ -198,9 +198,20 @@ function Commands:hot_reload_client(session, response, entity)
 end
 
 function Commands:add_journal_command(session, response, entity, journalType)
-   local journal_data = {entity = entity, description = journalType, probability_override = 100}
-   stonehearth.personality:log_journal_entry(journal_data)
-   response:resolve({})
+   if journalType then
+      local substitution_values = {}
+      substitution_values['gather_target'] = 'i18n(stonehearth:entities.food.berries.berry_basket.display_name)'
+      local journal_data = {entity = entity, description = journalType, probability_override = 100, substitutions = substitution_values}
+      stonehearth.personality:log_journal_entry(journal_data)
+      response:resolve({})
+   else
+      local activity_logs = stonehearth.personality._activity_logs
+      local available_activities = {}
+      for activity_name, _ in pairs(activity_logs) do
+         table.insert(available_activities, activity_name)
+      end
+      response:resolve({error='must specify journal type', available_activities = available_activities})
+   end
 end
 
 function Commands:pasture_reproduce_command(session, response, entity)
