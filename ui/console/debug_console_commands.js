@@ -367,4 +367,16 @@ $(document).ready(function(){
       },
       debugMenuNameOverride: "Make Sleepy"
    });
+
+   radiant.console.register('hotload_mod', {
+      call: function(cmdobj, fn, args) {
+         var modName = args[0];
+         if (!modName) {
+            modName = "rayyas_children_ui";
+         }
+
+         return radiant.call('radiant:send_hotload_module_event', modName)
+      },
+      description: "hot load a mod",
+   });
 });
