@@ -116,6 +116,13 @@ App.StonehearthEntityInspectorView = App.View.extend({
          this.destroy();
       },
 
+      dumpPathfinder : function() {
+         var pathdata = this.get('pathdata');
+         if (pathdata) {
+            radiant.call('radiant:dump_pathfinder_with_jobid', pathdata.job_id, pathdata.entity_id);
+         }
+      },
+
       stepPathfinder: function() {
          var pathdata = this.get('pathdata');
          if (pathdata) {
