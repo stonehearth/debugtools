@@ -37,6 +37,11 @@
          {{else}}
             [<a href="#" style="color: gray">step pathfinder</a>]
          {{/if}}
+         {{#if view.pathdata}}
+            [<a href="#" {{action "dumpPathfinder" target="view"}}>dump pathfinder ({{ view.pathdata.job_id }})</a>]
+         {{else}}
+            [<a href="#" style="color: gray">dump pathfinder</a>]
+         {{/if}}
          [<a href='#' {{action "closeWindow" target="view"}}>close window</a>]
       </div>
 
