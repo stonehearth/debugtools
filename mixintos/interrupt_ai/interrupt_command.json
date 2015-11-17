@@ -1,11 +1,9 @@
 {
-   "type" : "command",
-
+   "type": "command",
    "name": "interrupt",
-   "display_name": "Interrupt",
-   "description": "Send the ai back to stonehearth:top",
+   "display_name": "i18n(debugtools:debugtools_mixintos.interrupt_ai.interrupt_command.display_name)",
+   "description": "i18n(debugtools:debugtools_mixintos.interrupt_ai.interrupt_command.description)",
    "icon": "file(interrupt_command.jpg)",
-
    "action": "call",
    "function": "debugtools:interrupt_ai",
    "args": [
