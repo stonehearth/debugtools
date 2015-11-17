@@ -188,12 +188,12 @@ function Commands:dump_backpack_command(session, response, entity)
 end
 
 function Commands:hot_reload_server(session, response, entity)
-   radiant.resources.debug_clear_cached_json()
+   radiant.resources.reset()
    return true
 end
 
 function Commands:hot_reload_client(session, response, entity)
-   radiant.resources.debug_clear_cached_json()
+   radiant.resources.reset()
    return true
 end
 
