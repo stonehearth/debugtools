@@ -128,11 +128,11 @@ var D3CollapsableTree = SimpleClass.extend({
       self._root.x0 = h / 2;
       self._root.y0 = 0;
 
-      self._vis = d3.select(self.options.container).append("svg:svg")
+      self._svg = d3.select(self.options.container).append("svg:svg")
           .attr("width", w + m[1] + m[3])
           .attr("height", h + m[0] + m[2])
           .attr('class', 'tree')
-        .append("svg:g")
+      self._vis = self._svg.append("svg:g")
           .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
       self._tree = d3.layout.tree()
@@ -149,10 +149,14 @@ var D3CollapsableTree = SimpleClass.extend({
    _update : function(source) {
       var self = this
 
-      var vis = self._vis
-      var tree = self._tree
-      var root = self._root
-      var diagonal = self._diagonal
+      var vis = self._vis;
+      var tree = self._tree;
+      var root = self._root;
+      var diagonal = self._diagonal;
+      var svg = self._svg[0];
+      var offset = 100;
+      var oldSvgWidth = parseInt($(svg).attr('width')) - offset;
+      var svgWidth = oldSvgWidth;
 
       var duration = 300;
 
@@ -174,7 +178,12 @@ var D3CollapsableTree = SimpleClass.extend({
       var nodeEnter = node.enter().append("svg:g")
          .attr("class", "node")
          .attr("uri", function(d) { return d._uri; })
-         .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+         .attr("transform", function(d) {
+            if (source.y0 > svgWidth) {
+               svgWidth = source.y0;
+            }
+            return "translate(" + source.y0 + "," + source.x0 + ")"; 
+         })
 
       nodeEnter.append("svg:circle")
          .attr("r", 1e-6)
@@ -190,7 +199,12 @@ var D3CollapsableTree = SimpleClass.extend({
       // Transition nodes to their new position.
       var nodeUpdate = node.transition()
          .duration(duration)
-         .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+         .attr("transform", function(d) { 
+            if (d.y > svgWidth) {
+               svgWidth = d.y;
+            }
+            return "translate(" + d.y + "," + d.x + ")";
+         });
 
       nodeUpdate.select("circle")
          .attr("r", 4.5)
@@ -245,6 +259,10 @@ var D3CollapsableTree = SimpleClass.extend({
          d.x0 = d.x;
          d.y0 = d.y;
       });
+
+      if (svgWidth > oldSvgWidth) {
+         $(svg).attr('width', svgWidth + offset); // offset it by a bit
+      }
    },
 
    destroy: function() {
