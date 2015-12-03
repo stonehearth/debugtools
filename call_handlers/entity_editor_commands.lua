@@ -36,7 +36,18 @@ function EntityEditorCommands:update_entity_command(session, response, entity, o
          destination_component:set_region(new_region)
       end
       if options.destination.adjacency_flags then
+         destination_component:set_auto_update_adjacent(true)
          destination_component:set_adjacency_flags(options.destination.adjacency_flags)
+      elseif options.destination.adjacency_region_updates then
+         destination_component:set_auto_update_adjacent(false)
+         local regions = options.destination.adjacency_region_updates
+         local new_region = _radiant.sim.alloc_region3()
+         new_region:modify(function(cursor)
+            for _, region in ipairs(regions) do
+               cursor:add_cube(Cube3(Point3(region.min.x, region.min.y, region.min.z), Point3(region.max.x, region.max.y, region.max.z)))
+            end
+         end)
+         destination_component:set_adjacent(new_region)
       end
    end
    

@@ -61,13 +61,13 @@ App.StonehearthEntityEditorView = App.View.extend({
       topElement.on("radiant_selection_changed.object_browser", function (_, data) {
          var uri = data.selected_entity;
          if (uri) {
-            self.set('uri', uri)
+            self.set('uri', uri);
          }
       });
 
       var selected = App.stonehearthClient.getSelectedEntity();
       if (selected) {
-         self.set('uri', selected)
+         self.set('uri', selected);
       }
 
       $('h3').tooltipster();
@@ -76,7 +76,19 @@ App.StonehearthEntityEditorView = App.View.extend({
       
       self.$().draggable();
       self._jsonView = null;
+
+      self.$("#auto_update_adjacent_checkbox").click(function() {
+         self.updateEntityImmediately();
+      })
    },
+
+   _updateRendererDebug: function() {
+      var uri = this.get("uri");
+      if (uri) {
+         radiant.call("radiant:show_debug_shapes_for_entity", uri);
+         App.setGameMode('build');
+      }
+   }.observes("uri"),
 
    _updateAxisAlignmentFlags: function() {
       var self = this;
@@ -92,6 +104,18 @@ App.StonehearthEntityEditorView = App.View.extend({
          self.set('axis_aligned_z', false);
       }
    }.observes('model.mob.axis_alignment_flags'),
+
+   _updateAdjacencyAutoUpdate: function() {
+      var self = this;
+      var isAutoUpdate = self.get('model.destination.auto_update_adjacent');
+      if (isAutoUpdate) {
+         $("#adjacencyAutoUpdate").show();
+         $("#adjacentManualSpecify").hide();
+      } else {
+         $("#adjacencyAutoUpdate").hide();
+         $("#adjacentManualSpecify").show();
+      }
+   }.observes('model.destination.auto_update_adjacent'),
 
    _updateAdjacencyFlags: function() {
       var self = this;
@@ -166,8 +190,7 @@ App.StonehearthEntityEditorView = App.View.extend({
       var regionViews = this.get('childViews');
       var allRegions = [];
       radiant.each(regionViews, function(name, regionView) {
-         var destinationRegion = regionView.$(regionName);
-         if (destinationRegion && destinationRegion.length > 0) {
+         if (regionView.get("regionClass") == regionName) {
             var min = regionView.getRegionMin();
             var max = regionView.getRegionMax();
             if (min && max) {
@@ -197,16 +220,20 @@ App.StonehearthEntityEditorView = App.View.extend({
       if (self.get('model.destination')) {
          var destinationUpdates = {};
          if (self.get('model.destination.region')) {
-            destinationUpdates['region_updates'] = self._getRegions('.destinationRegion');
+            destinationUpdates['region_updates'] = self._getRegions('destinationRegion');
          }
-         destinationUpdates['adjacency_flags'] = self._getAdjacencyFlags();
+         if ($('#auto_update_adjacent_checkbox').is(':checked')) {
+            destinationUpdates['adjacency_flags'] = self._getAdjacencyFlags();
+         } else {
+            destinationUpdates['adjacency_region_updates'] = self._getRegions('adjacencyRegion');
+         }
          updates['destination'] = destinationUpdates;
       }
 
       if (self.get('model.region_collision_shape')) {
          var collisionUpdates = {};
          if (self.get('model.region_collision_shape.region')) {
-            collisionUpdates['region_updates'] = self._getRegions('.collisionRegion');
+            collisionUpdates['region_updates'] = self._getRegions('collisionRegion');
          }
          updates['region_collision_shape'] = collisionUpdates;
       }
@@ -214,19 +241,22 @@ App.StonehearthEntityEditorView = App.View.extend({
       return updates;
    },
 
+   updateEntityImmediately: function() {
+      radiant.call('debugtools:update_entity_command', this.get('uri'), this._getUpdates()); 
+   },
+
    actions: {
       close: function () {
          this.destroy();
       },
       updateEntity: function () {
-         var self = this;
-         radiant.call('debugtools:update_entity_command', self.get('uri'), self._getUpdates()); 
+         this.updateEntityImmediately();
       },
       addDestinationRegion: function () {
          var self = this;
          var updates = {};
          var destinationUpdates = {};
-         var regions = self._getRegions('.destinationRegion');
+         var regions = self._getRegions('destinationRegion');
          var existing_region = regions[regions.length - 1];
          if (!existing_region) {
             existing_region = self.default_region;
@@ -242,7 +272,7 @@ App.StonehearthEntityEditorView = App.View.extend({
          var self = this;
          var updates = {};
          var collisionUpdates = {};
-         var regions = self._getRegions('.collisionRegion');
+         var regions = self._getRegions('collisionRegion');
          var existing_region = regions[regions.length - 1];
          if (!existing_region) {
             existing_region = self.default_region;
@@ -252,6 +282,22 @@ App.StonehearthEntityEditorView = App.View.extend({
          regions.push({min: newMin, max: newMax});
          collisionUpdates['region_updates'] = regions;
          updates['region_collision_shape'] = collisionUpdates;
+         radiant.call('debugtools:update_entity_command', self.get('uri'), updates); 
+      },
+      addAdjacencyRegion: function() {
+         var self = this;
+         var updates = {};
+         var destinationUpdates = {};
+         var regions = self._getRegions('adjacencyRegion');
+         var existing_region = regions[regions.length - 1];
+         if (!existing_region) {
+            existing_region = self.default_region;
+         }
+         var newMin = {x:existing_region.max.x, y:0, z: existing_region.max.z};
+         var newMax = {x:existing_region.max.x + 1, y:1, z: existing_region.max.z + 1};
+         regions.push({min: newMin, max: newMax});
+         destinationUpdates['adjacency_region_updates'] = regions;
+         updates['destination'] = destinationUpdates;
          radiant.call('debugtools:update_entity_command', self.get('uri'), updates); 
       },
       showMobJson: function() {
@@ -292,7 +338,7 @@ App.StonehearthEntityEditorView = App.View.extend({
          if (self.get('model.destination')) {
             var destinationComponent = {};
             if (self.get('model.destination.region')) {
-               var regions = self._getRegions('.destinationRegion');
+               var regions = self._getRegions('destinationRegion');
                if (regions.length > 0) {
                   destinationComponent['region'] = regions;
                }
@@ -308,7 +354,7 @@ App.StonehearthEntityEditorView = App.View.extend({
          if (self.get('model.region_collision_shape')) {
             var collisionRegions = {};
             if (self.get('model.region_collision_shape.region')) {
-               var regions = self._getRegions('.collisionRegion');
+               var regions = self._getRegions('collisionRegion');
                if (regions.length > 0) {
                   collisionRegions['region'] = regions;
                }
@@ -340,6 +386,7 @@ App.StonehearthEntityEditorView = App.View.extend({
 
 App.DebugToolsRegionItemView = App.View.extend({
    classNames: ['regionItem'],
+   templateName: 'regionEditor',
 
    didInsertElement: function() {
       var self = this;
@@ -368,14 +415,87 @@ App.DebugToolsRegionItemView = App.View.extend({
       return this._getXYZ('#region_max');
    },
    
+   _canIncrement: function(first, second) {
+      var existingValue = this.get(first);
+      existingValue = existingValue + 1;
+      var testValue = this.get(second);
+      if (existingValue >= testValue) {
+         return "disabled";
+      }
+      return "enabled";
+   },
+
+   _canDecrement: function(first, second) {
+      var existingValue = this.get(first);
+      existingValue = existingValue - 1;
+      var testValue = this.get(second);
+      if (existingValue <= testValue) {
+         return "disabled";
+      }
+      return "enabled";
+   },
+
+   can_increment_min_x: function() {
+      return this._canIncrement("shape.min.x", "shape.max.x");
+   }.property("shape.min.x", "shape.max.x"),
+
+   can_increment_min_y: function() {
+      return this._canIncrement("shape.min.y", "shape.max.y");
+   }.property("shape.min.y", "shape.max.y"),
+
+   can_increment_min_z: function() {
+      return this._canIncrement("shape.min.z", "shape.max.z");
+   }.property("shape.min.z", "shape.max.z"),
+
+   can_decrement_max_x: function() {
+      return this._canDecrement("shape.max.x", "shape.min.x");
+   }.property("shape.max.x", "shape.min.x"),
+
+   can_decrement_max_y: function() {
+      return this._canDecrement("shape.max.y", "shape.min.y");
+   }.property("shape.max.y", "shape.min.y"),
+
+   can_decrement_max_z: function() {
+      return this._canDecrement("shape.max.z", "shape.min.z");
+   }.property("shape.max.z", "shape.min.z"),
+
    actions: {
       deleteRegion: function (e) {
          var self = this;
          self._deleted = true;
          self.$().hide();
+      },
+      decrement: function (id) {
+         id = "#" + id;
+         var existingValue = parseFloat(this.$(id).val());
+         existingValue = existingValue - 1;
+         if (id.indexOf("max") >= 0) {
+            // check to see if this would put us <= min
+            var min_id = id.replace("max", "min");
+            var minValue = parseFloat(this.$(min_id).val());
+            if (existingValue <= minValue) {
+               return;
+            }
+         }
+         this.$(id).val(existingValue);
+         this.entityEditor.updateEntityImmediately();
+      },
+      increment: function (id) {
+         id = "#" + id;
+         var existingValue = parseFloat(this.$(id).val());
+         existingValue = existingValue + 1;
+         if (id.indexOf("min") >= 0) {
+            // check to see if this would put us >= max
+            var max_id = id.replace("min", "max");
+            var maxValue = parseFloat(this.$(max_id).val());
+            if (existingValue >= maxValue) {
+               return;
+            }
+         }
+         this.$(id).val(existingValue);
+         this.entityEditor.updateEntityImmediately();
       }
    }
-
 });
 
 App.DebugToolsEntityEditorJsonView = App.View.extend({
