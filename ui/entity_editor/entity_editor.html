@@ -62,60 +62,57 @@
                   </a>
                </div>
 
-               {{#each view.model.destination.region itemView="debugToolsRegionItem"}}
-                  <div class="destinationRegion region">
-                     <a id="deleteRegion" href="#" {{action "deleteRegion" target="view"}} class="has_tooltip button deleteRegionButton" title="Delete This Region">
-                        <div class="deleteRegionIcon"></div>
-                     </a>
-                     <div class="minRegion">
-                     <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_min}}">Min:</label>
-                     <input type="text" id="region_min_x" class="smallInput" {{bind-attr value="this.min.x"}}>
-                     <input type="text" id="region_min_y" class="smallInput" {{bind-attr value="this.min.y"}}>
-                     <input type="text" id="region_min_z" class="smallInput" {{bind-attr value="this.min.z"}}>
-                     </div>
-                     <div class="maxRegion">
-                     <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_max}}">Max:</label>
-                     <input type="text" id="region_max_x" class="smallInput" {{bind-attr value="this.max.x"}}>
-                     <input type="text" id="region_max_y" class="smallInput" {{bind-attr value="this.max.y"}}>
-                     <input type="text" id="region_max_z" class="smallInput" {{bind-attr value="this.max.z"}}>
-                     </div>
-                  </div>
+               {{#each shape in view.model.destination.region}}
+                  {{view "debugToolsRegionItem" regionClass="destinationRegion" shape=shape entityEditor=view}}
                {{/each}}
             </div>
 
             <div id="adjacency">
+
                <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_adjacency}}">Adjacency:</label><br>
+               <input type="checkbox" id="auto_update_adjacent_checkbox" {{bind-attr checked=view.model.destination.auto_update_adjacent}}> Auto Update Adjacency
+               <div id="adjacencyAutoUpdate">
+                  <input type="checkbox" id="checkbox_adjacency_front_left" {{bind-attr checked=view.adjacency_front_left}}>
+                  <label class="checkbox_adjacency" for="checkbox_adjacency_front_left" title="Front Left Corner"></label>
 
-               <input type="checkbox" id="checkbox_adjacency_front_left" {{bind-attr checked=view.adjacency_front_left}}>
-               <label class="checkbox_adjacency" for="checkbox_adjacency_front_left" title="Front Left Corner"></label>
+                  <input type="checkbox" id="checkbox_adjacency_front" {{bind-attr checked=view.adjacency_front}}>
+                  <label class="checkbox_adjacency" for="checkbox_adjacency_front" title="Front"></label>
 
-               <input type="checkbox" id="checkbox_adjacency_front" {{bind-attr checked=view.adjacency_front}}>
-               <label class="checkbox_adjacency" for="checkbox_adjacency_front" title="Front"></label>
+                  <input type="checkbox" id="checkbox_adjacency_front_right" {{bind-attr checked=view.adjacency_front_right}}>
+                  <label class="checkbox_adjacency" for="checkbox_adjacency_front_right" title="Front Right Corner"></label>
 
-               <input type="checkbox" id="checkbox_adjacency_front_right" {{bind-attr checked=view.adjacency_front_right}}>
-               <label class="checkbox_adjacency" for="checkbox_adjacency_front_right" title="Front Right Corner"></label>
+                  <br>
 
-               <br>
+                  <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_left" {{bind-attr checked=view.adjacency_left}}>
+                  <label class="checkbox_adjacency" for="checkbox_adjacency_left" title="Left"></label>
+                  
+                  <label class="center"></label>
 
-               <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_left" {{bind-attr checked=view.adjacency_left}}>
-               <label class="checkbox_adjacency" for="checkbox_adjacency_left" title="Left"></label>
-               
-               <label class="center"></label>
+                  <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_right" {{bind-attr checked=view.adjacency_right}}>
+                  <label class="checkbox_adjacency" for="checkbox_adjacency_right" title="Right"></label>
 
-               <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_right" {{bind-attr checked=view.adjacency_right}}>
-               <label class="checkbox_adjacency" for="checkbox_adjacency_right" title="Right"></label>
+                  <br>
 
-               <br>
-
-               <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_back_left" {{bind-attr checked=view.adjacency_back_left}}>
-               <label class="checkbox_adjacency" for="checkbox_adjacency_back_left" title="Lower Left"></label>
+                  <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_back_left" {{bind-attr checked=view.adjacency_back_left}}>
+                  <label class="checkbox_adjacency" for="checkbox_adjacency_back_left" title="Lower Left"></label>
 
 
-               <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_back" {{bind-attr checked=view.adjacency_back}}>
-               <label class="checkbox_adjacency" for="checkbox_adjacency_back" title="Back"></label>
+                  <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_back" {{bind-attr checked=view.adjacency_back}}>
+                  <label class="checkbox_adjacency" for="checkbox_adjacency_back" title="Back"></label>
 
-               <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_back_right" {{bind-attr checked=view.adjacency_back_right}}>
-               <label class="checkbox_adjacency" for="checkbox_adjacency_back_right" title="Lower Right"></label>
+                  <input type="checkbox" class="checkbox_adjacency" id="checkbox_adjacency_back_right" {{bind-attr checked=view.adjacency_back_right}}>
+                  <label class="checkbox_adjacency" for="checkbox_adjacency_back_right" title="Lower Right"></label>
+               </div>
+               <div id="adjacentManualSpecify">
+                  <div class="regionsSectionTitle">
+                     <a id="addAdjacencyRegion" href="#" {{action "addAdjacencyRegion" target="view"}} class="button addRegionButton" title="Add Adjacency Region">
+                        <div class="addRegionIcon"></div>
+                     </a>
+                     </div>
+                  {{#each shape in view.model.destination.adjacent}}
+                     {{view "debugToolsRegionItem" regionClass="adjacencyRegion" shape=shape entityEditor=view}}
+                  {{/each}}
+               </div>
             </div>
             </p>
          </div>
@@ -132,24 +129,8 @@
                   </a>
                </div>
 
-               {{#each view.model.region_collision_shape.region itemView="debugToolsRegionItem"}}
-                <div class="collisionRegion region">
-                  <a id="deleteRegion" href="#" {{action "deleteRegion" target="view"}} class="has_tooltip button deleteRegionButton" title="Delete This Region. Doesn't take effect until update">
-                     <div class="deleteRegionIcon"></div>
-                  </a>
-                  <div class="minRegion">
-                  <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_min}}">Min:</label>
-                  <input type="text" id="region_min_x" class="smallInput" {{bind-attr value="this.min.x"}}>
-                  <input type="text" id="region_min_y" class="smallInput" {{bind-attr value="this.min.y"}}>
-                  <input type="text" id="region_min_z" class="smallInput" {{bind-attr value="this.min.z"}}>
-                  </div>
-                  <div class="maxRegion">
-                  <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_max}}">Max:</label>
-                  <input type="text" id="region_max_x" class="smallInput" {{bind-attr value="this.max.x"}}>
-                  <input type="text" id="region_max_y" class="smallInput" {{bind-attr value="this.max.y"}}>
-                  <input type="text" id="region_max_z" class="smallInput" {{bind-attr value="this.max.z"}}>
-                  </div>
-                </div>
+               {{#each shape in view.model.region_collision_shape.region}}
+                  {{view "debugToolsRegionItem" regionClass="collisionRegion" shape=shape entityEditor=view}}
                {{/each}}
             </div>
             
@@ -160,6 +141,54 @@
                Update
             </button>
          </a>
+      </div>
+   </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="regionEditor">
+   <div class="region">
+      <a id="deleteRegion" href="#" {{action "deleteRegion" target="view"}} class="has_tooltip button deleteRegionButton" title="Delete This Region. Doesn't take effect until update">
+         <div class="deleteRegionIcon"></div>
+      </a>
+      <div class="minMaxRegion">
+         <div class="regionNumber">
+            <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_min}}">Min:</label>
+         </div>
+         <div class="regionNumber regionMinX">
+            <a href="#" {{action "increment" "region_min_x" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_up.png" {{bind-attr class="view.can_increment_min_x"}}></a>
+            <input type="text" id="region_min_x" class="smallInput" {{bind-attr value="view.shape.min.x"}}>
+            <a href="#" {{action "decrement" "region_min_x" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_down.png"></a>
+         </div>
+         <div class="regionNumber regionMinY">
+            <a href="#" {{action "increment" "region_min_y" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_up.png" {{bind-attr class="view.can_increment_min_y"}}></a>
+            <input type="text" id="region_min_y" class="smallInput" {{bind-attr value="shape.min.y"}}>
+            <a href="#" {{action "decrement" "region_min_y" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_down.png"></a>
+         </div>
+         <div class="regionNumber regionMinZ">
+            <a href="#" {{action "increment" "region_min_z" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_up.png" {{bind-attr class="view.can_increment_min_z"}}></a>
+            <input type="text" id="region_min_z" class="smallInput" {{bind-attr value="shape.min.z"}}>
+            <a href="#" {{action "decrement" "region_min_z" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_down.png"></a>
+         </div>
+      </div>
+      <div class="minMaxRegion">
+         <div class="regionNumber">
+            <label class="has_tooltip" title="{{i18n debugtools:entity_editor.destination.tooltip_region_max}}">Max:</label>
+         </div>
+         <div class="regionNumber regionMaxX">
+            <a href="#" {{action "increment" "region_max_x" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_up.png"></a>
+            <input type="text" id="region_max_x" class="smallInput" {{bind-attr value="shape.max.x"}}>
+            <a href="#" {{action "decrement" "region_max_x" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_down.png" {{bind-attr class="view.can_decrement_max_x"}}></a>
+         </div>
+         <div class="regionNumber regionMaxY">
+            <a href="#" {{action "increment" "region_max_y" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_up.png"></a>
+            <input type="text" id="region_max_y" class="smallInput" {{bind-attr value="shape.max.y"}}>
+            <a href="#" {{action "decrement" "region_max_y" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_down.png" {{bind-attr class="view.can_decrement_max_y"}}></a>
+         </div>
+         <div class="regionNumber regionMaxZ">
+            <a href="#" {{action "increment" "region_max_z" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_up.png"></a>
+            <input type="text" id="region_max_z" class="smallInput" {{bind-attr value="shape.max.z"}}>
+            <a href="#" {{action "decrement" "region_max_z" target="view"}}><img src="/debugtools/ui/entity_editor/images/arrow_down.png" {{bind-attr class="view.can_decrement_max_z"}}></a>
+         </div>
       </div>
    </div>
 </script>
