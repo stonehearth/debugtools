@@ -138,23 +138,38 @@
             height: 25px;
             background: url('./images/delete.png');
          }
+
+         .minMaxRegion {
+         }
+         .regionNumber {
+            text-align: center;
+            width: 30px;
+            display: inline-block;
+            vertical-align: middle;
+            padding: 5px;
+            .disabled {
+               -webkit-filter: grayscale(100%);
+            }
+         }
       }
    }
 
    #adjacency {
-      input[type="checkbox"]{
-         display:none;
-      }
-      input[type="checkbox"] + label {
-          display:inline-block;
-          width:20px;
-          height:20px;
-          padding: 5px;
-          background:white;
-          cursor:pointer;
-      }
-      input[type="checkbox"]:checked + label {
-          background:red;
+      #adjacencyAutoUpdate {
+         input[type="checkbox"]{
+            display:none;
+         }
+         input[type="checkbox"] + label {
+             display:inline-block;
+             width:20px;
+             height:20px;
+             padding: 5px;
+             background:white;
+             cursor:pointer;
+         }
+         input[type="checkbox"]:checked + label {
+             background:red;
+         }
       }
       .center {
          display:inline-block;
