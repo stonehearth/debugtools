@@ -201,8 +201,9 @@ function Commands:add_journal_command(session, response, entity, journalType)
    if journalType then
       local substitution_values = {}
       substitution_values['gather_target'] = 'i18n(stonehearth:entities.food.berries.berry_basket.display_name)'
+      local score_metadata = {score_name = 'debug', score_mod = 1}
       local journal_data = {entity = entity, description = journalType, probability_override = 100, substitutions = substitution_values}
-      stonehearth.personality:log_journal_entry(journal_data)
+      stonehearth.personality:log_journal_entry(journal_data, score_metadata)
       response:resolve({})
    else
       local activity_logs = stonehearth.personality._activity_logs
