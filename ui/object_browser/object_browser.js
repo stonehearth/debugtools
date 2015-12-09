@@ -218,11 +218,11 @@ App.StonehearthObjectBrowserRawView = App.View.extend({
                  .replace(/\n/g, '<br>')
                  .replace(/"(object:\/\/[^"]*)"/g, '<a class="navlink" href="$1">$1</a>')
                  .replace(/uri\":&nbsp;\"([^"]*)"/g, 'uri": <a class="navlink" href="$1">$1</a>');
-   }.property('model'),
+   }.property('model')
 });
 
 
-App.StonehearthObjectBrowserEncounterView = App.View.extend({
+App.StonehearthObjectBrowserEncounterView = App.ContainerView.extend({
    uriProperty: 'model',
    components: {
       script : {},
@@ -231,36 +231,41 @@ App.StonehearthObjectBrowserEncounterView = App.View.extend({
 
    init : function() {
       this._super();
+      var self = this;
+      self.radiantTraceJournals = new RadiantTrace();
+      self.traceJournals = self.radiantTraceJournals.traceUri(this.uri, {
+         'script' : '*'
+      });
+      self.traceJournals.progress(function(obj) {
+         self.makeChild(obj);
+         self.radiantTraceJournals.destroy();
+      });
    },
 
    didInsertElement: function() {
       this._super();
    },
-   
-   encounterSubViewClass: function() {
+
+   makeChild: function(obj) {
       var known_types = {
-         'stonehearth:game_master:encounters:generator' :            'stonehearthObjectBrowserGeneratorEncounter',
-         'stonehearth:game_master:encounters:wait' :                 'stonehearthObjectBrowserWaitEncounter',
-         'stonehearth:game_master:encounters:wait_for_net_worth' :   'stonehearthObjectBrowserWaitForNetWorthEncounter',
-         'stonehearth:game_master:encounters:wait_for_time_of_day' : 'stonehearthObjectBrowserWaitForTimeOfDayEncounter',
-         'stonehearth:game_master:encounters:collection_quest' :     'stonehearthObjectBrowserCollectionQuestEncounter',
+         'stonehearth:game_master:encounters:generator' :            'StonehearthObjectBrowserGeneratorEncounterView',
+         'stonehearth:game_master:encounters:wait' :                 'StonehearthObjectBrowserWaitEncounterView',
+         'stonehearth:game_master:encounters:wait_for_net_worth' :   'StonehearthObjectBrowserWaitForNetWorthEncounterView',
+         'stonehearth:game_master:encounters:wait_for_time_of_day' : 'StonehearthObjectBrowserWaitForTimeOfDayEncounterView',
+         'stonehearth:game_master:encounters:collection_quest' :     'StonehearthObjectBrowserCollectionQuestEncounterView',
       }
 
-      var type = this.get('model.script.__controller');
+      var type = obj.script.__controller;
+
       var encounterSubViewClass = known_types[type];
       if (!encounterSubViewClass) {
-         encounterSubViewClass = 'stonehearthObjectBrowserRawEncounter';
+         encounterSubViewClass = 'StonehearthObjectBrowserRawEncounterView';
       }
 
-      if (this._lastEncounterSubViewClass && this._lastEncounterSubViewClass != encounterSubViewClass) {
-         var parentView = this.get('parentView');
-         if (parentView) {
-            Ember.run.scheduleOnce('afterRender', parentView, 'rerender');
-         }
-      }
-      this._lastEncounterSubViewClass = encounterSubViewClass;
-      return encounterSubViewClass;
-   }.property('model', 'model.script.__controller'),
+      this.destroyAllChildren();
+      this._childView = this.createChildView(App[encounterSubViewClass], {uri : obj.script.__self});
+      this.pushObject(this._childView);
+   }
 });
 
 App.StonehearthObjectBrowserBaseView = App.View.extend({
@@ -281,11 +286,19 @@ App.StonehearthObjectBrowserBaseView = App.View.extend({
       var self = this;
 
       self._super();
+   },
+
+   startPolling: function() {
+      var self = this;
+
+      if (!this.get('model.__self')) {
+         return;
+      }
       if (self.pollRate && !self._interval) {
          self._poll_encounter();
          self._interval = setInterval(function() { self._poll_encounter(); }, self.pollRate);
       }
-   },
+   }.observes('model').on('init'),
 
    _poll_encounter : function() {
       var self = this;
@@ -309,9 +322,11 @@ App.StonehearthObjectBrowserBaseView = App.View.extend({
 });
 
 App.StonehearthObjectBrowserRawEncounterView = App.StonehearthObjectBrowserBaseView.extend({
+   templateName: 'stonehearthObjectBrowserRawEncounter'
 });
 
 App.StonehearthObjectBrowserWaitEncounterView = App.StonehearthObjectBrowserBaseView.extend({
+   templateName: 'stonehearthObjectBrowserWaitEncounter',
    pollRate: 500,
    actions: {
       triggerNow: function() {
@@ -321,6 +336,7 @@ App.StonehearthObjectBrowserWaitEncounterView = App.StonehearthObjectBrowserBase
 });
 
 App.StonehearthObjectBrowserGeneratorEncounterView = App.StonehearthObjectBrowserBaseView.extend({
+   templateName: 'stonehearthObjectBrowserGeneratorEncounter',
    pollRate: 500,
    actions: {
       triggerNow: function() {
@@ -330,6 +346,7 @@ App.StonehearthObjectBrowserGeneratorEncounterView = App.StonehearthObjectBrowse
 });
 
 App.StonehearthObjectBrowserWaitForNetWorthEncounterView = App.StonehearthObjectBrowserBaseView.extend({
+   templateName: 'stonehearthObjectBrowserWaitForNetWorthEncounter',
    pollRate: 500,
    actions: {
       triggerNow: function() {
@@ -339,6 +356,7 @@ App.StonehearthObjectBrowserWaitForNetWorthEncounterView = App.StonehearthObject
 });
 
 App.StonehearthObjectBrowserWaitForTimeOfDayEncounterView = App.StonehearthObjectBrowserBaseView.extend({
+   templateName: 'stonehearthObjectBrowserWaitForTimeOfDayEncounter',
    pollRate: 500,
    actions: {
       triggerNow: function() {
@@ -348,6 +366,7 @@ App.StonehearthObjectBrowserWaitForTimeOfDayEncounterView = App.StonehearthObjec
 });
 
 App.StonehearthObjectBrowserCollectionQuestEncounterView = App.StonehearthObjectBrowserBaseView.extend({
+   templateName: 'stonehearthObjectBrowserCollectionQuestEncounter',
    pollRate: 500,
    actions: {
       forceReturnNow: function() {
