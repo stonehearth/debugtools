@@ -50,7 +50,6 @@
    <div class='title'>
       {{ view.model.ctx.encounter_name }}
    </div>
-   {{ view view.encounterSubViewClass uriBinding="view.model.script.__self" templateNameBinding="view.encounterSubViewClass" }}
 </script>
 
 <script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserRawEncounter">
@@ -81,7 +80,7 @@
 
    {{#if view.progress.time_left}}
       <ul class="menu">
-         <li><i class="fa fa-bolt fa-fw fa-lg"></i><a href="#" {{action "triggerNow" target="view"}}> Trigger Now </a></li>
+         <li><i class="fa fa-bolt fa-fw fa-lg"></i><a href="#" {{action "triggerNow" target=view}}> Trigger Now </a></li>
       </ul>
    {{/if}}
 </script>
