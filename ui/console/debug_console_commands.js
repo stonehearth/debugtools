@@ -105,6 +105,17 @@ $(document).ready(function(){
       description: "Sets the attribute on the selected entity to the specified value. Usage: set health 10"
    });
 
+   radiant.console.register('set_game_speed', {
+      call: function(cmdobj, fn, args) {
+         var val = parseInt(args[0]);
+         if (val != NaN) {
+            return radiant.call('debugtools:set_game_speed_command', val);
+         }
+         return false;
+      },
+      description: "Sets the game speed to the default game speed multiplied by the specified amount. Usage: set_game_speed 5"
+   });
+
    radiant.console.register('reset_location', {
       call: function(cmdobj, fn, args) {
          var x = parseInt(args[0]);
