@@ -77,6 +77,13 @@ function Commands:set_attr_command(session, response, entity, attribute, value)
    return true
 end
 
+function Commands:set_game_speed_command(session, response, value)
+   local default_speed = stonehearth.game_speed:get_default_speed() or 1
+   local game_speed = stonehearth.game_speed
+   game_speed:set_game_speed(default_speed * value, true)
+   return true
+end
+
 function Commands:reset_location_command(session, response, entity, x, y, z)
    local location = radiant.entities.get_world_grid_location(entity)
    if x and y and z then
