@@ -80,6 +80,10 @@ App.StonehearthEntityEditorView = App.View.extend({
       self.$("#auto_update_adjacent_checkbox").click(function() {
          self.updateEntityImmediately();
       })
+
+      self.$("#adjacencyAutoUpdate").on('click', ":checkbox", function() {
+         self.updateEntityImmediately();
+      });
    },
 
    _updateRendererDebug: function() {
@@ -343,11 +347,16 @@ App.StonehearthEntityEditorView = App.View.extend({
                   destinationComponent['region'] = regions;
                }
             }
-            var adjacencyFlags = self._getAdjacencyFlags();
-            var defaultFlags = self.adjacency_flags.FRONT | self.adjacency_flags.BACK | self.adjacency_flags.LEFT | self.adjacency_flags.RIGHT;
-            if (adjacencyFlags != defaultFlags) {
-               destinationComponent['adjacency_flags'] = self._getAdjacencyFlagsArray();
+            if ($('#auto_update_adjacent_checkbox').is(':checked')) {
+               var adjacencyFlags = self._getAdjacencyFlags();
+               var defaultFlags = self.adjacency_flags.FRONT | self.adjacency_flags.BACK | self.adjacency_flags.LEFT | self.adjacency_flags.RIGHT;
+               if (adjacencyFlags != defaultFlags) {
+                  destinationComponent['adjacency_flags'] = self._getAdjacencyFlagsArray();
+               }
+            } else {
+               destinationComponent['adjacent'] = self._getRegions('adjacencyRegion');
             }
+
             overallJson['destination'] = destinationComponent;
          }
 
