@@ -1,0 +1,223 @@
+#jobMonitorIcon {
+   .debugDockIcon;
+   background: url('./images/icon.png');
+}
+
+#jobMonitor {
+   .debug;
+   position: absolute;
+   top: 60px;
+   right: 0px;
+   min-width: 350px;
+   min-height: 1010px;
+   height: 90%;
+   
+   #jobMonitorCanvas {
+   };
+
+   .addRegionIcon{
+      width: 25px;
+      height: 25px;
+      background: url('./images/add.png');
+   }
+
+   .showJsonIcon {
+      width: 25px;
+      height: 25px;
+      background: url('./images/show_json.png');
+   }
+
+   .rotateButtonIcon{
+      width: 25px;
+      height: 25px;
+      background: url('./images/rotate.png');
+   }
+
+   .regionsSectionTitle {
+      height: 30px;
+   }
+
+   .sectionTitle {
+      display: inline-block;
+   }
+
+   h2{
+      margin-bottom: 10px;
+   }
+
+   .addRegionButton{
+      display: inline-block;
+      float: right;
+   }
+
+   .showJsonButton{
+      display: inline-block;
+      float: right;
+   }
+
+   .largeInput {
+      width: 180px;
+      position: relative;
+      top: -2px;
+   }
+   input[type='checkbox'] {
+      .resetAllCss;
+      top: -2px;
+   }
+   .smallInput {
+      width: 30px;
+   }
+
+   .button {
+      float: right;
+      color: #fff;
+
+      &:hover {
+         color: #fc0;
+      }
+   }
+
+   .depressed {
+      color: #fc0;
+   }
+
+   #collapse {
+      position: absolute;
+      top: 8px;
+      right: 26px;
+   }
+
+   #close {
+      position: absolute;
+      top: 8px;
+      right: 4px;
+   }
+
+   #rotateButton {
+   }
+
+   .title {
+      .controlFont;
+   }
+   .subtitle {
+      position:relative;
+      top: -30px;
+      float:right;
+      font-size: 14px
+      color: white;
+   }
+
+   .menu {
+      li {
+         margin-left: 0px;
+         padding-left: 0px;
+         list-style-type: none;
+         i {
+            color: #fc0;
+         }
+         &:hover {
+            color: #fc0;
+         }
+      }
+   }
+
+   #body {
+      max-height: 900px;
+      overflow: auto;
+   }
+
+   .optionalComponent {
+      display: none;
+      .has_tooltip {
+         font-family: @debugFontFamily;
+         font-size: 14px;
+      }
+      .region {
+         border: 1px solid #333;
+         padding-left: 10px;
+         margin-top: 2px;
+         margin-bottom: 2px;
+
+         .deleteRegionIcon {
+            width: 25px;
+            height: 25px;
+            background: url('./images/delete.png');
+         }
+
+         .minMaxRegion {
+         }
+         .regionNumber {
+            text-align: center;
+            width: 30px;
+            display: inline-block;
+            vertical-align: middle;
+            padding: 5px;
+            .disabled {
+               -webkit-filter: grayscale(100%);
+            }
+         }
+      }
+   }
+
+   #adjacency {
+      #adjacencyAutoUpdate {
+         input[type="checkbox"]{
+            display:none;
+         }
+         input[type="checkbox"] + label {
+             display:inline-block;
+             width:20px;
+             height:20px;
+             padding: 5px;
+             background:white;
+             cursor:pointer;
+         }
+         input[type="checkbox"]:checked + label {
+             background:red;
+         }
+      }
+      .center {
+         display:inline-block;
+         width: 22px;
+      }
+   }
+
+   #update{
+      float: right;
+   }
+}
+
+#jobMonitorJson {
+   .debug;
+   position: absolute;
+   top: 10px;
+   left: 1100px;
+   width: 300px;
+   height: 425px;
+   #toolbar {
+      display: block;
+      height: 20px;
+
+      #close {
+         position: absolute;
+         top: 8px;
+         right: 4px;
+      }
+   }
+   textarea {
+      width: 280px;
+      font-size: 10px;
+      color: #fff;
+      -webkit-user-select: all;
+   }
+
+   #copyButton {
+      float: right;
+   }
+}
+
+.tooltipster-shdt {
+   .tooltipster-content {
+      .debug;
+   }   
+}

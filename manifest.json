@@ -19,6 +19,7 @@
          "file(/ui/object_browser/object_browser.html)",
          "file(/ui/perfmon/perfmon.html)",
          "file(/ui/entity_editor/entity_editor.html)",
+         "file(/ui/job_monitor/job_monitor.html)",
          "file(/ui/item_dropper/item_dropper.html)"
       ],
       "js" : [
@@ -29,6 +30,7 @@
          "file(/ui/object_browser/object_browser.js)",
          "file(/ui/perfmon/perfmon.js)",
          "file(/ui/entity_editor/entity_editor.js)",
+         "file(/ui/job_monitor/job_monitor.js)",
          "file(/ui/item_dropper/item_dropper.js)"
       ],
       "less" : [
@@ -39,6 +41,7 @@
          "file(/ui/object_browser/object_browser.less)",
          "file(/ui/perfmon/perfmon.less)",
          "file(/ui/entity_editor/entity_editor.less)",
+         "file(/ui/job_monitor/job_monitor.less)",
          "file(/ui/item_dropper/item_dropper.less)"
       ]
    },
