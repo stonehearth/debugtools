@@ -7,7 +7,7 @@ local track_entities = radiant.util.get_config('track_entities', false)
 function EntityTrackerService:initialize()
    if track_entities then
       self._all_entities = {}
-      -- listen for every entity creation event sGo we can tear them all down between tests
+      -- listen for every entity creation event so we can tear them all down between tests
       radiant.events.listen(radiant, 'radiant:entity:post_create', function(e)
             local entity = e.entity
             local id = entity:get_id()
