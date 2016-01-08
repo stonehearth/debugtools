@@ -1,0 +1,29 @@
+<script type="text/x-handlebars" data-template-name="jobMonitorIcon">
+   <div id="jobMonitorIcon" title="{{i18n debugtools:tooltip_icon_job_monitor}}"></div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="jobMonitor">
+   <div id="jobMonitor">
+      <div id="toolbar">
+         <a id="close" href="#" {{action "close" target="view"}} class="button">
+            <i class="fa fa-times fa-fw fa-lg"></i>
+         </a>
+      </div>
+      <canvas id="jobMonitorCanvas">
+      </canvas>
+   </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="jobMonitorJson">
+   <div id="jobMonitorJson">
+      <div id="toolbar">
+         <a id="close" href="#" {{action "close" target="view"}} class="button">
+            <i class="fa fa-times fa-fw fa-lg"></i>
+         </a>
+      </div>
+      <p>{{view.description}}</p>
+      <textarea id="jsonTextArea" rows="20" cols="200" readonly>
+      </textarea>
+      <button id="copyButton">Copy</button>
+   </div>
+</script>

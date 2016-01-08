@@ -5,6 +5,7 @@
    "tooltip_icon_object_browser": "Object Browser",
    "tooltip_icon_perfmon": "Performance Monitor",
    "tooltip_icon_entity_editor": "Entity Editor",
+   "tooltip_icon_job_monitor": "Job Monitor",
    "entity_editor": {
       "destination": {
          "tooltip_region": "Shows as purple lines when you press F11. This is the region from which we generate the adjacency regions. It should fit all of your entity in a neat square.",
