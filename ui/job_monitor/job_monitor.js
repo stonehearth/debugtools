@@ -213,7 +213,7 @@ App.StonehearthJobMonitorView = App.View.extend({
          }
       }
 
-      // Sort all the tasklets by priority to help with visualization
+      // Sort all the tasklets by name to help with visualization
       var sortedTasklets = [];
       radiant.each(ejs.tasks, function(name, tasklet) {
          sortedTasklets.push({
@@ -222,7 +222,13 @@ App.StonehearthJobMonitorView = App.View.extend({
          })
       });
       sortedTasklets.sort(function(l, r) {
-         return r.tasklet.priority - l.tasklet.priority;
+         if (l.name < r.name) {
+            return -1;
+         }
+         if (l.name > r.name) {
+            return 1;
+         }
+         return 0;
       })
 
       // Add all the tasks indented under the ejs.
