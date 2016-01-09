@@ -40,7 +40,7 @@ var BFS_PROGRESS_BAR_BACKGROUND_COLOR = 'rgb(64, 64, 64)';
 var DEFAULT_TEXT_COLOR = 'rgb(255, 255, 255)';
 var INACTIVE_TEXT_COLOR = 'rgb(128, 128, 128)';
 var EJS_INDENT_FOR_PATHFINDERS = 24;
-var EJS_INDENT_FOR_ACTIVITY = BFS_PATHFINDER_PROGRESS_BAR_LEFT - EJS_INDENT_FOR_PATHFINDERS;
+var EJS_INDENT_FOR_ACTIVITY = EJS_INDENT_FOR_PATHFINDERS + BFS_PATHFINDER_PROGRESS_BAR_LEFT;
 var EJS_Y_MARGIN = 12;
 var EJS_ACTIVITY_COLOR = '#93ef26';
 
@@ -158,11 +158,11 @@ App.StonehearthJobMonitorView = App.View.extend({
       }
    },
 
-   _checkEntityActivity : function (uri) {
+   _getAiForEntity : function (uri) {
       var self = this;
 
-      if (this._entityActivities[uri]) {
-         return this._entityActivities[uri];
+      if (this._entityAi[uri]) {
+         return this._entityAi[uri];
       }
 
       if (!this._entityTraces[uri]) {
@@ -172,14 +172,11 @@ App.StonehearthJobMonitorView = App.View.extend({
             entityTrace.destroy();
             self._entityTraces[uri] = radiant.trace(o['stonehearth:ai'])
                .progress(function(ai) {
-                  var activity = i18n.t(ai.status_text_key, { data: ai.status_text_data });
-                  self._entityActivities[uri] = activity;
-                  console.log('activity changed to ', activity)              
+                  self._entityAi[uri] = ai;
                });
          });
       }
-
-      return '...';
+      return undefined;
    },
 
    _drawEntityJobScheduler: function (cursor, name, ejs) {
@@ -193,6 +190,11 @@ App.StonehearthJobMonitorView = App.View.extend({
       }
 
       // Add the entity text.
+      var ai = self._getAiForEntity(ejs.entity_uri);
+      if (ai) {
+         name = name + ' (spin:' + ai.spin_count + ')';
+      }
+
       this._ctx.font = LARGE_FONT;
       this._addText(cursor.x + LARGE_LED_SIZE + LARGE_TEXT_LEFT_MARGIN,
                     cursor.y,
@@ -201,11 +203,14 @@ App.StonehearthJobMonitorView = App.View.extend({
 
       // Say what they're doing...
       if (ejs.entity_uri) {
-         var activity = self._checkEntityActivity(ejs.entity_uri);
-         this._addText(cursor.x + EJS_INDENT_FOR_ACTIVITY,
-                       cursor.y,
-                       activity,
-                       EJS_ACTIVITY_COLOR);
+         var ai = self._getAiForEntity(ejs.entity_uri);
+         if (ai) {
+            var activity = i18n.t(ai.status_text_key, { data: ai.status_text_data });                  
+            this._addText(cursor.x + EJS_INDENT_FOR_ACTIVITY,
+                          cursor.y,
+                          activity,
+                          EJS_ACTIVITY_COLOR);
+         }
       }
 
       // Sort all the tasklets by priority to help with visualization
@@ -243,7 +248,7 @@ App.StonehearthJobMonitorView = App.View.extend({
       var self = this;
 
       this._entityTraces = {};
-      this._entityActivities = {}
+      this._entityAi = {}
 
       this._createCanvas();
 
