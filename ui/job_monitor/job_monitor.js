@@ -42,6 +42,7 @@ var INACTIVE_TEXT_COLOR = 'rgb(128, 128, 128)';
 var EJS_INDENT_FOR_PATHFINDERS = 24;
 var EJS_INDENT_FOR_ACTIVITY = BFS_PATHFINDER_PROGRESS_BAR_LEFT - EJS_INDENT_FOR_PATHFINDERS;
 var EJS_Y_MARGIN = 12;
+var EJS_ACTIVITY_COLOR = '#93ef26';
 
 App.StonehearthJobMonitorView = App.View.extend({
    templateName: 'jobMonitor',
@@ -109,7 +110,7 @@ App.StonehearthJobMonitorView = App.View.extend({
                     textColor);
 
       // Draw the progress bar.
-      var r = bfs.travel_distance / bfs.max_travel_distance;
+      var r = Math.max(1.0, bfs.explored_distance / bfs.max_travel_distance);
       var barWidth = BFS_PATHFINDER_PROGRESS_BAR_RIGHT - BFS_PATHFINDER_PROGRESS_BAR_LEFT;
       var progressWidth = barWidth * r;
       this._addBox(cursor.x + BFS_PATHFINDER_PROGRESS_BAR_LEFT,
@@ -159,16 +160,17 @@ App.StonehearthJobMonitorView = App.View.extend({
       }
 
       if (!this._entityTraces[uri]) {
-         var components = {
-            "stonehearth:ai": {
-               status_text_data : {}
-            },               
-         }
-         this._entityTraces[uri] = new RadiantTrace(uri, components)
-                                       .progress(function(o) {
-                                          var ai = o['stonehearth:ai'];
-                                          self._entityActivities[uri] = i18n.t(ai.status_text_key, { data: ai.status_text_data });
-                                       });
+         this._entityTraces[uri] = true;
+         var entityTrace = radiant.trace(uri);
+         entityTrace.progress(function(o) {
+            entityTrace.destroy();
+            self._entityTraces[uri] = radiant.trace(o['stonehearth:ai'])
+               .progress(function(ai) {
+                  var activity = i18n.t(ai.status_text_key, { data: ai.status_text_data });
+                  self._entityActivities[uri] = activity;
+                  console.log('activity changed to ', activity)              
+               });
+         });
       }
 
       return '...';
@@ -197,7 +199,7 @@ App.StonehearthJobMonitorView = App.View.extend({
          this._addText(cursor.x + EJS_INDENT_FOR_ACTIVITY,
                        cursor.y,
                        activity,
-                       textColor);
+                       EJS_ACTIVITY_COLOR);
       }
 
       // Sort all the tasklets by priority to help with visualization
@@ -246,7 +248,7 @@ App.StonehearthJobMonitorView = App.View.extend({
                   self._now = obj.now;
 
                   if (first) {
-                     console.log(JSON.stringify(obj, null, 2));
+                     //console.log(JSON.stringify(obj, null, 2));
                      first = false;
                   }
                   self._clear();
