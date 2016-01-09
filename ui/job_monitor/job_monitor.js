@@ -106,11 +106,11 @@ App.StonehearthJobMonitorView = App.View.extend({
       this._ctx.font = SMALL_FONT;
       this._addText(cursor.x + SMALL_LED_SIZE + SMALL_TEXT_LEFT_MARGIN,
                     cursor.y,
-                    name,
+                    bfs.id + ': ' + name,
                     textColor);
 
       // Draw the progress bar.
-      var r = Math.max(1.0, bfs.explored_distance / bfs.max_travel_distance);
+      var r = Math.min(1.0, bfs.explored_distance / bfs.max_travel_distance);
       var barWidth = BFS_PATHFINDER_PROGRESS_BAR_RIGHT - BFS_PATHFINDER_PROGRESS_BAR_LEFT;
       var progressWidth = barWidth * r;
       this._addBox(cursor.x + BFS_PATHFINDER_PROGRESS_BAR_LEFT,
@@ -141,6 +141,12 @@ App.StonehearthJobMonitorView = App.View.extend({
                     cursor.y,
                     name,
                     textColor);
+
+      this._addText(cursor.x + SMALL_LED_SIZE + BFS_PATHFINDER_PROGRESS_BAR_LEFT,
+                    cursor.y,
+                    astar.idle,
+                    textColor);
+
       cursor.y = cursor.y + SMALL_FONT_LINE_SPACING;
    },
 
