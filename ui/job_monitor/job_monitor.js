@@ -66,11 +66,19 @@ App.StonehearthJobMonitorView = App.View.extend({
    _addText: function(x, y, text, color) {
       this._ctx.fillStyle = color;
       this._ctx.fillText(text, x, y);
+
+      if (y > this._canvas.height) {
+         this._canvas.height = y + 20;
+      }
    },
 
    _addBox: function(x, y, w, h, color) {
       this._ctx.fillStyle = color;
       this._ctx.fillRect(x, y, w, h);
+
+      if ((y + h) > this._canvas.height) {
+         this._canvas.height = y + h + 20;
+      }
    },
 
    _getLedColor: function(obj) {
@@ -248,6 +256,12 @@ App.StonehearthJobMonitorView = App.View.extend({
          cursor.y += EJS_Y_MARGIN;
       });
 
+   },
+
+   actions: {
+      close: function () {
+         this.destroy();
+      }
    },
 
    didInsertElement: function() {
