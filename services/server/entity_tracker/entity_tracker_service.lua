@@ -32,6 +32,7 @@ end
 
 function EntityTrackerService:load_entities_command(session, response)
    local all_entities = _radiant.sim.get_all_entities()
+   self._sv.entities = {}
    local count = 0
    if all_entities then
       for id, entity in pairs(all_entities) do
