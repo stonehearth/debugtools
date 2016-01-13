@@ -390,4 +390,11 @@ $(document).ready(function(){
       },
       description: "hot load a mod",
    });
+
+   radiant.console.register('load_entity_tracker', {
+      call: function(cmdobj, fn, args) {
+         return radiant.call_obj('debugtools.entity_tracker', 'load_entities_command');
+      },
+      description: "Tells the debugtools entity tracker to load up all the entities. you can then inspect them in the object browser after typing 'debugtools'"
+   });
 });
