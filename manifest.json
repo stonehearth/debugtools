@@ -152,7 +152,7 @@
          "controller" : "file(call_handlers/entity_editor_commands.lua)",
          "endpoint" : "server"          
       },
-      "get_stonehearth_mod_controller_command" : {
+      "get_mod_controller_command" : {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"          
       },
