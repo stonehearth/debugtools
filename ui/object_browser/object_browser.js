@@ -25,6 +25,7 @@ App.StonehearthObjectBrowserView = App.View.extend({
       this._super();
       this.backStack = [];
       this.forwardStack = [];
+      this._viewingPrivateData = false;
    },
 
    didInsertElement: function() {
@@ -88,12 +89,22 @@ App.StonehearthObjectBrowserView = App.View.extend({
    },
 
    navigateTo: function(uri) {
-      var currentUri = this.get('uri');
+      var self = this;
+      var currentUri = self.get('uri');
       if (uri != currentUri) {
-         this.backStack.push(currentUri);
-         this.forwardStack = [];
-         this.set('uri', uri);
+         self.backStack.push(currentUri);
+         self.forwardStack = [];
+         if (uri == "stonehearth") {
+            radiant.call("debugtools:get_stonehearth_mod_controller_command")
+               .done(function(response) {
+                  self.set('uri', response.stonehearth_uri);
+               })
+         } else {
+            self.set('uri', uri);
+         }
       }
+      self.set("privateData", null);
+      self._viewingPrivateData = false;
    },
 
    _updateCollapsedControl : function() {
@@ -172,10 +183,29 @@ App.StonehearthObjectBrowserView = App.View.extend({
          var self = this;
          self.set('showRawView', !self.get('showRawView'));
          self._updateToggleRawViewControl();
+      },
+
+      togglePrivateVariables: function() {
+         var self = this;
+         self._viewingPrivateData = !self._viewingPrivateData;
+         if (self._viewingPrivateData) {
+            var uri = self.get("uri");
+            radiant.call("debugtools:get_all_data", uri)
+               .done(function(response) {
+                  if (response.data) {
+                     if (response.data.__fields) {
+                        self.set("privateData", response.data.__fields)
+                     } else {
+                        self.set("privateData", response.data)
+                     }
+                  }
+               })
+         } else {
+            self.set("privateData", null)
+         }
       }
    }
 });
-
 
 App.StonehearthObjectBrowserContentView = App.View.extend({
    templateName: 'objectBrowserContent',
@@ -198,6 +228,30 @@ App.StonehearthObjectBrowserContentView = App.View.extend({
 
       return subViewClass;
    }.property('model', 'model.__controller'),
+});
+
+App.StonehearthObjectBrowserRawPrivateView = App.View.extend({
+   templateName: 'stonehearthObjectBrowserRawPrivate',
+
+   didInsertElement: function() {
+      console.log("success!");
+   },
+
+   raw_view: function() {
+      var model = this.get('privateData');
+
+      if (!model) {
+         return '- no data -';
+      }
+      var json = JSON.stringify(model, undefined, 2);
+      return json.replace(/&/g, '&amp;')
+                 .replace(/</g, '&lt;')
+                 .replace(/>/g, '&gt;')
+                 .replace(/ /g, '&nbsp;')
+                 .replace(/\n/g, '<br>')
+                 .replace(/"(object:\/\/[^"]*)"/g, '<a class="navlink" href="$1">$1</a>')
+                 .replace(/uri\":&nbsp;\"([^"]*)"/g, 'uri": <a class="navlink" href="$1">$1</a>');
+   }.property('privateData'),
 });
 
 App.StonehearthObjectBrowserRawView = App.View.extend({

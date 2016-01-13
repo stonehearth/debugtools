@@ -304,4 +304,15 @@ function Commands:start_game_master_command(session, response, entity)
    return true
 end
 
+function Commands:get_stonehearth_mod_controller_command(session, response)
+   response:resolve({stonehearth_uri=stonehearth.__saved_variables})
+end
+
+function Commands:get_all_data(session, response, game_object)
+   if game_object then
+      response:resolve({data=game_object:get_data()})
+   end
+   response:resolve({})
+end
+
 return Commands
