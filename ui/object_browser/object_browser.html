@@ -20,7 +20,10 @@
          <a id="toggleRawView" href="#" {{action "toggleRawView" target="view"}} class="button" title="Toggle Raw View">
             <i class="fa fa-cogs fa-fw fa-lg"></i>
          </a>
-         <input type="text" id="uriInput" {{bind-attr value="view.uri"}}>
+         <a id="togglePrivateVariables" href="#" {{action "togglePrivateVariables" target="view"}} class="button" title="Toggle Private Variables View">
+            <i class="fa fa-user-secret fa-fw fa-lg"></i>
+         </a>
+         <input type="text" id="uriInput" {{bind-attr value="view.uri"}}>       
          <a id="collapse" href="#" {{action "toggleCollapsed" target="view"}} class="button">
             <i id="collapse_image" class="fa fa-chevron-up fa-fw fa-lg"></i>
          </a>
@@ -34,6 +37,10 @@
          {{ else }}
             {{ view stonehearthObjectBrowserContent viewName="contentView" uriBinding="view.uri" }}
          {{/if}}
+
+         {{#if view.privateData}}
+            {{ view stonehearthObjectBrowserRawPrivate privateData=view.privateData }}
+         {{/if}}
       </div>
    </div>
 </script>
@@ -43,6 +50,10 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserRaw">
+   {{{view.raw_view}}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserRawPrivate">
    {{{view.raw_view}}}
 </script>
 
