@@ -150,6 +150,8 @@ App.StonehearthObjectBrowserView = App.View.extend({
             var nextUri = this.backStack.pop();
             this.forwardStack.push(currentUri);
             this.set('uri', nextUri);
+            this.set("privateData", null);
+            this._viewingPrivateData = false;
          }
       },
 
@@ -160,6 +162,8 @@ App.StonehearthObjectBrowserView = App.View.extend({
             var nextUri = this.forwardStack.pop();
             this.backStack.push(currentUri);
             this.set('uri', nextUri);
+            this.set("privateData", null);
+            this._viewingPrivateData = false;
          }
       },
 
