@@ -18,7 +18,7 @@ App.StonehearthJobMonitorIcon = App.View.extend({
 });
 
 var X_ORIGIN = 10;
-var Y_ORIGIN = 10;
+var Y_ORIGIN = 20;
 
 var LARGE_LED_SIZE = 5;
 var LARGE_LED_Y_OFFSET = -6;
@@ -32,10 +32,11 @@ var SMALL_FONT = '8px consolasregular';
 var SMALL_FONT_LINE_SPACING = 8;
 var SMALL_TEXT_LEFT_MARGIN = 4;
 
-var BFS_PATHFINDER_PROGRESS_BAR_LEFT = 200;
+var BFS_PATHFINDER_PROGRESS_BAR_LEFT = 350;
 var BFS_PATHFINDER_PROGRESS_BAR_RIGHT = 450;
 var BFS_PROGRESS_BAR_COLOR = 'rgb(0, 0, 255)';
 var BFS_PROGRESS_BAR_BACKGROUND_COLOR = 'rgb(64, 64, 64)';
+var ASTAR_PROGRESS_BAR_COLOR = 'rgb(255, 215, 0)';
 
 var DEFAULT_TEXT_COLOR = 'rgb(255, 255, 255)';
 var INACTIVE_TEXT_COLOR = 'rgb(128, 128, 128)';
@@ -95,7 +96,7 @@ App.StonehearthJobMonitorView = App.View.extend({
          return undefined;
       }
 
-      var time_diff = this._now - obj.last_processed
+      var time_diff = this._now - obj.last_ticked
       if (time_diff >= 0 && time_diff < ACTIVE_FADE_COLORS.length) {
          return ACTIVE_FADE_COLORS[time_diff];
       }
@@ -114,7 +115,7 @@ App.StonehearthJobMonitorView = App.View.extend({
       this._ctx.font = SMALL_FONT;
       this._addText(cursor.x + SMALL_LED_SIZE + SMALL_TEXT_LEFT_MARGIN,
                     cursor.y,
-                    bfs.id + ': ' + name,
+                    bfs.id + ': ' + name + ' (pri:' + bfs.priority + ')',
                     textColor);
 
       // Draw the progress bar.
@@ -133,27 +134,40 @@ App.StonehearthJobMonitorView = App.View.extend({
                    BFS_PROGRESS_BAR_COLOR);
 
       cursor.y = cursor.y + SMALL_FONT_LINE_SPACING;
+
+      if (bfs.metrics && bfs.metrics.status == 'active') {
+         this._drawAStarPathfinder(cursor, '  astar: ' + bfs.metrics.name, bfs.metrics, true);
+      }
    },
 
-   _drawAStarPathfinder: function(cursor, name, astar) {
-      // Add the box in the left margin showing the activity of the astar
-      var activeColor = this._getLedColor(astar);
-      var textColor = activeColor ? DEFAULT_TEXT_COLOR : INACTIVE_TEXT_COLOR;
-      if (activeColor) {
-         this._addBox(cursor.x, cursor.y + SMALL_LED_Y_OFFSET, SMALL_LED_SIZE, SMALL_LED_SIZE, activeColor);
+   _drawAStarPathfinder: function(cursor, name, astar, ignoreLabel) {
+      // Add the entity text.
+      if (!ignoreLabel) {
+         this._ctx.font = SMALL_FONT;
+         this._addText(cursor.x + SMALL_LED_SIZE + SMALL_TEXT_LEFT_MARGIN,
+                       cursor.y,
+                       astar.id + ': ' + name,
+                       astar.stats == 'idle' ? INACTIVE_TEXT_COLOR : DEFAULT_TEXT_COLOR);
       }
 
-      // Add the entity text.
-      this._ctx.font = SMALL_FONT;
-      this._addText(cursor.x + SMALL_LED_SIZE + SMALL_TEXT_LEFT_MARGIN,
-                    cursor.y,
-                    name,
-                    textColor);
-
-      this._addText(cursor.x + SMALL_LED_SIZE + BFS_PATHFINDER_PROGRESS_BAR_LEFT,
-                    cursor.y,
-                    astar.idle,
-                    textColor);
+      // Draw the progress bar.
+      var current = astar.travel_distance;
+      var remaining = astar.eta;
+      if (remaining >= 0) {
+         var r = Math.min(1.0, current / (current + remaining));
+         var barWidth = BFS_PATHFINDER_PROGRESS_BAR_RIGHT - BFS_PATHFINDER_PROGRESS_BAR_LEFT;
+         var progressWidth = barWidth * r;
+         this._addBox(cursor.x + BFS_PATHFINDER_PROGRESS_BAR_LEFT,
+                      cursor.y,
+                      barWidth,
+                      SMALL_LED_SIZE,
+                      BFS_PROGRESS_BAR_BACKGROUND_COLOR);
+         this._addBox(cursor.x + BFS_PATHFINDER_PROGRESS_BAR_LEFT,
+                      cursor.y,
+                      progressWidth,
+                      SMALL_LED_SIZE,
+                      ASTAR_PROGRESS_BAR_COLOR);
+      }
 
       cursor.y = cursor.y + SMALL_FONT_LINE_SPACING;
    },
@@ -200,7 +214,7 @@ App.StonehearthJobMonitorView = App.View.extend({
       // Add the entity text.
       var ai = self._getAiForEntity(ejs.entity_uri);
       if (ai) {
-         name = name + ' (spin:' + ai.spin_count + ')';
+         name = name + ' (pri:' + ejs.priority + ' ticks:' + ejs.total_ticks + ' spin:' + ai.spin_count + ')';
       }
 
       this._ctx.font = LARGE_FONT;
@@ -223,9 +237,9 @@ App.StonehearthJobMonitorView = App.View.extend({
 
       // Sort all the tasklets by name to help with visualization
       var sortedTasklets = [];
-      radiant.each(ejs.tasks, function(name, tasklet) {
+      radiant.each(ejs.tasks, function(id, tasklet) {
          sortedTasklets.push({
-            name: name,
+            name: tasklet.name,
             tasklet: tasklet,
          })
       });
@@ -251,11 +265,30 @@ App.StonehearthJobMonitorView = App.View.extend({
    _drawRoundRobinTasks: function(tasks) {
       var self = this;
       var cursor = { x: X_ORIGIN, y: Y_ORIGIN }
-      radiant.each(tasks, function(name, ejs) {
-         self._drawEntityJobScheduler(cursor, name, ejs);
-         cursor.y += EJS_Y_MARGIN;
-      });
+      var idleTotal = 0;
+      radiant.each(tasks, function(id, ejs) {
+         var activity;
+         var ai = self._getAiForEntity(ejs.entity_uri);
+         if (ai) {
+            activity = i18n.t(ai.status_text_key, { data: ai.status_text_data });
+            if (activity == 'idle') {
+               idleTotal = idleTotal + 1;
+            }
+         }
 
+         var render;
+         if (self._selectedEntity) {
+            render = ejs.entity_uri == self._selectedEntity;
+         } else {
+            render = activity == 'idle';
+         }
+         if (render) {
+            self._drawEntityJobScheduler(cursor, ejs.name, ejs);
+            cursor.y += EJS_Y_MARGIN;
+         }
+      });
+      this._ctx.font = LARGE_FONT;
+      this._addText(0, 8, 'idle count: ' + idleTotal, 'rgb(255, 0, 0)');
    },
 
    actions: {
@@ -273,6 +306,10 @@ App.StonehearthJobMonitorView = App.View.extend({
       this._createCanvas();
 
       var first = true;
+
+      topElement.on("radiant_selection_changed.object_browser", function (_, data) {
+         self._selectedEntity = data.selected_entity;
+      });
 
       radiant.call('radiant:game:get_job_metrics')
                .progress(function(obj) {
