@@ -1,0 +1,29 @@
+<script type="text/x-handlebars" data-template-name="entityTrackerInspector">
+   <div id="entityTrackerInspector">
+      <div id="toolbar">
+         Total Entities: {{view.num_entities}}
+         <a id="close" href="#" {{action "close" target="view"}} class="button">
+            <i class="fa fa-times fa-fw fa-lg"></i>
+         </a>
+      </div>
+      <div id="body">
+      
+
+      <table>
+      {{#each entity_data in view.all_entities}}
+         <tr>
+            <td>
+               {{entity_data.count}}
+            </td>
+
+            <td>
+               <a class="navlink" {{bind-attr href=entity_data.data}}>{{entity_data.uri}}</a>
+            </td>
+         </tr>
+      {{/each}}
+
+      </table>
+
+      </div>
+   </div>
+</script>
