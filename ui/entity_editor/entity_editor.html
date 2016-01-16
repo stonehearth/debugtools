@@ -108,13 +108,12 @@
                      <a id="addAdjacencyRegion" href="#" {{action "addAdjacencyRegion" target="view"}} class="button addRegionButton" title="Add Adjacency Region">
                         <div class="addRegionIcon"></div>
                      </a>
-                     </div>
+                  </div>
                   {{#each shape in view.model.destination.adjacent}}
                      {{view "debugToolsRegionItem" regionClass="adjacencyRegion" shape=shape entityEditor=view}}
                   {{/each}}
                </div>
             </div>
-            </p>
          </div>
 
          <div id="collision" class="optionalComponent">
