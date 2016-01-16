@@ -21,6 +21,10 @@ function EntityTrackerService:initialize()
             self._all_entities[id] = tostring(entity)
          end)
    end
+
+   radiant.events.listen(radiant, 'radiant:entity:post_create', function(e)
+      --radiant.log.write('entity_tracker', 0, 'Entity %s was created', e.entity)
+   end)
 end
 
 function EntityTrackerService:get_entity_info_command(session, response, id)
@@ -32,6 +36,7 @@ end
 
 function EntityTrackerService:load_entities_command(session, response)
    local all_entities = _radiant.sim.get_all_entities()
+   self._sv.entities = {}
    local count = 0
    if all_entities then
       for id, entity in pairs(all_entities) do
@@ -54,7 +59,10 @@ function EntityTrackerService:load_entities_command(session, response)
       end
    end
    self.__saved_variables:mark_changed()
-   return 'loaded ' ..count .. ' entities'
+   response:resolve({
+      num_entities = count,
+      tracker = self
+      })
 end
 
 return EntityTrackerService

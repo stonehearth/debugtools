@@ -1,7 +1,7 @@
 {
    "info" :{
       "name" : "Stonehearth Debug Tools",
-      "version" : 1
+      "version" : 2
    },
 
    "server_init_script" : "file(debugtools_server)",
@@ -17,6 +17,7 @@
          "file(/ui/campaign_browser/campaign_browser.html)",
          "file(/ui/entity_inspector/entity_inspector.html)",
          "file(/ui/object_browser/object_browser.html)",
+         "file(/ui/object_browser/entity_tracker_inspector.html)",
          "file(/ui/perfmon/perfmon.html)",
          "file(/ui/entity_editor/entity_editor.html)",
          "file(/ui/job_monitor/job_monitor.html)",
@@ -28,6 +29,7 @@
          "file(/ui/campaign_browser/campaign_browser.js)",
          "file(/ui/entity_inspector/entity_inspector.js)",
          "file(/ui/object_browser/object_browser.js)",
+         "file(/ui/object_browser/entity_tracker_inspector.js)",
          "file(/ui/perfmon/perfmon.js)",
          "file(/ui/entity_editor/entity_editor.js)",
          "file(/ui/job_monitor/job_monitor.js)",
@@ -39,6 +41,7 @@
          "file(/ui/campaign_browser/campaign_browser.less)",
          "file(/ui/entity_inspector/entity_inspector.less)",
          "file(/ui/object_browser/object_browser.less)",
+         "file(/ui/object_browser/entity_tracker_inspector.less)",
          "file(/ui/perfmon/perfmon.less)",
          "file(/ui/entity_editor/entity_editor.less)",
          "file(/ui/job_monitor/job_monitor.less)",
