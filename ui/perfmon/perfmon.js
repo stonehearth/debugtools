@@ -173,10 +173,19 @@ App.StonehearthPerfmonView = App.View.extend({
             value : self._formatCounter(d)
          };
          counters.push(entry)
-      })
+      });
 
-      counters.sort( function(l, r) { return l.name < r.name })
-      this.set('counters_' + counterType, counters)
+      counters.sort(function(l, r) {
+         if (l.name < r.name) {
+            return -1;
+         }
+         if (l.name > r.name) {
+            return 1;
+         }
+         return 0;
+      });
+
+      this.set('counters_' + counterType, counters);
    },
 
 });

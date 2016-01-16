@@ -207,6 +207,10 @@ App.StonehearthObjectBrowserView = App.View.extend({
          } else {
             self.set("privateData", null)
          }
+      },
+
+      showAllEntities: function() {
+         App.debugView.addView(App.StonehearthEntityTrackerInspectorView)
       }
    }
 });
@@ -236,10 +240,6 @@ App.StonehearthObjectBrowserContentView = App.View.extend({
 
 App.StonehearthObjectBrowserRawPrivateView = App.View.extend({
    templateName: 'stonehearthObjectBrowserRawPrivate',
-
-   didInsertElement: function() {
-      console.log("success!");
-   },
 
    raw_view: function() {
       var model = this.get('privateData');
