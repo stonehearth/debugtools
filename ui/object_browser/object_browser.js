@@ -94,7 +94,7 @@ App.StonehearthObjectBrowserView = App.View.extend({
       if (uri != currentUri) {
          self.backStack.push(currentUri);
          self.forwardStack = [];
-         if (uri.indexOf('/') < 0) {
+         if (uri.indexOf('/') < 0 && uri.indexOf(':') < 0) {
             radiant.call("debugtools:get_mod_controller_command", uri)
                .done(function(response) {
                   self.set('uri', response.mod_uri);
