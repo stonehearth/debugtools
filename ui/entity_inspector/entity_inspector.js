@@ -42,7 +42,7 @@ App.StonehearthAiRowView = App.View.extend({
 
    // Uncomment to observe the models as they go flying by
    _onModelUpdated: function() {
-      console.log('ai row model is ', this.get('model'));
+      //console.log('ai row model is ', this.get('model'));
    }.observes('model').on('init'),
    //
 });
