@@ -211,6 +211,10 @@ App.StonehearthObjectBrowserView = App.View.extend({
 
       showAllEntities: function() {
          App.debugView.addView(App.StonehearthEntityTrackerInspectorView)
+      },
+
+      selectEntity: function() {
+         radiant.call('stonehearth:select_entity', this.get('uri'));
       }
    }
 });
