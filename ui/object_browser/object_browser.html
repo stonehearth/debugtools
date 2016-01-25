@@ -17,14 +17,8 @@
          <a href="#" {{action "goForward" target="view"}} class="button" title="Forward">
             <i class="fa fa-arrow-right fa-fw fa-lg"></i>
          </a>
-         <a id="toggleRawView" href="#" {{action "toggleRawView" target="view"}} class="button" title="Toggle Raw View">
-            <i class="fa fa-cogs fa-fw fa-lg"></i>
-         </a>
-         <a id="togglePrivateVariables" href="#" {{action "togglePrivateVariables" target="view"}} class="button" title="Toggle Private Variables View">
-            <i class="fa fa-user-secret fa-fw fa-lg"></i>
-         </a>
          <a id="showAllEntities" href="#" {{action "showAllEntities" target="view"}} class="button" title="Show All Entities">
-            <i class="fa fa-search-plus fa-fw fa-lg"></i>
+            <i class="fa fa-bars fa-fw fa-lg"></i>
          </a>
 
          <!-- Input for typing in your own uri --!>
@@ -36,6 +30,19 @@
          <a id="close" href="#" {{action "close" target="view"}} class="button">
             <i class="fa fa-times fa-fw fa-lg"></i>
          </a>
+
+         <br><br>
+
+         <a id="toggleRawView" href="#" {{action "toggleRawView" target="view"}} class="button" title="Toggle Raw View">
+            <i class="fa fa-cogs fa-fw fa-lg"></i>
+         </a>
+         <a id="togglePrivateVariables" href="#" {{action "togglePrivateVariables" target="view"}} class="button" title="Toggle Private Variables View">
+            <i class="fa fa-user-secret fa-fw fa-lg"></i>
+         </a>
+         <a id="selectEntity" href="#" {{action "selectEntity" target="view"}} class="button" title="Select Entity">
+            <i class="fa fa-search-plus fa-fw fa-lg"></i>
+         </a>
+         <br>
       </div>
       <div id="body">
          {{#if view.showRawView }}
