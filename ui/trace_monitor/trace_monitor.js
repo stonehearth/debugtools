@@ -66,6 +66,11 @@ App.StonehearthTraceMonitorView = App.View.extend({
         data.splice(30);
 
         var table = self.$('#traceMonitorTable');
+
+        if (!table) {
+          return;
+        }
+
         table.empty();
 
         $('<tr>')
