@@ -397,4 +397,61 @@ $(document).ready(function(){
       },
       description: "Tells the debugtools entity tracker to load up all the entities. you can then inspect them in the object browser after typing 'debugtools'"
    });
+
+   radiant.console.register('make_hostile', {
+      call: function(cmdobj, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
+         var amenity = 'hostile';
+         return radiant.call_obj('stonehearth.player', 'debug_set_amenity_command', selected, amenity);
+      },
+      description: "Makes the player hostile with the selected entity's faction",
+      debugMenuNameOverride: "Make Hostile",
+      test: function(entity) {
+         var player_id = entity.get('unit_info.player_id');
+         if (player_id && player_id != "player_1") {
+            return true;
+         }
+         return false;
+      },
+   });
+
+   radiant.console.register('make_neutral', {
+      call: function(cmdobj, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
+         var amenity = 'neutral';
+         return radiant.call_obj('stonehearth.player', 'debug_set_amenity_command', selected, amenity);
+      },
+      description: "Makes the player hostile with the selected entity's faction",
+      debugMenuNameOverride: "Make Neutral",
+      test: function(entity) {
+         var player_id = entity.get('unit_info.player_id');
+         if (player_id && player_id != "player_1") {
+            return true;
+         }
+         return false;
+      },
+   });
+
+   radiant.console.register('make_friendly', {
+      call: function(cmdobj, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
+         var amenity = 'friendly';
+         return radiant.call_obj('stonehearth.player', 'debug_set_amenity_command', selected, amenity);
+      },
+      description: "Makes the player hostile with the selected entity's faction",
+      debugMenuNameOverride: "Make Friendly",
+      test: function(entity) {
+         var player_id = entity.get('unit_info.player_id');
+         if (player_id && player_id != "player_1") {
+            return true;
+         }
+         return false;
+      },
+   });
 });

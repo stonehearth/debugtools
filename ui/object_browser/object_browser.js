@@ -445,7 +445,8 @@ App.stonehearthObjectBrowserDebugCommandsView = App.View.extend({
    components: {
       "uri": {},
       "stonehearth:job": {},
-      "stonehearth:attributes": {}
+      "stonehearth:attributes": {},
+      "unit_info": {}
    },
    didInsertElement: function() {
       var self = this;
