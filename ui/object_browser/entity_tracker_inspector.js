@@ -47,6 +47,12 @@ App.StonehearthEntityTrackerInspectorView = App.View.extend({
       return entities_array;
    }.property('model.entities'),
 
+   out_of_bounds_entities: function() {
+      var self = this;
+      var entities_array = radiant.map_to_array(self.get('model.out_of_bounds_entities'));
+      return entities_array;
+   }.property('model.out_of_bounds_entities'),
+
    actions: {
       close: function () {
          this.destroy();

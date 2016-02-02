@@ -10,8 +10,9 @@ function EntityTrackerService:initialize()
    if not self._sv._initialized then
       self._sv._initialized = true
       self._sv.entities = {}
+      self._sv.out_of_bounds_entities = {}
    end
-
+   
    if track_entities then
       self._all_entities = {}
       -- listen for every entity creation event so we can tear them all down between tests
@@ -34,9 +35,28 @@ function EntityTrackerService:get_entity_info_command(session, response, id)
    return self._all_entities[id]
 end
 
+local function _is_in_bounds_point(point)
+   local MIN = -2048
+   local MAX = 2048
+   if point.x > MAX or point.x < MIN then
+      return false
+   end
+
+   if point.z > MAX or point.z < MIN then
+      return false
+   end
+
+   if point.y > 140 or point.y < -10 then
+      return false
+   end
+
+   return true
+end
+
 function EntityTrackerService:load_entities_command(session, response)
    local all_entities = _radiant.sim.get_all_entities()
    self._sv.entities = {}
+   self._sv.out_of_bounds_entities = {}
    local count = 0
    if all_entities then
       for id, entity in pairs(all_entities) do
@@ -56,6 +76,13 @@ function EntityTrackerService:load_entities_command(session, response)
          table.insert(entities_table, entity)
          info.count = info.count + 1
          count = count + 1
+
+         local pos = radiant.entities.get_world_grid_location(entity)
+         if pos then
+            if not _is_in_bounds_point(pos) then
+               table.insert(self._sv.out_of_bounds_entities, entity)
+            end
+         end
       end
    end
    self.__saved_variables:mark_changed()

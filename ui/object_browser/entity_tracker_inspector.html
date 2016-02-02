@@ -24,6 +24,18 @@
 
       </table>
 
+      Out of Bounds:
+      <table>
+      {{#each entity_data in view.out_of_bounds_entities}}
+         <tr>
+            <td>
+               <a class="navlink" {{bind-attr href=entity_data}}>{{entity_data}}</a>
+            </td>
+         </tr>
+      {{/each}}
+
+      </table>
+
       </div>
    </div>
 </script>
