@@ -46,7 +46,7 @@ local function _is_in_bounds_point(point)
       return false
    end
 
-   if point.y > 140 or point.y < -10 then
+   if point.y > 200 or point.y < -10 then
       return false
    end
 
