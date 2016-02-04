@@ -1,7 +1,6 @@
 <script type="text/x-handlebars" data-template-name="entityTrackerInspector">
    <div id="entityTrackerInspector">
       <div id="toolbar">
-         Total Entities: {{view.num_entities}}
          <a id="close" href="#" {{action "close" target="view"}} class="button">
             <i class="fa fa-times fa-fw fa-lg"></i>
          </a>
@@ -9,7 +8,30 @@
       <div id="body">
       
 
-      <table>
+      <table id="entitiesTable">
+         <caption>Total Entities: {{view.num_entities}}</caption>
+        <tr>
+          <th id="countHeader">Count
+            {{#if view.sort.count_asc}}
+               <i class="fa fa-sort-numeric-asc fa-fw fa-lg"></i>
+            {{/if}}
+            {{#if view.sort.count_desc}}
+               <i class="fa fa-sort-numeric-desc fa-fw fa-lg"></i>
+            {{/if}}
+
+          </th>
+          <th id="AliasHeader">Alias
+
+            {{#if view.sort.uri_asc}}
+               <i class="fa fa-sort-alpha-asc fa-fw fa-lg"></i>
+            {{/if}}
+            {{#if view.sort.uri_desc}}
+               <i class="fa fa-sort-alpha-desc fa-fw fa-lg"></i>
+            {{/if}}
+
+          </th>
+        </tr>
+
       {{#each entity_data in view.all_entities}}
          <tr>
             <td>
@@ -21,11 +43,11 @@
             </td>
          </tr>
       {{/each}}
-
       </table>
 
-      Out of Bounds:
-      <table>
+      
+      <table width="100%">
+      <caption>Out of Bounds Entities:</caption>
       {{#each entity_data in view.out_of_bounds_entities}}
          <tr>
             <td>
