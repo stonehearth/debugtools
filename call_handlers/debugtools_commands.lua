@@ -313,10 +313,22 @@ function Commands:get_mod_controller_command(session, response, mod_name)
 end
 
 function Commands:get_all_data(session, response, game_object)
-   if game_object then
-      response:resolve({data=game_object:get_data()})
+   local data = {}
+   if not game_object then
+      response:reject('unknown game object')
+      return
    end
-   response:resolve({})
+   if type(game_object.get_data) == 'function' then
+      data = game_object:get_data()
+   elseif type(game_object.__saved_variables) == 'userdata' then
+      -- non-SvTable controllers, will just have a __saved_variables block shoved
+      -- in there.  Grab that one's data.
+      data = game_object.__saved_variables:get_data()
+   else
+      response:reject('could not find get_data method on ' .. tostring(game_object))
+      return
+   end
+   response:resolve(data)
 end
 
 return Commands
