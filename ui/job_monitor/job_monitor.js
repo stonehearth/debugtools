@@ -105,6 +105,7 @@ App.StonehearthJobMonitorView = App.View.extend({
 
    _drawBFSPathfinder: function(cursor, name, bfs) {
       // Add the box in the left margin showing the activity of the bfs
+      var self = this;
       var activeColor = this._getLedColor(bfs);
       var textColor = activeColor ? DEFAULT_TEXT_COLOR : INACTIVE_TEXT_COLOR;
       if (activeColor) {
@@ -138,6 +139,36 @@ App.StonehearthJobMonitorView = App.View.extend({
       if (bfs.metrics && bfs.metrics.status == 'active') {
          this._drawAStarPathfinder(cursor, '  astar: ' + bfs.metrics.name, bfs.metrics, true);
       }
+
+      var sorted = [];
+      radiant.each(bfs.searches, function(id, search) {
+         sorted.push({
+            description: search.description,
+            search: search,
+         })
+      });
+      sorted.sort(function(l, r) {
+         if (l.description < r.description) {
+            return -1;
+         }
+         if (l.description > r.description) {
+            return 1;
+         }
+         return 0;
+      })
+
+      // Add all the tasks indented under the ejs.
+      cursor.x += EJS_INDENT_FOR_PATHFINDERS;
+      radiant.each(sorted, function(i, o) {
+        self._addText(cursor.x + SMALL_TEXT_LEFT_MARGIN,
+                      cursor.y,
+                      o.description,
+                      textColor);
+        cursor.y = cursor.y + SMALL_FONT_LINE_SPACING;
+      });
+      cursor.x -= EJS_INDENT_FOR_PATHFINDERS;
+      
+      cursor.y = cursor.y + LARGE_FONT_LINE_SPACING;      
    },
 
    _drawAStarPathfinder: function(cursor, name, astar, ignoreLabel) {
