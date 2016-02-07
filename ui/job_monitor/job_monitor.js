@@ -137,7 +137,7 @@ App.StonehearthJobMonitorView = App.View.extend({
       cursor.y = cursor.y + SMALL_FONT_LINE_SPACING;
 
       if (bfs.metrics && bfs.metrics.status == 'active') {
-         this._drawAStarPathfinder(cursor, '  astar: ' + bfs.metrics.name, bfs.metrics, true);
+         this._drawAStarPathfinder(cursor, '  astar: ' + bfs.metrics.name, bfs.metrics);
       }
 
       var sorted = [];
@@ -167,7 +167,7 @@ App.StonehearthJobMonitorView = App.View.extend({
         cursor.y = cursor.y + SMALL_FONT_LINE_SPACING;
       });
       cursor.x -= EJS_INDENT_FOR_PATHFINDERS;
-      
+
       cursor.y = cursor.y + LARGE_FONT_LINE_SPACING;      
    },
 
@@ -177,8 +177,9 @@ App.StonehearthJobMonitorView = App.View.extend({
          this._ctx.font = SMALL_FONT;
          this._addText(cursor.x + SMALL_LED_SIZE + SMALL_TEXT_LEFT_MARGIN,
                        cursor.y,
-                       astar.id + ': ' + name,
+                       astar.id + ': ' + '(dst:' + astar.dst_count + ') ' + name,
                        astar.stats == 'idle' ? INACTIVE_TEXT_COLOR : DEFAULT_TEXT_COLOR);
+         cursor.y = cursor.y + SMALL_FONT_LINE_SPACING;               
       }
 
       // Draw the progress bar.
