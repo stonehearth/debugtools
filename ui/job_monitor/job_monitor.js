@@ -162,7 +162,7 @@ App.StonehearthJobMonitorView = App.View.extend({
       radiant.each(sorted, function(i, o) {
         self._addText(cursor.x + SMALL_TEXT_LEFT_MARGIN,
                       cursor.y,
-                      o.description,
+                      '(dsts:' + o.search.count +')' + o.description,
                       textColor);
         cursor.y = cursor.y + SMALL_FONT_LINE_SPACING;
       });
