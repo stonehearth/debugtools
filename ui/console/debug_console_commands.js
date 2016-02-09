@@ -454,4 +454,23 @@ $(document).ready(function(){
          return false;
       },
    });
+
+   radiant.console.register('destroy_immediately', {
+      call: function(cmdobjs, fn, args) {
+         var entity;
+         if (args.length > 0) {
+            entity = 'object://game/' + args[0];
+         } else {
+            entity = selected;
+         }
+         return radiant.call('stonehearth:destroy_entity', entity);
+      },
+      description : "Destroy an entity immediately. Might not run other code that normally runs when someone is killed, like drop loot, etc. Arg 0 is id of the entity. If no argument is provided, destroys the currently selected entity. Usage: destroy_immediately 12345",
+      test: function(entity) {
+         if (entity) {
+            return true;
+         }
+         return false;
+      }
+   });
 });
