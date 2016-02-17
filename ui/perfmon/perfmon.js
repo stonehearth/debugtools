@@ -103,6 +103,11 @@ App.StonehearthPerfmonView = App.View.extend({
          .progress(function(data) {
             self._updateCounters(data, 'client');
          });
+
+      self.$('.button').tooltipster({
+         theme: 'tooltipster-shdt',
+         arrow: true,
+      });
    },
 
    destroy: function() {
@@ -187,6 +192,12 @@ App.StonehearthPerfmonView = App.View.extend({
 
       this.set('counters_' + counterType, counters);
    },
+
+   actions: {
+      toggleLongTickProfile: function() {
+         radiant.call('radiant:toggle_profile_long_ticks');
+      }
+   }
 
 });
 
