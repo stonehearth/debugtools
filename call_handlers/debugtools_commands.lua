@@ -331,4 +331,28 @@ function Commands:get_all_data(session, response, game_object)
    response:resolve(data)
 end
 
+function Commands:call_component_function_command(session, response, entity, component_name, function_name, ...)
+   if not entity then
+      response:reject('unknown entity')
+      return
+   end
+
+   local component = entity:get_component(component_name)
+   if not component then
+      response:reject('no component '..component_name..' on entity.')
+      return
+   end
+
+   local function_ptr = component[function_name]
+   if not function_ptr or type(function_ptr) ~= 'function' then
+      response:reject(function_name..' is not a function')
+      return
+   end
+
+   local data = function_ptr(component, ...)
+
+   response:resolve(data)
+end
+
+
 return Commands

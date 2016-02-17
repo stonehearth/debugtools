@@ -473,4 +473,23 @@ $(document).ready(function(){
          return false;
       }
    });
+
+   radiant.console.register('release', {
+      call: function(cmdobjs, fn, args) {
+         var entity;
+         if (args.length > 0) {
+            entity = 'object://game/' + args[0];
+         } else {
+            entity = selected;
+         }
+         return radiant.call('debugtools:call_component_function_command', entity, 'stonehearth:bait_trap', 'release');
+      },
+      description : "releases the pet in a bait trap",
+      test: function(entity) {
+         if (entity && entity.get('stonehearth:bait_trap')) {
+            return true;
+         }
+         return false;
+      }
+   });
 });

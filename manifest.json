@@ -165,6 +165,10 @@
       "get_all_data" : {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"          
+      },
+      "call_component_function_command" : {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"          
       }
    },
    "default_locale": "en"
