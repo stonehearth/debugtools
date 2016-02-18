@@ -25,6 +25,7 @@ App.StonehearthPerfmonView = App.View.extend({
       var self = this;
 
       self._defaultPrecision = 2;
+      self._profilingLongTicks = false;
 
       self._defaultSuffixes = {
          '-3': 'n',
@@ -195,7 +196,17 @@ App.StonehearthPerfmonView = App.View.extend({
 
    actions: {
       toggleLongTickProfile: function() {
-         radiant.call('radiant:toggle_profile_long_ticks');
+         var self = this;
+         radiant.call('radiant:toggle_profile_long_ticks')
+            .done(function(response) {
+               if (response.msg.indexOf("enabled") >= 0) {
+                  self._profilingLongTicks = true;
+               } else {
+                  self._profilingLongTicks = false;
+               }
+
+               self.set('profiling_long_ticks', self._profilingLongTicks);
+            });
       }
    }
 

@@ -5,14 +5,17 @@
 <script type="text/x-handlebars" data-template-name="perfmon">
    <div id="perfmon">
       <div id="toolbar" class="header">
-         Perfmon
-         <div class='close'><a href='#'>close window</a></div>
-
-         <br/><br/>
-
          <a id="toggleLongTickProfile" href="#" {{action "toggleLongTickProfile" target="view"}} class="button" title="Toggle Profile Long Ticks">
-            <i class="fa fa-file-archive-o fa-fw fa-lg"></i>
+            {{#if view.profiling_long_ticks}}
+               <i class="fa fa-stop fa-fw fa-lg"></i>  
+            {{else}}
+               <i class="fa fa-play fa-fw fa-lg"></i>
+            {{/if}}
          </a>
+
+         Perfmon
+
+         <div class='close'><a href='#'>close window</a></div>
       </div>
       <div id="entries">
          <table>
