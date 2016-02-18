@@ -492,4 +492,11 @@ $(document).ready(function(){
          return false;
       }
    });
+
+   radiant.console.register('get_global_vision', {
+      call: function(cmdobjs, fn, args) {
+         return radiant.call_obj('stonehearth.population', 'get_global_vision_command');
+      },
+      description : "Returns list of all objects in global vision of the caller's population"
+   });
 });
