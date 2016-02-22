@@ -354,5 +354,11 @@ function Commands:call_component_function_command(session, response, entity, com
    response:resolve(data)
 end
 
+function Commands:ai_reconsider_entity_command(session, response, entity)
+   stonehearth.ai:reconsider_entity(entity, 'debugtools reconsider')
+
+   return true
+end
+
 
 return Commands
