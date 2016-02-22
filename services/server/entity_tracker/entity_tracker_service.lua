@@ -36,9 +36,8 @@ function EntityTrackerService:initialize()
                local inventory = stonehearth.inventory:get_inventory(player_id)
                if inventory and inventory:contains_item(entity) then
                   local container = inventory:container_for(entity)
-                  radiant.verify(container, "Entity %s is not in world and not in any storage container. Last parent was %s", entity, self._entity_parents[id])
                   if not container then
-
+                     radiant.verify(false, "Entity %s is not in world and not in any storage container. Last parent was %s", entity, self._entity_parents[id])
                   end
                end
             else
