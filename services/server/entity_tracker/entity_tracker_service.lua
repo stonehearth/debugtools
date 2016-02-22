@@ -12,6 +12,8 @@ function EntityTrackerService:initialize()
       self._sv.entities = {}
       self._sv.out_of_bounds_entities = {}
    end
+
+   self._entity_parents = {}
    
    if track_entities then
       self._all_entities = {}
@@ -23,9 +25,27 @@ function EntityTrackerService:initialize()
          end)
    end
 
-   radiant.events.listen(radiant, 'radiant:entity:post_create', function(e)
-      --radiant.log.write('entity_tracker', 0, 'Entity %s was created', e.entity)
-   end)
+   radiant.events.listen(radiant, 'radiant:mob:parent_changed', function(e)
+         local entity = e.entity
+         if entity and entity:is_valid() then
+            local id = entity:get_id()
+            local player_id = radiant.entities.get_player_id(entity)
+            local parent = radiant.entities.get_parent(entity)
+            if parent == nil and self._entity_parents[id] ~= nil then
+               -- parent changed to nil. why?
+               local inventory = stonehearth.inventory:get_inventory(player_id)
+               if inventory and inventory:contains_item(entity) then
+                  local container = inventory:container_for(entity)
+                  radiant.verify(container, "Entity %s is not in world and not in any storage container. Last parent was %s", entity, self._entity_parents[id])
+                  if not container then
+
+                  end
+               end
+            else
+               self._entity_parents[id] = parent
+            end
+         end
+      end)
 end
 
 function EntityTrackerService:get_entity_info_command(session, response, id)
