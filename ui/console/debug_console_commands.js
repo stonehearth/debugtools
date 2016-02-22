@@ -499,4 +499,17 @@ $(document).ready(function(){
       },
       description : "Returns list of all objects in global vision of the caller's population"
    });
+
+   radiant.console.register('ai_reconsider', {
+      call: function(cmdobjs, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
+         return radiant.call('debugtools:ai_reconsider_entity_command', selected);
+      },
+      description : "Calls reconsider on the selected entity",
+      test: function(entity) {
+         return true;
+      }
+   });
 });
