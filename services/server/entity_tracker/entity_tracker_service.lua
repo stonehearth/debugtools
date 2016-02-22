@@ -25,25 +25,32 @@ function EntityTrackerService:initialize()
          end)
    end
 
-   radiant.events.listen(radiant, 'radiant:mob:parent_changed', function(e)
-         local entity = e.entity
-         if entity and entity:is_valid() then
-            local id = entity:get_id()
-            local player_id = radiant.entities.get_player_id(entity)
-            local parent = radiant.entities.get_parent(entity)
-            if parent == nil and self._entity_parents[id] ~= nil then
-               -- parent changed to nil. why?
-               local inventory = stonehearth.inventory:get_inventory(player_id)
-               if inventory and inventory:contains_item(entity) then
-                  local container = inventory:container_for(entity)
-                  if not container then
-                     radiant.verify(false, "Entity %s is not in world and not in any storage container. Last parent was %s", entity, self._entity_parents[id])
-                  end
+   local update_entity_parent = function(entity)
+      if entity and entity:is_valid() then
+         local id = entity:get_id()
+         local player_id = radiant.entities.get_player_id(entity)
+         local parent = radiant.entities.get_parent(entity)
+         if parent == nil and self._entity_parents[id] ~= nil then
+            -- parent changed to nil. why?
+            local inventory = stonehearth.inventory:get_inventory(player_id)
+            if inventory and inventory:contains_item(entity) then
+               local container = inventory:container_for(entity)
+               if not container then
+                  radiant.verify(false, "Entity %s is not in world and not in any storage container. Last parent was %s", entity, self._entity_parents[id])
                end
-            else
-               self._entity_parents[id] = parent
             end
+         else
+            self._entity_parents[id] = parent
          end
+      end
+   end
+
+   radiant.events.listen(radiant, 'radiant:mob:parent_changed', function(e)
+         update_entity_parent(e.entity)
+      end)
+
+   radiant.events.listen(radiant, 'stonehearth:inventory:container_changed', function(e)
+         update_entity_parent(e.entity)
       end)
 end
 
