@@ -1,5 +1,6 @@
 local Point3 = _radiant.csg.Point3
 local InterruptAi = require 'mixintos.interrupt_ai.interrupt_ai'
+local entity_forms_lib = require 'stonehearth.lib.entity_forms.entity_forms_lib'
 
 local Commands = class()
 
@@ -360,5 +361,35 @@ function Commands:ai_reconsider_entity_command(session, response, entity)
    return true
 end
 
+function Commands:fill_storage_command(session, response, entity, uri)
+   if not entity then
+      response:reject('unknown entity')
+      return
+   end
+
+   local storage_component = entity:get_component('stonehearth:storage')
+   if not storage_component then
+      response:reject('entity is not storage')
+      return
+   end
+
+   local add_to_storage = function(storage, item_uri)
+      local item = radiant.entities.create_entity(item_uri, {owner = entity})
+      local root, iconic = entity_forms_lib.get_forms(item)
+      if iconic then
+         storage:add_item(iconic)
+      else
+         storage:add_item(item)
+      end
+   end
+
+   local num = storage_component:get_capacity() - storage_component:get_num_items()
+
+   for i=1, num do
+      add_to_storage(storage_component, uri)
+   end
+
+   return true
+end
 
 return Commands
