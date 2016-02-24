@@ -512,4 +512,24 @@ $(document).ready(function(){
          return true;
       }
    });
+
+   radiant.console.register('fill_storage', {
+      call: function(cmdobjs, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
+         var uri = 'stonehearth:resources:wood:oak_log';
+         if (args.length > 0) {
+            uri = args[0];
+         }
+         return radiant.call('debugtools:fill_storage_command', selected, uri);
+      },
+      description : "Fills the selected storage with the specified uri. If no uri specified, defaults to oak logs. Usage: fill_storage stonehearth:resources:wood:oak_log",
+      test: function(entity) {
+         if (entity && entity.get('stonehearth:storage') && !entity.get('stonehearth:stockpile')) {
+            return true;
+         }
+         return false;
+      }
+   });
 });
