@@ -213,7 +213,14 @@ App.StonehearthObjectBrowserView = App.View.extend({
       },
 
       selectEntity: function() {
-         radiant.call('stonehearth:select_entity', this.get('uri'));
+         var entity = this.get('uri');
+
+         if (entity) {
+            radiant.call('stonehearth:select_entity', entity);
+            radiant.call('stonehearth:camera_look_at_entity', entity);
+         } else {
+            console.log('entity undefined')
+         }
       }
    }
 });
