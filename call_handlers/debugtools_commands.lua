@@ -56,6 +56,31 @@ function Commands:create_entity(session, response, uri, iconic, location, rotati
    return true
 end
 
+function Commands:destroy_npc_stockpiles(session, response, npc_player_id)
+   if npc_player_id then
+      return self:_destroy_player_stockpiles(npc_player_id)
+   end
+   local npcs = radiant.resources.load_json('stonehearth:data:npc_index')
+   if npcs then
+      for player_id, info in pairs(npcs) do
+         self:_destroy_player_stockpiles(player_id)
+      end
+   end
+   return true
+end
+
+function Commands:_destroy_player_stockpiles(player_id)
+   local inventory = stonehearth.inventory:get_inventory(player_id)
+   local stockpiles = inventory and inventory:get_all_stockpiles()
+   if not stockpiles then
+      return false
+   end
+   for id, entity in pairs(stockpiles) do
+      radiant.entities.kill_entity(entity)
+   end
+   return true
+end
+
 function Commands:add_exp_command(session, response, entity, exp)
    local job_component = entity:get_component('stonehearth:job')
    if not job_component then
