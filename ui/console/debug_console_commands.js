@@ -474,6 +474,13 @@ $(document).ready(function(){
       }
    });
 
+   radiant.console.register('destroy_npc_stockpiles', {
+      call: function(cmdobjs, fn, args) {
+         return radiant.call('debugtools:destroy_npc_stockpiles', args[0])
+      },
+      description : "Destroys stockpiles of the npc player (Arg 0). If no argument is provided, destroys stockpiles of all npcs. Usage: destroy_npc_stockpiles goblins"
+   });
+
    radiant.console.register('release', {
       call: function(cmdobjs, fn, args) {
          var entity;
