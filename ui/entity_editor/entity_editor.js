@@ -388,6 +388,7 @@ App.StonehearthEntityEditorView = App.View.extend({
 
    destroy: function() {
       topElement.off("radiant_selection_changed.object_browser");
+      radiant.call("radiant:show_debug_shapes_for_entity", '');
       this._super();
    },
 
