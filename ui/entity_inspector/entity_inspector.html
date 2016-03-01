@@ -32,6 +32,12 @@
             [<a href="#" {{action "pinToEntity" target="view"}}>pin to entity</a>]
          {{/if}}
 
+         {{#if view.is_logging_overridden}}
+           [<a href="#" {{action "setLogOverride" 1000 target="view"}}>stop logging</a>]
+         {{else}}
+            [<a href="#" {{action "setLogOverride" 1 target="view"}}>start logging</a>]
+         {{/if}}
+
          {{#if view.pathdata}}
             [<a href="#" {{action "stepPathfinder" target="view"}}>step pathfinder ({{ view.pathdata.job_id }})</a>]
          {{else}}

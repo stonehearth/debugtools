@@ -181,6 +181,10 @@
       "fill_storage_command": {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"
+      },
+      "set_ai_log_override_command": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"
       }
    },
    "default_locale": "en"
