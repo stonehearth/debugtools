@@ -142,7 +142,7 @@ App.StonehearthEntityInspectorView = App.View.extend({
          var self = this;
          radiant.call('debugtools:set_ai_log_override_command', level)
             .done(function(response) {
-               if (response.level && response.level < 9) {
+               if (response.level && response.level >= 9) {
                   self.set('is_logging_overridden', true);
                } else {
                   self.set('is_logging_overridden', false);

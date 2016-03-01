@@ -33,9 +33,9 @@
          {{/if}}
 
          {{#if view.is_logging_overridden}}
-           [<a href="#" {{action "setLogOverride" 1000 target="view"}}>stop logging</a>]
+            [<a href="#" {{action "setLogOverride" 1 target="view"}}>stop logging</a>]
          {{else}}
-            [<a href="#" {{action "setLogOverride" 1 target="view"}}>start logging</a>]
+            [<a href="#" {{action "setLogOverride" 9 target="view"}}>start logging</a>]
          {{/if}}
 
          {{#if view.pathdata}}
