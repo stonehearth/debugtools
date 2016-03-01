@@ -136,6 +136,18 @@ App.StonehearthEntityInspectorView = App.View.extend({
 
       unPinn: function() {
          this.set('is_pinned_to_entity', false);
+      },
+
+      setLogOverride: function(level) {
+         var self = this;
+         radiant.call('debugtools:set_ai_log_override_command', level)
+            .done(function(response) {
+               if (response.level && response.level < 9) {
+                  self.set('is_logging_overridden', true);
+               } else {
+                  self.set('is_logging_overridden', false);
+               }
+            });
       }
    },
 });
