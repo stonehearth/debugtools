@@ -304,11 +304,10 @@ function Commands:get_all_item_uris_command(session, response)
 end
 
 function Commands:decay_command(session, response, entity)
-   local food_container = radiant.entities.get_entity_data(entity, 'stonehearth:food_container')
-   if not food_container then
+   local decay_tuning = radiant.entities.get_entity_data(entity, 'stonehearth:food_decay')
+   if not decay_tuning then
       return false
    end
-   local decay_tuning = food_container.decay
    local decay = radiant.entities.get_attribute(entity, 'decay')
    local largest_trigger_value = 0
 

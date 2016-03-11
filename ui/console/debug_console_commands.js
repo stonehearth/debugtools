@@ -321,7 +321,7 @@ $(document).ready(function(){
       },
       description: "Make a food decay immediately. Usage: decay",
       test: function(entity) {
-         if (entity && entity.get('uri.entity_data.stonehearth:food_container.decay')) {
+         if (entity && entity.get('uri.entity_data.stonehearth:food_decay')) {
             return true;
          }
          return false;
