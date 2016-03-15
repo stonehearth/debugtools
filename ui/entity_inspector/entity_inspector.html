@@ -74,8 +74,13 @@
 
 <script type="text/x-handlebars" data-template-name="executionFrame">
    <div class="row" {{bind-attr row_id="id"}}>
-      {{{view.model.id}}} 
-      <span id="state" {{bind-attr class="view.model.state"}} {{bind-attr style="view.styleOverride"}}>{{{view.model.name}}} </span>
+      {{{view.model.id}}}
+      <span id="state" {{bind-attr class="view.model.state"}} {{bind-attr style="view.styleOverride"}}>{{{view.model.name}}} 
+      {{#if view.model.priority}}
+          P({{{view.model.priority}}})
+      {{/if}}
+
+      </span>
       <span id="activity" class="activity"> - {{{view.model.does}}} </span> <br>
       {{#if view.model.progress }}
          {{{view.model.id}}} <span {{bind-attr class="view.model.pathfinder_data:steppablePath:"}} {{bind-attr style="view.styleOverride"}} {{action 'stepThis' view.model.pathfinder_data target="view"}}>{{{view.model.progress}}}</span>
