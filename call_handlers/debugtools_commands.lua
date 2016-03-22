@@ -103,6 +103,21 @@ function Commands:set_attr_command(session, response, entity, attribute, value)
    return true
 end
 
+function Commands:set_attr_to_all_citizens_command(session, response, attribute, value)
+   local town = stonehearth.town:get_town(session.player_id)
+   if town then
+      local citizens = town:get_citizens()
+      if citizens then
+         for _, citizen in citizens:each() do
+            local attribute_component = citizen:get_component('stonehearth:attributes')
+            attribute_component:set_attribute(attribute, value)
+         end
+      end
+      return true
+   end
+   return false
+end
+
 function Commands:set_game_speed_command(session, response, value)
    local default_speed = stonehearth.game_speed:get_default_speed() or 1
    local game_speed = stonehearth.game_speed

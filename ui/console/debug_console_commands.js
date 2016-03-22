@@ -359,6 +359,26 @@ $(document).ready(function(){
       debugMenuNameOverride: "Make Hungry"
    });
 
+   radiant.console.register('make_full', {
+      call: function(cmdobj, fn, args) {
+         var attribute = 'calories';
+         var val = 100;
+         if (!selected) {
+            return radiant.call('debugtools:set_attr_to_all_citizens_command', attribute, val);
+         }
+         return radiant.call('debugtools:set_attr_command', selected, attribute, val);
+      },
+      description: "Makes the selected entity full if the entity has the calories attribute. If no entity selected, sets attribute to every citizen in your town. Usage: make_full",
+      test: function(entity) {
+         var attributes = entity.get('stonehearth:attributes');
+         if (attributes && attributes.attributes && attributes.attributes.calories) {
+            return true;
+         }
+         return false;
+      },
+      debugMenuNameOverride: "Make Full"
+   });
+
    radiant.console.register('make_sleepy', {
       call: function(cmdobj, fn, args) {
          if (!selected) {
