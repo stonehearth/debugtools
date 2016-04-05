@@ -559,4 +559,11 @@ $(document).ready(function(){
          return false;
       }
    });
+
+   radiant.console.register('now', {
+      call: function(cmdobjs, fn, args) {
+         return radiant.call('debugtools:get_gamestate_now_command');
+      },
+      description : "Returns radiant.gamestate.now()",
+   });
 });

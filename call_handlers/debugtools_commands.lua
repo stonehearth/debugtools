@@ -436,4 +436,9 @@ function Commands:set_ai_log_override_command(session, response, level)
    response:resolve({level = level})
 end
 
+function Commands:get_gamestate_now_command(session, response)
+   local now = radiant.gamestate.now()
+   response:resolve({now = now})
+end
+
 return Commands
