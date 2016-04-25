@@ -99,6 +99,12 @@ function Commands:set_attr_command(session, response, entity, attribute, value)
    if not attribute_component then
       return false
    end
+   if attribute == 'health' then
+      -- special case health because it's not actually an attribute
+      radiant.entities.set_health(entity, value)
+      return true
+   end
+
    attribute_component:set_attribute(attribute, value)
    return true
 end
