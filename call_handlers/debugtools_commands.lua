@@ -87,7 +87,7 @@ function Commands:add_exp_command(session, response, entity, exp)
       return false
    end
    if not exp and not job_component:is_max_level() then
-      job_component:_level_up()
+      job_component:level_up()
    else
       job_component:add_exp(exp)
    end
