@@ -92,6 +92,21 @@
    </ul>
 </script>
 
+<script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserWaitForRequirementsMetEncounter">
+   <div class='subtitle'> Wait For Requirements Met </div>  
+   <table>
+      <tr><td>Requirements Met</td></tr>
+      {{#each requirement in view.requirements }}
+         <tr><td>{{ requirement }}</td></tr>
+      {{/each}}
+      <tr><td>Recheck Time</td><td>{{ view.progress.recheck_time }}</td></tr>
+   </table>
+
+   <ul class="menu">
+      <li><i class="fa fa-bolt fa-fw fa-lg"></i><a href="#" {{action "triggerNow" target="view"}}> Trigger Now </a></li>
+   </ul>
+</script>
+
 <script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserWaitForTimeOfDayEncounter">
    <div class='subtitle'> Wait For Time Of Day </div>  
    <table>

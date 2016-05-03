@@ -12,7 +12,7 @@ App.StonehearthObjectBrowserIcon = App.View.extend({
       $('#objectBrowserIcon').tooltipster();
       this.$().click(function() {
          App.debugView.addView(App.StonehearthObjectBrowserView, { trackSelected: true })
-      })
+      });
    }
 
 });
@@ -320,6 +320,7 @@ App.StonehearthObjectBrowserEncounterView = App.ContainerView.extend({
          'stonehearth:game_master:encounters:wait' :                 'StonehearthObjectBrowserWaitEncounterView',
          'stonehearth:game_master:encounters:wait_for_net_worth' :   'StonehearthObjectBrowserWaitForNetWorthEncounterView',
          'stonehearth:game_master:encounters:wait_for_time_of_day' : 'StonehearthObjectBrowserWaitForTimeOfDayEncounterView',
+         'stonehearth:game_master:encounters:wait_for_requirements_met' : 'StonehearthObjectBrowserWaitForRequirementsMetView',
          'stonehearth:game_master:encounters:collection_quest' :     'StonehearthObjectBrowserCollectionQuestEncounterView',
       }
 
@@ -430,6 +431,31 @@ App.StonehearthObjectBrowserWaitForTimeOfDayEncounterView = App.StonehearthObjec
       triggerNow: function() {
          this._call_encounter('trigger_now_cmd');
       },
+   }
+});
+
+App.StonehearthObjectBrowserWaitForRequirementsMetView = App.StonehearthObjectBrowserBaseView.extend({
+   templateName: 'stonehearthObjectBrowserWaitForRequirementsMetEncounter',
+   pollRate: 500,
+   actions: {
+      triggerNow: function() {
+         this._call_encounter('trigger_now_cmd');
+      },
+   },
+
+   _poll_encounter : function() {
+   var self = this;
+      if (!self._dead) {
+         self._call_encounter('get_progress_cmd')
+                  .done(function(o) {
+                     if (!self._dead) {
+                        self.set('progress', o);
+                        self.set('requirements', radiant.map_to_array(o.requirements, function(k, v) {
+                           return k.toString() + ': ' + v.toString();
+                        }));
+                     }
+                  })
+      }
    }
 });
 
