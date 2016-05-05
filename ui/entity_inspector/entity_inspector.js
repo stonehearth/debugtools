@@ -71,6 +71,9 @@ App.StonehearthEntityInspectorView = App.View.extend({
    templateName: 'entityInspector',
    uriProperty: 'model',
    closeOnEsc: true,
+   components: {
+      "unit_info" : {}
+   },
 
    init: function() {
       this._super();
@@ -78,7 +81,7 @@ App.StonehearthEntityInspectorView = App.View.extend({
       $(top).on("radiant_selection_changed.entity_inspector", function (_, data) {
          if (!self.get('is_pinned_to_entity')) {
             self.set('uri', data.selected_entity);
-         }         
+         }
      });
    },
 
@@ -140,7 +143,7 @@ App.StonehearthEntityInspectorView = App.View.extend({
 
       setLogOverride: function(level) {
          var self = this;
-         radiant.call('debugtools:set_ai_log_override_command', level)
+         radiant.call('debugtools:set_ai_log_override_command', level, self.get('uri'))
             .done(function(response) {
                if (response.level && response.level >= 9) {
                   self.set('is_logging_overridden', true);

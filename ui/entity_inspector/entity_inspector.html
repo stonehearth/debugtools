@@ -54,6 +54,7 @@
       <div id="content">
          {{#if view.model.debug_info }}
             {{#view "stonehearthAiThread" uriBinding="view.model.debug_info" }}
+               Entity Name: {{view.model.entity_name}}
                {{ view "stonehearthExecutionFrame" uriBinding="view.model.execution_frame" }}
             {{/view}}
          {{/if}}
