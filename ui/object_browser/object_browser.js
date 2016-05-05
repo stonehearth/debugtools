@@ -367,6 +367,19 @@ App.StonehearthObjectBrowserBaseView = App.View.extend({
          self._poll_encounter();
          self._interval = setInterval(function() { self._poll_encounter(); }, self.pollRate);
       }
+
+      self._call_encounter('get_out_edges_cmd')
+         .done(function(o) {
+            if (!self._dead) {
+               if (o.out_edges && o.type == "trigger_one") {
+                  var edgeList = [];
+                  radiant.each(o.out_edges, function(k, v) {
+                     edgeList.push(v.out_edge);
+                  });
+               }
+               self.set('out_edges', edgeList);
+            }
+         });
    }.observes('model').on('init'),
 
    _poll_encounter : function() {
@@ -411,6 +424,9 @@ App.StonehearthObjectBrowserGeneratorEncounterView = App.StonehearthObjectBrowse
       triggerNow: function() {
          this._call_encounter('trigger_now_cmd');
       },
+      triggerEdge: function(edge_name) {
+         this._call_encounter('trigger_now_cmd', edge_name)
+      }
    }
 });
 
