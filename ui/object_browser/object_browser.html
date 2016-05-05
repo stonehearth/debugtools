@@ -72,7 +72,7 @@
 
 <script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserEncounter">
    <div class='title'>
-      {{ view.model.ctx.encounter_name }}
+      {{ view.encounter_name }}
    </div>
 </script>
 
@@ -81,6 +81,9 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserWaitForNetWorthEncounter">
+   <div class='title'>
+      {{ view.encounter_name }}
+   </div>
    <div class='subtitle'> Wait For Net Worth </div>  
    <table>
       <tr><td>Current</td><td>{{ view.progress.current }}</td></tr>
@@ -93,6 +96,9 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserWaitForRequirementsMetEncounter">
+   <div class='title'>
+      {{ view.encounter_name }}
+   </div>
    <div class='subtitle'> Wait For Requirements Met </div>  
    <table>
       <tr><td>Requirements Met</td></tr>
@@ -108,6 +114,9 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserWaitForTimeOfDayEncounter">
+   <div class='title'>
+      {{ view.encounter_name }}
+   </div>
    <div class='subtitle'> Wait For Time Of Day </div>  
    <table>
       <tr><td>Alarm Time</td><td>{{ view.progress.alarm_time }}</td></tr>
@@ -125,7 +134,10 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserWaitEncounter">
-   <div class='subtitle'> Wait </div>  
+   <div class='title'>
+      {{ view.encounter_name }}
+   </div>
+   <div class='subtitle'> Wait </div>
    <table>
       {{#if view.progress.time_left }}
          <tr><td>Time left: </td><td>{{ view.progress.time_left }}</td></tr>
@@ -147,6 +159,9 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserGeneratorEncounter">
+   <div class='title'>
+      {{ view.encounter_name }}
+   </div>
    <div class='subtitle'> Generator </div>  
    <table>
       {{#if view.progress.next_spawn_time }}
@@ -168,6 +183,9 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="stonehearthObjectBrowserCollectionQuestEncounter">
+   <div class='title'>
+      {{ view.encounter_name }}
+   </div>
    <div class='subtitle'> Collection Quest </div>  
    <table>
       {{#if view.progress.time_left }}
