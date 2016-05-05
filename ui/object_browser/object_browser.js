@@ -332,7 +332,7 @@ App.StonehearthObjectBrowserEncounterView = App.ContainerView.extend({
       }
 
       this.destroyAllChildren();
-      this._childView = this.createChildView(App[encounterSubViewClass], {uri : obj.script.__self});
+      this._childView = this.createChildView(App[encounterSubViewClass], {uri : obj.script.__self, encounter_name : obj.node_name});
       this.pushObject(this._childView);
    }
 });
@@ -426,7 +426,10 @@ App.StonehearthObjectBrowserWaitEncounterView = App.StonehearthObjectBrowserBase
       triggerEdge: function(edge_name) {
          this._call_encounter('trigger_now_cmd', edge_name)
       }
-   }
+   },
+   ctxUpdated: function() {
+      console.log('model ctx updated!')
+   }.observes('model.ctx')
 });
 
 App.StonehearthObjectBrowserGeneratorEncounterView = App.StonehearthObjectBrowserBaseView.extend({
