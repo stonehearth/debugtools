@@ -437,8 +437,17 @@ function Commands:fill_storage_command(session, response, entity, uri)
    return true
 end
 
-function Commands:set_ai_log_override_command(session, response, level)
-   _radiant.ai.set_log_level_override(level)
+function Commands:set_ai_log_override_command(session, response, level, entity)
+   if entity and entity:is_valid() then
+      if level ~= 0 then
+         _radiant.ai.set_entity_log_level_override(entity:get_id())
+      else
+         _radiant.ai.set_entity_log_level_override(0) -- if no entity, clear out the entity ID stuff.
+      end
+   else
+      _radiant.ai.set_entity_log_level_override(0) -- if no entity, clear out the entity ID stuff.
+      _radiant.ai.set_log_level_override(level)
+   end
    response:resolve({level = level})
 end
 
