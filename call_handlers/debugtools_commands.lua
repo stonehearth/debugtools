@@ -439,7 +439,7 @@ end
 
 function Commands:set_ai_log_override_command(session, response, level, entity)
    if entity and entity:is_valid() then
-      if level ~= 0 then
+      if level > 1 then
          _radiant.ai.set_entity_log_level_override(entity:get_id())
       else
          _radiant.ai.set_entity_log_level_override(0) -- if no entity, clear out the entity ID stuff.
