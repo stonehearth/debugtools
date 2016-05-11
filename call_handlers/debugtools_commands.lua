@@ -109,6 +109,13 @@ function Commands:set_attr_command(session, response, entity, attribute, value)
    return true
 end
 
+function Commands:get_score_command(session, response, score_type)
+   local scores = stonehearth.score:get_scores_for_player(session.player_id):get_score_data()
+   local score = scores and scores.total_scores:get(score_type) or 0
+
+   response:resolve({score = score})
+end
+
 function Commands:set_attr_to_all_citizens_command(session, response, attribute, value)
    local town = stonehearth.town:get_town(session.player_id)
    if town then
