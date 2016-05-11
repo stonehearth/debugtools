@@ -339,6 +339,17 @@ $(document).ready(function(){
       description: "Return info about an entity, even if the entity has been destroyed. Pass in id of the entity. Usage: get_entity_info 82215"
    });
 
+   radiant.console.register('get_score', {
+      call: function(cmdobj, fn, args) {
+         if (!args[0]) {
+            return "must provide the name of the score you wish to retrieve";
+         }
+         var score_type = args[0];
+         return radiant.call('debugtools:get_score_command', score_type);
+      },
+      description: "Get the town's score for specified score type. Usage: get_score military_strength"
+   });
+
    radiant.console.register('make_hungry', {
       call: function(cmdobj, fn, args) {
          if (!selected) {

@@ -94,6 +94,10 @@
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"
       },
+      "get_score_command": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"
+      },
       "reset_scores_command": {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"
