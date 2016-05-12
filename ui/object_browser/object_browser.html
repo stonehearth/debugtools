@@ -197,6 +197,12 @@
       {{#if view.progress.time_left }}
          <li><i class="fa fa-bolt fa-fw fa-lg"></i><a href="#" {{action "forceReturnNow" target="view"}}> Force Return Now </a></li>
       {{/if}}
+      <br>
+      {{#if view.out_edges }}
+         {{#each edge in view.out_edges}}
+             <li><a href="#" {{action "triggerEdge" edge target="view"}}> Trigger {{edge}} </a></li>
+         {{/each}}
+      {{/if}}
    </ul>
 </script>
 
