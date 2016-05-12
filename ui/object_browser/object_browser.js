@@ -494,6 +494,9 @@ App.StonehearthObjectBrowserCollectionQuestEncounterView = App.StonehearthObject
    templateName: 'stonehearthObjectBrowserCollectionQuestEncounter',
    pollRate: 500,
    actions: {
+      triggerEdge: function(edge_name) {
+         this._call_encounter('trigger_now_cmd', edge_name)
+      },
       forceReturnNow: function() {
          this._call_encounter('force_return_now_cmd');
       },
