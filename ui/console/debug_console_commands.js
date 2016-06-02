@@ -577,4 +577,17 @@ $(document).ready(function(){
       },
       description : "Returns radiant.gamestate.now()",
    });
+
+   radiant.console.register('increase_city_tier', {
+      call: function(cmdobjs, fn, args) {
+         return radiant.call_obj('stonehearth.population', 'debug_increase_city_tier');
+      },
+      description : "Increases the city tier of the settlement by 1",
+      test: function(entity) {
+         if (entity.uri && entity.uri.__self && entity.uri.__self.indexOf('camp_standard') >= 0) {
+            return true;
+         }
+         return false;
+      }
+   });
 });
