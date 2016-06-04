@@ -590,4 +590,14 @@ $(document).ready(function(){
          return false;
       }
    });
+
+   radiant.console.register('fixup_components', {
+      call: function(cmdobjs, fn, args) {
+         return radiant.call('debugtools:fixup_components_command', selected);
+      },
+      description : "If there are any components missing on this entity, we will attempt to add them",
+      test: function(entity) {
+         return true;
+      }
+   });
 });
