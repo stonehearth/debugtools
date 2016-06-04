@@ -463,4 +463,28 @@ function Commands:get_gamestate_now_command(session, response)
    response:resolve({now = now})
 end
 
+function Commands:fixup_components_command(session, response, entity)
+   if not entity then
+      response:reject('unknown entity')
+      return
+   end
+   local uri = entity:get_uri()
+   local json = radiant.resources.load_json(uri)
+   if not json then
+      response:reject('uri '..uri..' has no json')
+      return
+   end
+
+   local components = json.components or {}
+   local added_components = {}
+   for component_name, _ in pairs(components) do
+      if not entity:get_component(component_name) then
+         entity:add_component(component_name)
+         table.insert(added_components, component_name)
+      end
+   end
+
+   response:resolve({added_components = added_components})
+end
+
 return Commands
