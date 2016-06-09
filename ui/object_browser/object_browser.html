@@ -39,9 +39,11 @@
          <a id="togglePrivateVariables" href="#" {{action "togglePrivateVariables" target="view"}} class="button" title="Toggle Private Variables View">
             <i class="fa fa-user-secret fa-fw fa-lg"></i>
          </a>
-         <a id="selectEntity" href="#" {{action "selectEntity" target="view"}} class="button" title="Select Entity">
-            <i class="fa fa-search-plus fa-fw fa-lg"></i>
-         </a>
+         {{#if view.model.mob }}
+            <a id="selectEntity" href="#" {{action "selectEntity" target="view"}} class="button" title="Select Entity">
+               <i class="fa fa-search-plus fa-fw fa-lg"></i>
+            </a>
+         {{/if}}
          <br>
       </div>
       <div id="body">
