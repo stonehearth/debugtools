@@ -578,6 +578,19 @@ $(document).ready(function(){
       description : "Returns radiant.gamestate.now()",
    });
 
+   radiant.console.register('spawn_encounter', {
+      call: function(cmdobjs, fn, args) {
+         var campaign = args[0];
+         var name = args[1];
+         var options = args[2];
+         if (!(campaign && name)) {
+            return false;
+         }
+         return radiant.call('debugtools:spawn_encounter_command', campaign, name, options);
+      },
+      description : "Spawns the encounter specified. WARNING: Only for testing purposes, will corrupt saves and cause odd encounter spawning behavior in saves. Arguments should be: the campaign name, the encounter name. Usage: spawn_encounter ambient_threats create_necromancer_crypt",
+   });
+
    radiant.console.register('increase_city_tier', {
       call: function(cmdobjs, fn, args) {
          return radiant.call_obj('stonehearth.population', 'debug_increase_city_tier');
