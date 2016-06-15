@@ -463,6 +463,20 @@ function Commands:get_gamestate_now_command(session, response)
    response:resolve({now = now})
 end
 
+function Commands:spawn_encounter_command(session, response, campaign_name, encounter_name, args)
+   local options = {
+      campaign_name = campaign_name,
+      edge_name = encounter_name,
+      override_info = args
+   }
+
+   stonehearth.game_master:set_ignore_start_requirements(true)
+   self:_trigger_campaign_encounter(options)
+   stonehearth.game_master:set_ignore_start_requirements(false)
+   response:resolve({})
+
+end
+
 function Commands:fixup_components_command(session, response, entity)
    if not entity then
       response:reject('unknown entity')
@@ -485,6 +499,67 @@ function Commands:fixup_components_command(session, response, entity)
    end
 
    response:resolve({added_components = added_components})
+end
+
+-- Yuck, move this to a file that can be shared so it is not copy pasted everywhere.
+function Commands:_trigger_campaign_encounter(options)
+   assert(options.edge_name) -- the name of the in_edge of the desired encounter
+
+   if not self._campaign_started or options.campaign_name ~= self._campaign_name then
+      self._gm_index = radiant.resources.load_json('stonehearth:data:gm_index')
+      assert(options.campaign_name, 'campaign_name not specified in options!')
+
+      local enc_arc
+      local enc_node
+      local function get_to_the_challenge(...)
+         local args = {...}
+         local event_name = args[1]
+         if event_name == 'elect_node' then
+            local _, nodelist_name, nodes = unpack(args)
+            if nodelist_name == options.campaign_name then
+               local mod_campaign_map = self._gm_index.campaigns[options.campaign_name]
+               local mod_campaign_name, _ = next(mod_campaign_map)
+               radiant.assert(mod_campaign_name, 'campaign %s not found in gm_index!', options.campaign_name)
+               return mod_campaign_name, nodes[mod_campaign_name]
+            end
+         elseif event_name == 'override_campaign_arc' then
+            local _, campaign, target_arc_type, data = unpack(args)
+            if target_arc_type == 'trigger' then
+               return options.arc or 'trigger'
+            end
+         elseif event_name == 'trigger_arc_edge' then
+            local _, arc, edge_name, parent_node = unpack(args)
+            if edge_name == 'start' then
+               --Jump directly to spawning the wolf cage encounter
+               local encounter_uri = arc._sv.encounters._sv.nodelist[options.edge_name]
+               if not encounter_uri then
+                  return
+               end
+               local encounter = radiant.create_controller('stonehearth:game_master:encounter', encounter_uri)
+               enc_arc = arc
+               enc_node = encounter
+               return options.edge_name, encounter
+            end
+         end
+      end
+
+      stonehearth.game_master:debug_campaign(options.campaign_name, function(...)
+         local result = { get_to_the_challenge(...) }
+         if #result > 0 then
+            return unpack(result)
+         end
+      end, options.override_info)
+
+      self._campaign_started = true
+      self._campaign_name = options.campaign_name
+      self._enc_arc = enc_arc
+      self._enc_node = enc_node
+   else
+      stonehearth.game_master:debug_trigger_encounter(self._enc_arc,
+                                                      options.edge_name,
+                                                      self._enc_node,
+                                                      options.override_info)
+   end
 end
 
 return Commands
