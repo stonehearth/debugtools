@@ -463,10 +463,11 @@ function Commands:get_gamestate_now_command(session, response)
    response:resolve({now = now})
 end
 
-function Commands:spawn_encounter_command(session, response, campaign_name, encounter_name, args)
+function Commands:spawn_encounter_command(session, response, campaign_name, encounter_name, arc, args)
    local options = {
       campaign_name = campaign_name,
       edge_name = encounter_name,
+      arc = arc,
       override_info = args
    }
 
