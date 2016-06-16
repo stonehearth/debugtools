@@ -580,16 +580,20 @@ $(document).ready(function(){
 
    radiant.console.register('spawn_encounter', {
       call: function(cmdobjs, fn, args) {
+         for (var i=0; i<args.length; i++) {
+            var result = args[i].trim();
+            result = result.length === 0 ? null : result;
+            args[i] = result;
+         }
          var campaign = args[0];
          var name = args[1];
          var arc = args[2];
-         var options = args[3];
          if (!(campaign && name)) {
             return false;
          }
-         return radiant.call('debugtools:spawn_encounter_command', campaign, name, arc, options);
+         return radiant.call('debugtools:spawn_encounter_command', campaign, name, arc);
       },
-      description : "Spawns the encounter specified. WARNING: Only for testing purposes, will corrupt saves and cause odd encounter spawning behavior in saves. Arguments should be: campaign name, encounter name, arc name. Usage: spawn_encounter ambient_threats create_necromancer_crypt",
+      description : "Spawns the encounter specified. WARNING: Only for testing purposes, may cause lasting issues if game is saved after using cmd. Arguments should be: campaign, encounter, arc. Usage: spawn_encounter ambient_threats create_necromancer_crypt trigger",
    });
 
    radiant.console.register('increase_city_tier', {
