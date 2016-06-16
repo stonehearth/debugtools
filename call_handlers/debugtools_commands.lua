@@ -466,8 +466,8 @@ end
 function Commands:spawn_encounter_command(session, response, campaign_name, encounter_name, arc, args)
    local options = {
       campaign_name = campaign_name,
-      edge_name = encounter_name,
-      arc = arc,
+      encounter_name = encounter_name,
+      arc = arc or 'trigger',
       override_info = args
    }
 
