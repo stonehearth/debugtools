@@ -467,7 +467,7 @@ function Commands:spawn_encounter_command(session, response, campaign_name, enco
    local options = {
       campaign_name = campaign_name,
       encounter_name = encounter_name,
-      arc = arc or 'trigger',
+      arc = arc,
       override_info = args
    }
 
