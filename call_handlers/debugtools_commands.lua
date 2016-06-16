@@ -472,7 +472,7 @@ function Commands:spawn_encounter_command(session, response, campaign_name, enco
    }
 
    stonehearth.game_master:set_ignore_start_requirements(true)
-   stonehearth.game_master:trigger_campaign_encounter(options)
+   stonehearth.game_master:debug_trigger_campaign_encounter(options)
    stonehearth.game_master:set_ignore_start_requirements(false)
    response:resolve({})
 
