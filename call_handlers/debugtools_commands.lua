@@ -502,4 +502,26 @@ function Commands:fixup_components_command(session, response, entity)
    response:resolve({added_components = added_components})
 end
 
+function Commands:select_storage_command(session, response, entity)
+   if not radiant.check.is_entity(entity) then
+      response:reject('unknown entity')
+      return
+   end
+
+   local inventory = stonehearth.inventory:get_inventory(session.player_id)
+   if not inventory then
+      response:reject('no inventory for requester')
+      return
+   end
+
+   local container = inventory:container_for(entity)
+   if not container then
+      response:reject('entity has no container')
+      return
+   end
+
+   response:resolve({container = container})
+end
+
+
 return Commands

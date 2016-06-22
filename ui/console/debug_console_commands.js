@@ -618,4 +618,16 @@ $(document).ready(function(){
          return true;
       }
    });
+
+   radiant.console.register('select_storage', {
+      call: function(cmdobjs, fn, args) {
+         return radiant.call('debugtools:select_storage_command', selected)
+                  .done(function(response) {
+                     if (response.container) {
+                        radiant.call('stonehearth:select_entity', response.container);
+                     }
+                  });
+      },
+      description : "Select's the storage that contains the entity, if it has one."
+   });
 });
