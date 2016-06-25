@@ -523,5 +523,23 @@ function Commands:select_storage_command(session, response, entity)
    response:resolve({container = container})
 end
 
+local PROFILER_ENABLED = false
+local PROFILER_LONG_TICKS = false
+function Commands:toggle_profiler(session, response, long_ticks)
+   if PROFILER_ENABLED then
+      PROFILER_ENABLED = false
+   else
+      PROFILER_ENABLED = true
+      PROFILER_LONG_TICKS = long_ticks
+   end
+
+   if PROFILER_LONG_TICKS then
+      _radiant.call('radiant:toggle_profile_long_ticks')
+   else
+      _radiant.call('radiant:toggle_cpu_profile')
+   end
+      
+   response:resolve({profiler_enabled = PROFILER_ENABLED, long_ticks_only = PROFILER_LONG_TICKS})
+end
 
 return Commands

@@ -20,12 +20,11 @@ App.StonehearthPerfmonView = App.View.extend({
    loading: false,
    history: [],
    forwardHistory: [],
-
+   long_ticks_only: true,
    init: function() {
       var self = this;
 
       self._defaultPrecision = 2;
-      self._profilingLongTicks = false;
 
       self._defaultSuffixes = {
          '-3': 'n',
@@ -197,15 +196,11 @@ App.StonehearthPerfmonView = App.View.extend({
    actions: {
       toggleLongTickProfile: function() {
          var self = this;
-         radiant.call('radiant:toggle_profile_long_ticks')
+         var long_ticks = self.$('#long_ticks_enabled').is(':checked');
+         radiant.call('debugtools:toggle_profiler', long_ticks)
             .done(function(response) {
-               if (response.msg.indexOf("enabled") >= 0) {
-                  self._profilingLongTicks = true;
-               } else {
-                  self._profilingLongTicks = false;
-               }
-
-               self.set('profiling_long_ticks', self._profilingLongTicks);
+               self.set('profiler_enabled', response.profiler_enabled);
+               self.set('long_ticks_only', response.long_ticks_only);
             });
       }
    }

@@ -5,14 +5,6 @@
 <script type="text/x-handlebars" data-template-name="perfmon">
    <div id="perfmon">
       <div id="toolbar" class="header">
-         <a id="toggleLongTickProfile" href="#" {{action "toggleLongTickProfile" target="view"}} class="button" title="Toggle Profile Long Ticks">
-            {{#if view.profiling_long_ticks}}
-               <i class="fa fa-stop fa-fw fa-lg"></i>  
-            {{else}}
-               <i class="fa fa-play fa-fw fa-lg"></i>
-            {{/if}}
-         </a>
-
          Perfmon
 
          <div class='close'><a href='#'>close window</a></div>
@@ -28,6 +20,20 @@
                <tr><td class="name">{{entry.name}}</td><td>{{entry.value}}</td></tr>
             {{/each}}
          </table>
+      </div>
+      <div id="profiling">
+         <h3>Profiling</h3>
+         <a id="toggleLongTickProfile" href="#" {{action "toggleLongTickProfile" target="view"}} class="button" title="Toggle Profile Long Ticks">
+            {{#if view.profiler_enabled}}
+               <i class="fa fa-stop fa-fw fa-lg"></i>  
+            {{else}}
+               <i class="fa fa-play fa-fw fa-lg"></i>
+            {{/if}}
+         </a>
+         <br>
+         <div id="longTicksCheckbox">
+            <input type="checkbox" id="long_ticks_enabled" {{bind-attr checked=view.long_ticks_only}}> Long Ticks Only
+         </div>
       </div>
    </div>
 </script>
