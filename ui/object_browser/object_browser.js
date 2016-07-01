@@ -197,14 +197,18 @@ App.StonehearthObjectBrowserView = App.View.extend({
             radiant.call("debugtools:get_all_data", uri)
                .done(function(response) {
                   if (response) {
-                     self.set("privateData", response.__fields)
+                     if (response.__fields) {
+                        self.set("privateData", response.__fields);
+                     } else {
+                        self.set("privateData", response);
+                     }
                   }
                })
                .fail(function(error) {
-                  self.set("privateData", error)
+                  self.set("privateData", error);
                });
          } else {
-            self.set("privateData", null)
+            self.set("privateData", null);
          }
       },
 
