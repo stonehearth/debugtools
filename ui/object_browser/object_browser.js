@@ -35,7 +35,11 @@ App.StonehearthObjectBrowserView = App.View.extend({
       // So annoying!  Use the cached value of $(top) we got in 'stonehearthReady'
       topElement.on("radiant_selection_changed.object_browser", function (_, data) {
          if (self.trackSelected) {
-            var uri = data.selected_entity;
+            var uri = App.stonehearthClient.getSubSelectedEntity();
+            if (!uri) {
+               uri = App.stonehearthClient.getSelectedEntity();
+            }
+            //var uri = data.selected_entity;
             if (uri) {
                self.navigateTo(uri);
             }
@@ -123,7 +127,10 @@ App.StonehearthObjectBrowserView = App.View.extend({
    _updateTrackSelectedControl : function() {
       var self = this;
       if (self.trackSelected) {
-         var selected = App.stonehearthClient.getSelectedEntity();
+         var selected = App.stonehearthClient.getSubSelectedEntity();
+         if (!selected) {
+            selected = App.stonehearthClient.getSelectedEntity();
+         }
          if (selected) {
             self.set('uri', selected)
          }
