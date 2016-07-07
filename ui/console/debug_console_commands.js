@@ -630,4 +630,24 @@ $(document).ready(function(){
       },
       description : "Select's the storage that contains the entity, if it has one."
    });
+
+   radiant.console.register('unlock', {
+      call: function(smdobjs, fn, args) {
+         if (args.length > 1) {
+            var crop_or_recipe = args[0];
+            var job = args[1];
+            return radiant.call_obj('stonehearth.job', 'debug_manual_unlock', job, crop_or_recipe);
+         }
+         
+         return false;
+      },
+      description : "Manually unlocks the given crop or recipe for the given job. Example usage: unlock pumpkin stonehearth:jobs:farmer",
+      test: function(entity) {
+         var job = entity.get('stonehearth:job');
+         if (job && job.job_uri != "stonehearth:jobs:worker") {
+            return true;
+         }
+         return false;
+      }
+   });
 });
