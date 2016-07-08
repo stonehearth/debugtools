@@ -641,13 +641,6 @@ $(document).ready(function(){
          
          return false;
       },
-      description : "Manually unlocks the given crop or recipe for the given job. Example usage: unlock pumpkin stonehearth:jobs:farmer",
-      test: function(entity) {
-         var job = entity.get('stonehearth:job');
-         if (job && job.job_uri != "stonehearth:jobs:worker") {
-            return true;
-         }
-         return false;
-      }
+      description : "Manually unlocks the given crop or recipe for the given job. Example usage: unlock pumpkin stonehearth:jobs:farmer"
    });
 });
