@@ -118,4 +118,18 @@ function EntityTrackerService:load_entities_command(session, response)
       })
 end
 
+function EntityTrackerService:destroy_all_entities_with_uri(session, response, entity)
+   local uri = entity:get_uri()
+   local info = self._sv.entities[uri]
+   if info then
+      local entities = info.data:get_data().entities
+      for i, entity in ipairs(entities) do
+         radiant.entities.destroy_entity(entity)
+      end
+      return true
+   end
+
+   return false
+end
+
 return EntityTrackerService

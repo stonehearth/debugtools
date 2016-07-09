@@ -643,4 +643,16 @@ $(document).ready(function(){
       },
       description : "Manually unlocks the given crop or recipe for the given job. Example usage: unlock pumpkin stonehearth:jobs:farmer"
    });
+
+   /* -- this is dangerous, but useful for memory profiling
+   radiant.console.register('destroy_all', {
+      call: function(cmdobj, fn, args) {
+         return radiant.call_obj('debugtools.entity_tracker', 'destroy_all_entities_with_uri', selected);
+      },
+      description: "Destroy all entities of this type",
+      test: function(entity) {
+         return true;
+      }
+   }); */
+
 });
