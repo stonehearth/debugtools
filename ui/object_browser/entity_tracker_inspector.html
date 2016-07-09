@@ -6,11 +6,10 @@
          </a>
       </div>
       <div id="body">
-      
 
       <table id="entitiesTable">
          <caption>Total Entities: {{view.num_entities}}</caption>
-        <tr>
+         <tr>
           <th id="countHeader">Count
             {{#if view.sort.count_asc}}
                <i class="fa fa-sort-numeric-asc fa-fw fa-lg"></i>
@@ -30,7 +29,15 @@
             {{/if}}
 
           </th>
-        </tr>
+         </tr>
+
+         <tr>
+            <a id="refreshIcon" href="#" {{action "refresh" target="view"}} class="button">
+               <i class="fa fa-refresh fa-fw fa-lg"></i>
+            </a>
+            <input id="uriInput"/>
+            <a id="searchButton" href="#" {{ action "search" target="view"}}>Search</button>
+         </tr>
 
       {{#each entity_data in view.all_entities}}
          <tr>

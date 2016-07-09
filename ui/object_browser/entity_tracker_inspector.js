@@ -36,6 +36,21 @@ App.StonehearthEntityTrackerInspectorView = App.View.extend({
          self._setSortFunction('uri', self._isAsc);
          self._updateAllEntities();
       });
+
+      self.$('#refreshIcon').click(function(event) {
+         self._updateAllEntities();
+      });
+
+      self.$('#uriInput').focus(function(e) {
+         $(self).val('');
+      });
+
+      self.$('#uriInput').keypress(function(e) {
+         if (e.which == 13) { // return
+            var uri = self.$('#uriInput').val();
+            self._updateAllEntities(uri);
+         }
+      });
    },
 
    _setSortFunction: function(sort_field, isAsc) {
@@ -54,7 +69,7 @@ App.StonehearthEntityTrackerInspectorView = App.View.extend({
       this.set('sort.' + sort_field + '_' + suffix, true);
    },
 
-   _updateAllEntities: function() {
+   _updateAllEntities: function(key) {
       var self = this;
       var entities_dictionary = self.get('model.entities');
       var entities_array = [];
@@ -64,12 +79,15 @@ App.StonehearthEntityTrackerInspectorView = App.View.extend({
          if (uri == "") {
             uri = "[no uri]"
          }
-         entities_array[index] = {
-            count : v.count,
-            uri : uri,
-            data : v.data
-         };
-         index++;
+         var addToArray = false;
+         if (typeof key != "string" || (key && (key != "") && (uri.indexOf(key) != -1))) {
+            entities_array[index] = {
+               count : v.count,
+               uri : uri,
+               data : v.data
+            };
+            index++;
+         }
       });
 
       self._sort(entities_array);
@@ -83,6 +101,13 @@ App.StonehearthEntityTrackerInspectorView = App.View.extend({
    }.property('model.out_of_bounds_entities'),
 
    actions: {
+      refresh: function() {
+         this._updateAllEntities();
+      },
+      search: function() {
+         var uri = this.$('#uriInput').val();
+         this._updateAllEntities(uri);
+      },
       close: function () {
          this.destroy();
       },
