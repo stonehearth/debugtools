@@ -134,8 +134,7 @@ end
 function Commands:set_game_speed_command(session, response, value)
    local default_speed = stonehearth.game_speed:get_default_speed() or 1
    local game_speed = stonehearth.game_speed
-   game_speed:set_game_speed(default_speed * value, true)
-   return true
+   return game_speed:set_game_speed(default_speed * value, true)
 end
 
 function Commands:reset_location_command(session, response, entity, x, y, z)
