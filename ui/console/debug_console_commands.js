@@ -440,7 +440,7 @@ $(document).ready(function(){
       description: "Makes the player hostile with the selected entity's faction",
       debugMenuNameOverride: "Make Hostile",
       test: function(entity) {
-         var player_id = entity.get('unit_info.player_id');
+         var player_id = entity.get('player_id');
          if (player_id && player_id != "player_1") {
             return true;
          }
@@ -459,7 +459,7 @@ $(document).ready(function(){
       description: "Makes the player hostile with the selected entity's faction",
       debugMenuNameOverride: "Make Neutral",
       test: function(entity) {
-         var player_id = entity.get('unit_info.player_id');
+         var player_id = entity.get('player_id');
          if (player_id && player_id != "player_1") {
             return true;
          }
@@ -478,7 +478,7 @@ $(document).ready(function(){
       description: "Makes the player hostile with the selected entity's faction",
       debugMenuNameOverride: "Make Friendly",
       test: function(entity) {
-         var player_id = entity.get('unit_info.player_id');
+         var player_id = entity.get('player_id');
          if (player_id && player_id != "player_1") {
             return true;
          }

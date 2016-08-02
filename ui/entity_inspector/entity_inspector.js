@@ -72,7 +72,6 @@ App.StonehearthEntityInspectorView = App.View.extend({
    uriProperty: 'model',
    closeOnEsc: true,
    components: {
-      "unit_info" : {}
    },
 
    init: function() {
