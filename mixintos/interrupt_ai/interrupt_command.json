@@ -7,6 +7,5 @@
    "action": "call",
    "function": "debugtools:interrupt_ai",
    "args": [
-      "{{self}}"
    ]
 }
