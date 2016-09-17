@@ -678,8 +678,15 @@ $(document).ready(function(){
       }
    });
 
-   /* -- this is dangerous, but useful for memory profiling
-   radiant.console.register('destroy_all', {
+   radiant.console.register('dump_cache_stats', {
+      call: function(smdobjs, fn, args) {
+         return radiant.call('radiant:dump_cache_stats');
+      },
+      description : "Displays spatial cache stats."
+   });
+
+   /* -- this is dangerous, but useful for memory profiling*/
+   /*radiant.console.register('destroy_all', {
       call: function(cmdobj, fn, args) {
          return radiant.call_obj('debugtools.entity_tracker', 'destroy_all_entities_with_uri', selected);
       },
@@ -687,6 +694,5 @@ $(document).ready(function(){
       test: function(entity) {
          return true;
       }
-   }); */
-
+   });*/
 });

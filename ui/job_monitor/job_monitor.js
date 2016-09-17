@@ -38,6 +38,11 @@ var BFS_PROGRESS_BAR_COLOR = 'rgb(0, 0, 255)';
 var BFS_PROGRESS_BAR_BACKGROUND_COLOR = 'rgb(64, 64, 64)';
 var ASTAR_PROGRESS_BAR_COLOR = 'rgb(255, 215, 0)';
 
+var IPF_PATHFINDER_PROGRESS_BAR_LEFT = 350;
+var IPF_PATHFINDER_PROGRESS_BAR_RIGHT = 450;
+var IPF_PROGRESS_BAR_COLOR = 'rgb(0, 0, 255)';
+var IPF_PROGRESS_BAR_BACKGROUND_COLOR = 'rgb(64, 64, 64)';
+
 var DEFAULT_TEXT_COLOR = 'rgb(255, 255, 255)';
 var INACTIVE_TEXT_COLOR = 'rgb(128, 128, 128)';
 var EJS_INDENT_FOR_PATHFINDERS = 24;
@@ -101,6 +106,74 @@ App.StonehearthJobMonitorView = App.View.extend({
          return ACTIVE_FADE_COLORS[time_diff];
       }
       return STARVED_COLOR;
+   },
+
+   _drawIPFStats: function(cursor, name, ipf) {
+      // Add the box in the left margin showing the activity of the bfs
+      var self = this;
+      var activeColor = this._getLedColor(ipf);
+      var textColor = activeColor ? DEFAULT_TEXT_COLOR : INACTIVE_TEXT_COLOR;
+      if (activeColor) {
+         this._addBox(cursor.x, cursor.y + SMALL_LED_Y_OFFSET, SMALL_LED_SIZE, SMALL_LED_SIZE, activeColor);
+      }
+
+      // Add the entity text.
+      this._ctx.font = SMALL_FONT;
+      this._addText(cursor.x + SMALL_LED_SIZE + SMALL_TEXT_LEFT_MARGIN,
+                    cursor.y,
+                    ipf.id + ': ' + name + ' (pri:' + ipf.priority + ')',
+                    textColor);
+
+      // Draw the progress bar.
+      var r = Math.min(1.0, ipf.explored_distance / 1024.0);
+      var barWidth = BFS_PATHFINDER_PROGRESS_BAR_RIGHT - BFS_PATHFINDER_PROGRESS_BAR_LEFT;
+      var progressWidth = barWidth * r;
+      this._addBox(cursor.x + BFS_PATHFINDER_PROGRESS_BAR_LEFT,
+                   cursor.y,
+                   barWidth,
+                   SMALL_LED_SIZE,
+                   BFS_PROGRESS_BAR_BACKGROUND_COLOR);
+      this._addBox(cursor.x + BFS_PATHFINDER_PROGRESS_BAR_LEFT,
+                   cursor.y,
+                   progressWidth,
+                   SMALL_LED_SIZE,
+                   BFS_PROGRESS_BAR_COLOR);
+
+      cursor.y = cursor.y + SMALL_FONT_LINE_SPACING;
+
+      if (ipf.metrics && ipf.metrics.status == 'active') {
+         this._drawAStarPathfinder(cursor, '  astar: ' + ipf.metrics.name, ipf.metrics);
+      }
+
+      var sorted = [];
+      radiant.each(bfs.queries, function(id, search) {
+         sorted.push({
+            description: search.description,
+            search: search,
+         })
+      });
+      sorted.sort(function(l, r) {
+         if (l.description < r.description) {
+            return -1;
+         }
+         if (l.description > r.description) {
+            return 1;
+         }
+         return 0;
+      })
+
+      // Add all the tasks indented under the ejs.
+      cursor.x += EJS_INDENT_FOR_PATHFINDERS;
+      radiant.each(sorted, function(i, o) {
+        self._addText(cursor.x + SMALL_TEXT_LEFT_MARGIN,
+                      cursor.y,
+                      '(dsts:' + o.search.count +')' + o.description,
+                      textColor);
+        cursor.y = cursor.y + SMALL_FONT_LINE_SPACING;
+      });
+      cursor.x -= EJS_INDENT_FOR_PATHFINDERS;
+
+      cursor.y = cursor.y + LARGE_FONT_LINE_SPACING;  
    },
 
    _drawBFSPathfinder: function(cursor, name, bfs) {
@@ -209,6 +282,8 @@ App.StonehearthJobMonitorView = App.View.extend({
          this._drawBFSPathfinder(cursor, name, tasklet);
       } else if (tasklet.type == 'astar') {
          this._drawAStarPathfinder(cursor, name, tasklet);
+      } else if (tasklet.type == 'ipf') {
+         this._drawIPFStats(cursor, name, tasklet);
       }
    },
 
