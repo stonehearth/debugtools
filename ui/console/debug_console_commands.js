@@ -654,6 +654,13 @@ $(document).ready(function(){
       description : "Manually unlocks the given crop or recipe for the given job. Example usage: unlock pumpkin stonehearth:jobs:farmer"
    });
 
+   radiant.console.register('toggle_select_building_subpart', {
+      call: function(smdobjs, fn, args) {
+         return radiant.call_obj('stonehearth.build_editor', 'toggle_select_building_subpart_command');
+      },
+      description : "Manually unlocks the given crop or recipe for the given job. Example usage: unlock pumpkin stonehearth:jobs:farmer"
+   });
+
    /* -- this is dangerous, but useful for memory profiling
    radiant.console.register('destroy_all', {
       call: function(cmdobj, fn, args) {
