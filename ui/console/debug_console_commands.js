@@ -538,6 +538,16 @@ $(document).ready(function(){
       description : "Returns list of all objects in global vision of the caller's population"
    });
 
+   radiant.console.register('get_current_interaction', {
+      call: function(cmdobjs, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
+         return radiant.call('debugtools:get_current_interaction_command', selected);
+      },
+      description : "Gets current interaction of selected entity"
+   })
+
    radiant.console.register('ai_reconsider', {
       call: function(cmdobjs, fn, args) {
          if (!selected) {

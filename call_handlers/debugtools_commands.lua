@@ -484,6 +484,14 @@ function Commands:fixup_components_command(session, response, entity)
    response:resolve({added_components = added_components})
 end
 
+function Commands:get_current_interaction_command(session, response, entity)
+   local social_component = entity:get_component('stonehearth:social')
+   if not social_component then
+      response:reject('entity does not have social component')
+   end
+   return { data = social_component:get_current_interaction_target() or '' }
+end
+
 function Commands:select_storage_command(session, response, entity)
    if not radiant.check.is_entity(entity) then
       response:reject('unknown entity')
