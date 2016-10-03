@@ -532,4 +532,28 @@ function Commands:toggle_profiler(session, response, long_ticks)
    response:resolve({profiler_enabled = PROFILER_ENABLED, long_ticks_only = PROFILER_LONG_TICKS})
 end
 
+function Commands:print_ai_stack_command(session, response, entity)
+   if not radiant.check.is_entity(entity) then
+      response:reject('unknown entity')
+      return
+   end
+
+   local ai_component = entity:get_component('stonehearth:ai')
+   if not ai_component then
+      response:reject('no ai component')
+      return
+   end
+
+   local thread = ai_component:get_thread()
+   if not thread then
+      response:reject('no thread')
+      return
+   end
+
+   local trace_back = debug.traceback(thread._co)
+   radiant.report_traceback(trace_back)
+
+   response:resolve({'reported traceback'})
+end
+
 return Commands

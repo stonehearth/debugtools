@@ -661,6 +661,23 @@ $(document).ready(function(){
       description : "Manually unlocks the given crop or recipe for the given job. Example usage: unlock pumpkin stonehearth:jobs:farmer"
    });
 
+   radiant.console.register('print_ai_stack', {
+      call: function(smdobjs, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
+
+         return radiant.call('debugtools:print_ai_stack_command', selected);
+      },
+      description : "prints the ai's current coroutine stack trace",
+      test: function(entity) {
+         if (entity && entity.get('stonehearth:ai')) {
+            return true;
+         }
+         return false;
+      }
+   });
+
    /* -- this is dangerous, but useful for memory profiling
    radiant.console.register('destroy_all', {
       call: function(cmdobj, fn, args) {
