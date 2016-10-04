@@ -550,10 +550,21 @@ function Commands:print_ai_stack_command(session, response, entity)
       return
    end
 
-   local trace_back = debug.traceback(thread._co)
-   radiant.report_traceback(trace_back)
+   local coroutine = thread._co
+   if not coroutine then
+      response:reject('thread has no coroutine!')
+      return
+   end
 
-   response:resolve({'reported traceback'})
+   local trace_back = debug.traceback(coroutine)
+
+   if not trace_back then
+      response:reject('no trace back obtained for coroutine')
+      return
+   end
+
+   radiant.report_traceback(trace_back)
+   response:resolve({'reported traceback for entity '..tostring(entity)})
 end
 
 return Commands
