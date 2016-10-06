@@ -1,7 +1,8 @@
 {
    "info" :{
       "name" : "Stonehearth Debug Tools",
-      "version" : 3
+      "version" : 3,
+      "default_enabled": false
    },
 
    "server_init_script" : "file(debugtools_server)",
