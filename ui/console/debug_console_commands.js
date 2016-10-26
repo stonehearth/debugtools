@@ -689,6 +689,7 @@ $(document).ready(function(){
       call: function(fn, args) {
          return radiant.call('radiant:dump_memory_stats');
       },
+      returnType: 'table',
       description : "Dumps a table of all tracked client and server memory"
    });
 
