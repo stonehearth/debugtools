@@ -685,6 +685,13 @@ $(document).ready(function(){
       description : "Displays spatial cache stats."
    });
 
+   radiant.console.register('dump_memory_stats', {
+      call: function(fn, args) {
+         return radiant.call('radiant:dump_memory_stats');
+      },
+      description : "Dumps a table of all tracked client and server memory"
+   });
+
    /* -- this is dangerous, but useful for memory profiling*/
    radiant.console.register('destroy_all', {
       call: function(cmdobj, fn, args) {
