@@ -410,16 +410,16 @@ $(document).ready(function(){
       debugMenuNameOverride: "Make Sleepy"
    });
 
-   radiant.console.register('hotload_mod', {
+   radiant.console.register('hotload_manifest', {
       call: function(cmdobj, fn, args) {
-         var modName = args[0];
-         if (!modName) {
-            modName = "rayyas_children_ui";
+         var manifest = args[0];
+         if (!manifest) {
+            manifest = "/rayyas_children/ui/manifest.json";
          }
 
-         return radiant.call('radiant:send_hotload_module_event', modName)
+         return radiant.call('radiant:hotload_manifest', manifest)
       },
-      description: "hot load a mod",
+      description: "hot load a manifest",
    });
 
    radiant.console.register('load_entity_tracker', {
