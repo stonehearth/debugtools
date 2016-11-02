@@ -99,9 +99,9 @@ function Commands:set_attr_command(session, response, entity, attribute, value)
    if not attribute_component then
       return false
    end
-   if attribute == 'health' then
+   if attribute == 'health' or attribute == 'guts' then
       -- special case health because it's not actually an attribute
-      radiant.entities.set_health(entity, value)
+      radiant.entities.set_resource(entity, attribute, value)
       return true
    end
 
