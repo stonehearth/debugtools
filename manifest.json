@@ -1,6 +1,7 @@
 {
    "info" :{
-      "name" : "Stonehearth Debug Tools",
+      "name" : "debugtools",
+      "display_name": "Stonehearth Debug Tools",
       "version" : 3,
       "default_enabled": false
    },
