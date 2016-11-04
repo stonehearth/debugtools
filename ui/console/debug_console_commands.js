@@ -720,6 +720,35 @@ $(document).ready(function(){
       description : "Dumps a table of all tracked client and server memory"
    });
 
+   radiant.console.register('dump_trace_stats', {
+      call: function(fn, args) {
+         return radiant.call('radiant:dump_trace_stats');
+      },
+      renderFunc: function(data) {
+         var tbl = $('<table>');
+
+         var addTable = function(data) {
+            $.each(data, function(path, count) {
+               var r = $('<tr>');
+               r.append($('<td>').text(path))
+               r.append($('<td>').text(count))
+               tbl.append(r);
+            });
+         }
+
+         tbl.append($('<tr>').append($('<td>').text('-----------')));
+         tbl.append($('<tr>').append($('<td>').text('client')));
+         tbl.append($('<tr>').append($('<td>').text('-----------')));
+         addTable(data.client);
+         tbl.append($('<tr>').append($('<td>').text('-----------')));
+         tbl.append($('<tr>').append($('<td>').text('server')));
+         tbl.append($('<tr>').append($('<td>').text('-----------')));
+         addTable(data.server);
+         return tbl;
+      },
+      description : "Dumps a table of all tracked client and server memory"
+   });
+
    /* -- this is dangerous, but useful for memory profiling*/
    radiant.console.register('destroy_all', {
       call: function(cmdobj, fn, args) {
