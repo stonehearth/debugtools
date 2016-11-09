@@ -172,6 +172,34 @@ $(document).ready(function(){
       description: "Add the specified buff uri to the currently selected entity. Usage: add_buff stonehearth:buffs:starving"
    });
 
+   radiant.console.register('add_thought', {
+      call: function(cmdobj, fn, args) {
+         var thoughtKey = args[0];
+         if (selected) {
+            if (thoughtKey.indexOf(':') < 0) {
+               return false
+            }
+            return radiant.call('debugtools:add_thought_command', selected, thoughtKey);
+         }
+         return false;
+      },
+      description: "Add the specified thought key (format is thought_type:category:name) to the currently selected entity. Usage: add_thought spectrum:space:very_cramped"
+   });
+
+   radiant.console.register('remove_thought', {
+      call: function(cmdobj, fn, args) {
+         var thoughtKey = args[0];
+         if (selected) {
+            if (thoughtKey.indexOf(':') < 0) {
+               return false
+            }
+            return radiant.call('debugtools:remove_thought_command', selected, thoughtKey);
+         }
+         return false;
+      },
+      description: "Remove the specified thought key (format is thought_type:category:name) from the currently selected entity. Usage: remove_thought spectrum:space:very_cramped"
+   });
+
    radiant.console.register('remove_buff', {
       call: function(cmdobj, fn, args) {
          var buffUri = args[0];
