@@ -128,6 +128,10 @@
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"
       },
+      "set_happiness_command": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"
+      },
       "promote_to_command": {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"

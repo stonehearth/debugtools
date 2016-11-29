@@ -200,6 +200,20 @@ $(document).ready(function(){
       description: "Remove the specified thought key (format is thought_type:category:name) from the currently selected entity. Usage: remove_thought spectrum:space:very_cramped"
    });
 
+   radiant.console.register('set_happiness', {
+      call: function(cmdobj, fn, args) {
+         var value = parseInt(args[0]);
+         if (selected) {
+            if (!value) {
+               return false;
+            }
+            radiant.call('debugtools:set_happiness_command', selected, value);
+         }
+         return false;
+      },
+      description: "Remove the specified thought key (format is thought_type:category:name) from the currently selected entity. Usage: remove_thought spectrum:space:very_cramped"
+   });
+
    radiant.console.register('remove_buff', {
       call: function(cmdobj, fn, args) {
          var buffUri = args[0];

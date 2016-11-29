@@ -195,6 +195,13 @@ function Commands:remove_thought_command(session, response, entity, thought_key)
    return true
 end
 
+function Commands:set_happiness_command(session, response, entity, value)
+   local happiness_component = entity:get_component('stonehearth:happiness')
+   if happiness_component then
+      happiness_component:debug_set_happiness(value)
+   end
+end
+
 function Commands:promote_to_command(session, response, entity, job)
    if not string.find(job, ':') and not string.find(job, '/') then
       -- as a convenience for autotest writers, stick the stonehearth:job on
