@@ -241,9 +241,9 @@ $(document).ready(function(){
 
    radiant.console.register('add_citizen', {
       call: function(cmdobj, fn, args) {
-         return radiant.call('debugtools:add_citizen_command');
+         return radiant.call('debugtools:add_citizen_command', args[0]);
       },
-      description: "Add a new hearthling to your town. Usage: add_citizen"
+      description: "Add a new hearthling to your town. Usage: add_citizen opt_promote_to"
    });
 
    radiant.console.register('dump_backpack', {

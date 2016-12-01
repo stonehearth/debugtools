@@ -215,13 +215,18 @@ function Commands:promote_to_command(session, response, entity, job)
    return true
 end
 
-function Commands:add_citizen_command(session, response, entity, job)
+function Commands:add_citizen_command(session, response, job)
    local player_id = session.player_id
    local pop = stonehearth.population:get_population(player_id)
    local citizen = pop:create_new_citizen()
 
+   if not job then 
+      job = 'worker'
+   end
+   job = 'stonehearth:jobs:' .. job
+
    citizen:add_component('stonehearth:job')
-               :promote_to('stonehearth:jobs:worker')
+               :promote_to(job)
 
    local explored_region = stonehearth.terrain:get_visible_region(player_id):get()
    local centroid = _radiant.csg.get_region_centroid(explored_region):to_closest_int()
