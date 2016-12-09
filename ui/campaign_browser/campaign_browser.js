@@ -286,7 +286,7 @@ App.StonehearthGameMasterView = App.View.extend({
             }
 
             self._node_browser = new D3CollapsableTree({
-               container: this.$('#content')[0],
+               container: this.$('#campaignBrowserContent')[0],
                root_node_uri: o.__self,
                get_node_name : function(node) { return node.node_name; },
                get_node_children : function(node) { 
