@@ -183,7 +183,7 @@ $(document).ready(function(){
          }
          return false;
       },
-      description: "Add the specified thought key (format is mod_name:thought_type:category:name) to the currently selected entity. Usage: add_thought stonehearth:spectrum:space:very_cramped"
+      description: "Add the specified thought key (format is mod_name:thoughts:category:..) to the currently selected entity. Usage: add_thought stonehearth:thoughts:hunger:hungry"
    });
 
    radiant.console.register('remove_thought', {
@@ -197,7 +197,7 @@ $(document).ready(function(){
          }
          return false;
       },
-      description: "Remove the specified thought key (format is mod_name:thought_type:category:name) from the currently selected entity. Usage: remove_thought stonehearth:spectrum:space:very_cramped"
+      description: "Remove the specified thought key (format is mod_name:thought_type:category:name) from the currently selected entity. Usage: remove_thought stonehearth:thoughts:hunger:hungry"
    });
 
    radiant.console.register('set_happiness', {
@@ -211,7 +211,7 @@ $(document).ready(function(){
          }
          return false;
       },
-      description: "Remove the specified thought key (format is thought_type:category:name) from the currently selected entity. Usage: remove_thought spectrum:space:very_cramped"
+      description: "Sets the current happiness of the currently selected entity."
    });
 
    radiant.console.register('remove_buff', {
