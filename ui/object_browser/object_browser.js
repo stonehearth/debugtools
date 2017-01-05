@@ -248,7 +248,7 @@ App.StonehearthObjectBrowserContentView = App.View.extend({
       var subViewClass = known_types[type];
       if (!subViewClass) {
          subViewClass = 'stonehearthObjectBrowserRaw';
-      }      
+      }
 
       if (this._lastSubViewClass && this._lastSubViewClass != subViewClass) {
          Ember.run.scheduleOnce('afterRender', this, 'rerender');
@@ -268,7 +268,7 @@ App.StonehearthObjectBrowserRawPrivateView = App.View.extend({
       if (!model) {
          return '- no data -';
       }
-      var json = JSON.stringify(model, undefined, 2);
+      var json = json_stable_stringify(model, { space: '   ' });
       return json.replace(/&/g, '&amp;')
                  .replace(/</g, '&lt;')
                  .replace(/>/g, '&gt;')
@@ -289,7 +289,7 @@ App.StonehearthObjectBrowserRawView = App.View.extend({
       if (!model) {
          return '- no data -';
       }
-      var json = JSON.stringify(model, undefined, 2);
+      var json = json_stable_stringify(model, { space: '   ' });
       return json.replace(/&/g, '&amp;')
                  .replace(/</g, '&lt;')
                  .replace(/>/g, '&gt;')
@@ -419,8 +419,8 @@ App.StonehearthObjectBrowserBaseView = App.View.extend({
       return radiant.call_obj(obj, method, arg0, arg1, arg2)
                         .fail(function(o) {
                            console.log('failed!', o)
-                        })      
-   }   
+                        })
+   }
 });
 
 App.StonehearthObjectBrowserRawEncounterView = App.StonehearthObjectBrowserBaseView.extend({
@@ -530,7 +530,7 @@ App.stonehearthObjectBrowserDebugCommandsView = App.View.extend({
          self.$("#objectBrowser").css({top: self.posY, left: self.posX, position:'absolute'});
       }
       self._super();
-      
+
       var entity = self.get('model');
       if (entity) {
          self._modelUpdated();
@@ -567,6 +567,3 @@ App.stonehearthObjectBrowserDebugCommandsView = App.View.extend({
       },
    }
 });
-
-
-
