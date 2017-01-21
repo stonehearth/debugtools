@@ -18,6 +18,7 @@ App.StonehearthEntityTrackerInspectorView = App.View.extend({
 
    didInsertElement: function() {
       var self = this;
+      self.$().draggable();
       // look at entities
       self.$('#body').on("click", ".navlink", function(event) {
          var uri = $(this).attr('href');
