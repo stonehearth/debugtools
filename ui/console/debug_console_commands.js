@@ -236,7 +236,7 @@ $(document).ready(function(){
          }
          return false;
       },
-      description: "Instantly promote the selected hearthling to the specified job. Usage: promote_to footman"
+      description: "Instantly promote the selected hearthling to the specified job (must specify full alias for mods, i.e. fancy_mod:jobs:fancy_chef). Usage: promote_to footman"
    });
 
    radiant.console.register('add_citizen', {
