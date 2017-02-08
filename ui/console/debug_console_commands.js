@@ -200,6 +200,28 @@ $(document).ready(function(){
       description: "Remove the specified thought key (format is mod_name:thought_type:category:name) from the currently selected entity. Usage: remove_thought stonehearth:thoughts:hunger:hungry"
    });
 
+   radiant.console.register('add_trait', {
+      call: function(cmdobj, fn, args) {
+         var trait = args[0];
+         if (selected) {
+            return radiant.call('debugtools:add_trait_command', selected, trait);
+         }
+         return false;
+      },
+      description: "Add the trait to the currently selected entity. Usage: add_trait stonehearth:traits:night_owl"
+   });
+
+   radiant.console.register('remove_trait', {
+      call: function(cmdobj, fn, args) {
+         var trait = args[0];
+         if (selected) {
+            return radiant.call('debugtools:remove_trait_command', selected, trait);
+         }
+         return false;
+      },
+      description: "Removes the trait from the currently selected entity. Usage: remove_trait stonehearth:traits:night_owl"
+   });
+
    radiant.console.register('set_happiness', {
       call: function(cmdobj, fn, args) {
          var value = parseInt(args[0]);
