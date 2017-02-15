@@ -81,6 +81,17 @@ $(document).ready(function(){
       debugMenuNameOverride: "Level Up"
    });
 
+   radiant.console.register('set_health', {
+      call: function(cmdobj, fn, args) {
+         var val = parseInt(args[0]);
+         if (selected && val != NaN) {
+            return radiant.call('debugtools:set_attr_command', selected, 'health', val);
+         }
+         return false;
+      },
+      description: "Sets the health on the selected entity to the specified value. Usage: set_health 10"
+   });
+
    radiant.console.register('set_attr', {
       call: function(cmdobj, fn, args) {
          var attribute = args[0];
