@@ -50,7 +50,7 @@ $(document).ready(function(){
          }
       }
    });
-   
+
    radiant.console.register('add_gold', {
       call: function(cmdobj, fn, args) {
          var goldAmount = 100;
@@ -214,11 +214,12 @@ $(document).ready(function(){
    radiant.console.register('add_trait', {
       call: function(cmdobj, fn, args) {
          var trait = args[0];
+         var arg_map = args[1];
          if (selected) {
             if (trait.indexOf(':') < 0) {
                trait = "stonehearth:traits:" + trait;
             }
-            return radiant.call('debugtools:add_trait_command', selected, trait);
+            return radiant.call('debugtools:add_trait_command', selected, trait, arg_map);
          }
          return false;
       },
@@ -729,7 +730,7 @@ $(document).ready(function(){
             var job = args[1];
             return radiant.call_obj('stonehearth.job', 'debug_manual_unlock', job, crop_or_recipe);
          }
-         
+
          return false;
       },
       description : "Manually unlocks the given crop or recipe for the given job. Example usage: unlock pumpkin stonehearth:jobs:farmer"
