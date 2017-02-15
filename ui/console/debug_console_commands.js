@@ -204,6 +204,9 @@ $(document).ready(function(){
       call: function(cmdobj, fn, args) {
          var trait = args[0];
          if (selected) {
+            if (trait.indexOf(':') < 0) {
+               trait = "stonehearth:traits:" + trait;
+            }
             return radiant.call('debugtools:add_trait_command', selected, trait);
          }
          return false;
@@ -215,6 +218,9 @@ $(document).ready(function(){
       call: function(cmdobj, fn, args) {
          var trait = args[0];
          if (selected) {
+            if (trait.indexOf(':') < 0) {
+               trait = "stonehearth:traits:" + trait;
+            }
             return radiant.call('debugtools:remove_trait_command', selected, trait);
          }
          return false;
