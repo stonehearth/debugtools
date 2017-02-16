@@ -214,7 +214,7 @@ $(document).ready(function(){
    radiant.console.register('add_trait', {
       call: function(cmdobj, fn, args) {
          var trait = args[0];
-         var arg_map = args[1];
+         var arg_map = args.slice(1, args.length);
          if (selected) {
             if (trait.indexOf(':') < 0) {
                trait = "stonehearth:traits:" + trait;
