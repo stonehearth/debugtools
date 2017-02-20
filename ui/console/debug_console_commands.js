@@ -54,8 +54,8 @@ $(document).ready(function(){
    radiant.console.register('add_gold', {
       call: function(cmdobj, fn, args) {
          var goldAmount = 100;
-         if (args[0]) {
-            goldAmount = JSON.parse(args[0]);
+         if (args._[0]) {
+            goldAmount = JSON.parse(args._[0]);
          }
          return radiant.call('debugtools:add_gold_console_command', goldAmount);
       },
@@ -64,7 +64,7 @@ $(document).ready(function(){
 
    radiant.console.register('add_exp', {
       call: function(cmdobj, fn, args) {
-         var xpAmount = parseInt(args[0]);
+         var xpAmount = parseInt(args._[0]);
          if (selected) {
             return radiant.call('debugtools:add_exp_command', selected, xpAmount);
          }
@@ -83,7 +83,7 @@ $(document).ready(function(){
 
    radiant.console.register('set_health', {
       call: function(cmdobj, fn, args) {
-         var val = parseInt(args[0]);
+         var val = parseInt(args._[0]);
          if (selected && val != NaN) {
             return radiant.call('debugtools:set_attr_command', selected, 'health', val);
          }
@@ -94,8 +94,8 @@ $(document).ready(function(){
 
    radiant.console.register('set_attr', {
       call: function(cmdobj, fn, args) {
-         var attribute = args[0];
-         var val = parseInt(args[1]);
+         var attribute = args._[0];
+         var val = parseInt(args._[1]);
          if (selected && attribute && val != NaN) {
             return radiant.call('debugtools:set_attr_command', selected, attribute, val);
          }
@@ -106,8 +106,8 @@ $(document).ready(function(){
 
    radiant.console.register('set', {
       call: function(cmdobj, fn, args) {
-         var attribute = args[0];
-         var val = parseInt(args[1]);
+         var attribute = args._[0];
+         var val = parseInt(args._[1]);
          if (selected && attribute && val != NaN) {
             return radiant.call('debugtools:set_attr_command', selected, attribute, val);
          }
@@ -118,7 +118,7 @@ $(document).ready(function(){
 
    radiant.console.register('set_game_speed', {
       call: function(cmdobj, fn, args) {
-         var val = parseInt(args[0]);
+         var val = parseInt(args._[0]);
          if (val != NaN) {
             return radiant.call('debugtools:set_game_speed_command', val);
          }
@@ -129,9 +129,9 @@ $(document).ready(function(){
 
    radiant.console.register('reset_location', {
       call: function(cmdobj, fn, args) {
-         var x = parseInt(args[0]);
-         var y = parseInt(args[1]);
-         var z = parseInt(args[2]);
+         var x = parseInt(args._[0]);
+         var y = parseInt(args._[1]);
+         var z = parseInt(args._[2]);
          if (selected) {
             return radiant.call('debugtools:reset_location_command', selected, x, y, z);
          }
@@ -142,8 +142,8 @@ $(document).ready(function(){
 
    radiant.console.register('change_score', {
       call: function(cmdobj, fn, args) {
-         var scoreName = args[0];
-         var val = parseInt(args[1]);
+         var scoreName = args._[0];
+         var val = parseInt(args._[1]);
          if (selected && scoreName) {
             return radiant.call('debugtools:change_score_command', selected, scoreName, val);
          }
@@ -171,7 +171,7 @@ $(document).ready(function(){
 
    radiant.console.register('add_buff', {
       call: function(cmdobj, fn, args) {
-         var buffUri = args[0];
+         var buffUri = args._[0];
          if (selected) {
             if (buffUri.indexOf(':') < 0) {
                buffUri = "stonehearth:buffs:" + buffUri;
@@ -185,7 +185,7 @@ $(document).ready(function(){
 
    radiant.console.register('add_thought', {
       call: function(cmdobj, fn, args) {
-         var thoughtKey = args[0];
+         var thoughtKey = args._[0];
          if (selected) {
             if (thoughtKey.indexOf(':') < 0) {
                return false
@@ -199,7 +199,7 @@ $(document).ready(function(){
 
    radiant.console.register('remove_thought', {
       call: function(cmdobj, fn, args) {
-         var thoughtKey = args[0];
+         var thoughtKey = args._[0];
          if (selected) {
             if (thoughtKey.indexOf(':') < 0) {
                return false
@@ -213,13 +213,12 @@ $(document).ready(function(){
 
    radiant.console.register('add_trait', {
       call: function(cmdobj, fn, args) {
-         var trait = args[0];
-         var arg_map = args.slice(1, args.length);
+         var trait = args._[0];
          if (selected) {
             if (trait.indexOf(':') < 0) {
                trait = "stonehearth:traits:" + trait;
             }
-            return radiant.call('debugtools:add_trait_command', selected, trait, arg_map);
+            return radiant.call('debugtools:add_trait_command', selected, trait, args);
          }
          return false;
       },
@@ -228,7 +227,7 @@ $(document).ready(function(){
 
    radiant.console.register('remove_trait', {
       call: function(cmdobj, fn, args) {
-         var trait = args[0];
+         var trait = args._[0];
          if (selected) {
             if (trait.indexOf(':') < 0) {
                trait = "stonehearth:traits:" + trait;
@@ -242,7 +241,7 @@ $(document).ready(function(){
 
    radiant.console.register('set_happiness', {
       call: function(cmdobj, fn, args) {
-         var value = parseInt(args[0]);
+         var value = parseInt(args._[0]);
          if (selected) {
             if (!value) {
                return false;
@@ -256,7 +255,7 @@ $(document).ready(function(){
 
    radiant.console.register('remove_buff', {
       call: function(cmdobj, fn, args) {
-         var buffUri = args[0];
+         var buffUri = args._[0];
          if (selected) {
             if (buffUri.indexOf(':') < 0) {
                buffUri = "stonehearth:buffs:" + buffUri;
@@ -270,7 +269,7 @@ $(document).ready(function(){
 
    radiant.console.register('promote_to', {
       call: function(cmdobj, fn, args) {
-         var job = args[0];
+         var job = args._[0];
          if (selected) {
             return radiant.call('debugtools:promote_to_command', selected, job);
          }
@@ -281,7 +280,7 @@ $(document).ready(function(){
 
    radiant.console.register('add_citizen', {
       call: function(cmdobj, fn, args) {
-         return radiant.call('debugtools:add_citizen_command', args[0]);
+         return radiant.call('debugtools:add_citizen_command', args._[0]);
       },
       description: "Add a new hearthling to your town. Usage: add_citizen opt_promote_to"
    });
@@ -312,7 +311,7 @@ $(document).ready(function(){
       },
 
       call: function(cmdobj, fn, args) {
-         var shouldShow = args.length > 0 ? this.stringToBoolean(args[0]) : true;
+         var shouldShow = args.length > 0 ? this.stringToBoolean(args._[0]) : true;
          _debug_show_untranslated = shouldShow;
       },
       description: "Use to display untranslated strings with *** around them. Usage: show_untranslated true/false"
@@ -333,7 +332,7 @@ $(document).ready(function(){
             return "must select something";
          }
 
-         var journalType = args[0];
+         var journalType = args._[0];
          return radiant.call('debugtools:add_journal_command', selected, journalType);
       },
       description: "Force add a journal entry for the selected hearthling. Usage: add_journal dreams"
@@ -412,10 +411,10 @@ $(document).ready(function(){
 
    radiant.console.register('get_entity_info', {
       call: function(cmdobj, fn, args) {
-         if (!args[0]) {
+         if (!args._[0]) {
             return "must provide an entity id";
          }
-         var id = parseInt(args[0]);
+         var id = parseInt(args._[0]);
          return radiant.call_obj('debugtools.entity_tracker', 'get_entity_info_command', id);
       },
       description: "Return info about an entity, even if the entity has been destroyed. Pass in id of the entity. Usage: get_entity_info 82215"
@@ -423,10 +422,10 @@ $(document).ready(function(){
 
    radiant.console.register('get_score', {
       call: function(cmdobj, fn, args) {
-         if (!args[0]) {
+         if (!args._[0]) {
             return "must provide the name of the score you wish to retrieve";
          }
-         var score_type = args[0];
+         var score_type = args._[0];
          return radiant.call('debugtools:get_score_command', score_type);
       },
       description: "Get the town's score for specified score type. Usage: get_score military_strength"
@@ -494,7 +493,7 @@ $(document).ready(function(){
 
    radiant.console.register('hotload_manifest', {
       call: function(cmdobj, fn, args) {
-         var manifest = args[0];
+         var manifest = args._[0];
          if (!manifest) {
             manifest = "/rayyas_children/ui/manifest.json";
          }
@@ -572,7 +571,7 @@ $(document).ready(function(){
       call: function(cmdobjs, fn, args) {
          var entity;
          if (args.length > 0) {
-            entity = 'object://game/' + args[0];
+            entity = 'object://game/' + args._[0];
          } else {
             entity = selected;
          }
@@ -589,7 +588,7 @@ $(document).ready(function(){
 
    radiant.console.register('destroy_npc_stockpiles', {
       call: function(cmdobjs, fn, args) {
-         return radiant.call('debugtools:destroy_npc_stockpiles', args[0])
+         return radiant.call('debugtools:destroy_npc_stockpiles', args._[0])
       },
       description : "Destroys stockpiles of the npc player (Arg 0). If no argument is provided, destroys stockpiles of all npcs. Usage: destroy_npc_stockpiles goblins"
    });
@@ -598,7 +597,7 @@ $(document).ready(function(){
       call: function(cmdobjs, fn, args) {
          var entity;
          if (args.length > 0) {
-            entity = 'object://game/' + args[0];
+            entity = 'object://game/' + args._[0];
          } else {
             entity = selected;
          }
@@ -650,7 +649,7 @@ $(document).ready(function(){
          }
          var uri = 'stonehearth:resources:wood:oak_log';
          if (args.length > 0) {
-            uri = args[0];
+            uri = args._[0];
          }
          return radiant.call('debugtools:fill_storage_command', selected, uri);
       },
@@ -677,9 +676,9 @@ $(document).ready(function(){
             result = result.length === 0 ? null : result;
             args[i] = result;
          }
-         var campaign = args[0];
-         var name = args[1];
-         var arc = args[2];
+         var campaign = args._[0];
+         var name = args._[1];
+         var arc = args._[2];
          if (!(campaign && name)) {
             return false;
          }
@@ -726,8 +725,8 @@ $(document).ready(function(){
    radiant.console.register('unlock', {
       call: function(smdobjs, fn, args) {
          if (args.length > 1) {
-            var crop_or_recipe = args[0];
-            var job = args[1];
+            var crop_or_recipe = args._[0];
+            var job = args._[1];
             return radiant.call_obj('stonehearth.job', 'debug_manual_unlock', job, crop_or_recipe);
          }
 
