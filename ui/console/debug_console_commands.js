@@ -218,6 +218,9 @@ $(document).ready(function(){
             if (trait.indexOf(':') < 0) {
                trait = "stonehearth:traits:" + trait;
             }
+            if (args.job_uri && args.job_uri.indexOf(':') < 0) {
+               args.job_uri = "stonehearth:jobs:" + args.job_uri;
+            }
             return radiant.call('debugtools:add_trait_command', selected, trait, args);
          }
          return false;
