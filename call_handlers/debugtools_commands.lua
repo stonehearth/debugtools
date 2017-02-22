@@ -210,8 +210,8 @@ function Commands:set_happiness_command(session, response, entity, value)
    end
 end
 
-function Commands:add_trait_command(session, response, entity, trait)
-   radiant.entities.add_trait(entity, trait)
+function Commands:add_trait_command(session, response, entity, trait, args)
+   radiant.entities.add_trait(entity, trait, args)
    return true
 end
 
