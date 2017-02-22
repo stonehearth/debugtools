@@ -314,7 +314,7 @@ $(document).ready(function(){
       },
 
       call: function(cmdobj, fn, args) {
-         var shouldShow = args.length > 0 ? this.stringToBoolean(args._[0]) : true;
+         var shouldShow = args._.length > 0 ? this.stringToBoolean(args._[0]) : true;
          _debug_show_untranslated = shouldShow;
       },
       description: "Use to display untranslated strings with *** around them. Usage: show_untranslated true/false"
@@ -573,7 +573,7 @@ $(document).ready(function(){
    radiant.console.register('destroy_immediately', {
       call: function(cmdobjs, fn, args) {
          var entity;
-         if (args.length > 0) {
+         if (args._.length > 0) {
             entity = 'object://game/' + args._[0];
          } else {
             entity = selected;
@@ -599,7 +599,7 @@ $(document).ready(function(){
    radiant.console.register('release', {
       call: function(cmdobjs, fn, args) {
          var entity;
-         if (args.length > 0) {
+         if (args._.length > 0) {
             entity = 'object://game/' + args._[0];
          } else {
             entity = selected;
@@ -651,7 +651,7 @@ $(document).ready(function(){
             return "must select something";
          }
          var uri = 'stonehearth:resources:wood:oak_log';
-         if (args.length > 0) {
+         if (args._.length > 0) {
             uri = args._[0];
          }
          return radiant.call('debugtools:fill_storage_command', selected, uri);
@@ -674,7 +674,7 @@ $(document).ready(function(){
 
    radiant.console.register('spawn_encounter', {
       call: function(cmdobjs, fn, args) {
-         for (var i=0; i<args.length; i++) {
+         for (var i = 0; i < args._.length; i++) {
             var result = args[i].trim();
             result = result.length === 0 ? null : result;
             args[i] = result;
@@ -727,7 +727,7 @@ $(document).ready(function(){
 
    radiant.console.register('unlock', {
       call: function(smdobjs, fn, args) {
-         if (args.length > 1) {
+         if (args._.length > 1) {
             var crop_or_recipe = args._[0];
             var job = args._[1];
             return radiant.call_obj('stonehearth.job', 'debug_manual_unlock', job, crop_or_recipe);
