@@ -16,7 +16,7 @@ function Commands:create_and_place_entity(session, response, uri, iconic)
    local entity = radiant.entities.create_entity(uri)
    local entity_forms = entity:get_component('stonehearth:entity_forms')
 
-   if iconic and entity_forms ~= nil then 
+   if iconic and entity_forms ~= nil then
       entity = entity_forms:get_iconic_entity()
    end
 
@@ -52,7 +52,7 @@ function Commands:create_entity(session, response, uri, iconic, location, rotati
    if inventory and not inventory:contains_item(entity) then
       inventory:add_item(entity)
    end
-   
+
    return true
 end
 
@@ -156,7 +156,7 @@ function Commands:change_score_command(session, response, entity, scoreName, val
    if score_component:get_score(scoreName) == nil then
       return false
    end
-   
+
    score_component:change_score(scoreName, value)
    return true
 end
@@ -165,7 +165,7 @@ function Commands:reset_scores_command(session, response, entity)
    local score_component = entity:get_component('stonehearth:score')
    if not score_component then
       return false
-   end   
+   end
    score_component:reset_all_scores()
    return true
 end
@@ -189,7 +189,7 @@ end
 function Commands:add_thought_command(session, response, entity, thought_key)
    local happiness_component = entity:get_component('stonehearth:happiness')
    if happiness_component then
-      happiness_component:add_thought(entity, thought_key)
+      radiant.entities.add_thought(entity, thought_key)
       return true
    end
    return false
@@ -198,7 +198,7 @@ end
 function Commands:remove_thought_command(session, response, entity, thought_key)
    local happiness_component = entity:get_component('stonehearth:happiness')
    if happiness_component then
-      happiness_component:remove_thought(entity, thought_key)
+      radiant.entities.remove_thought(entity, thought_key)
    end
    return true
 end
@@ -226,7 +226,7 @@ function Commands:promote_to_command(session, response, entity, job)
       -- there if they didn't put it there to begin with
       job = 'stonehearth:jobs:' .. job
    end
-   
+
    radiant.entities.drop_carrying_on_ground(entity)
    entity:get_component('stonehearth:job')
          :promote_to(job)
@@ -238,7 +238,7 @@ function Commands:add_citizen_command(session, response, job)
    local pop = stonehearth.population:get_population(player_id)
    local citizen = pop:create_new_citizen()
 
-   if not job then 
+   if not job then
       job = 'worker'
    end
    job = 'stonehearth:jobs:' .. job
@@ -341,7 +341,7 @@ function Commands:grow_command(session, response, entity)
       evolve_component:evolve()
       return true
    end
-   
+
    local growing_component = entity:get_component('stonehearth:growing')
    if growing_component then
       growing_component:_grow()
@@ -567,7 +567,7 @@ function Commands:toggle_profiler(session, response, long_ticks)
    else
       _radiant.call('radiant:toggle_cpu_profile')
    end
-      
+
    response:resolve({profiler_enabled = PROFILER_ENABLED, long_ticks_only = PROFILER_LONG_TICKS})
 end
 
