@@ -189,7 +189,7 @@ end
 function Commands:add_thought_command(session, response, entity, thought_key)
    local happiness_component = entity:get_component('stonehearth:happiness')
    if happiness_component then
-      happiness_component:add_thought(entity, thought_key)
+      radiant.entities.add_thought(entity, thought_key)
       return true
    end
    return false
@@ -198,7 +198,7 @@ end
 function Commands:remove_thought_command(session, response, entity, thought_key)
    local happiness_component = entity:get_component('stonehearth:happiness')
    if happiness_component then
-      happiness_component:remove_thought(entity, thought_key)
+      radiant.entities.remove_thought(entity, thought_key)
    end
    return true
 end
