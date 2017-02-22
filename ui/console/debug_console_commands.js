@@ -750,7 +750,6 @@ $(document).ready(function(){
          if (!selected) {
             return "must select something";
          }
-
          return radiant.call('debugtools:print_ai_stack_command', selected);
       },
       description : "prints the ai's current coroutine stack trace",
