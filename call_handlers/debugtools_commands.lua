@@ -532,7 +532,7 @@ function Commands:get_current_interaction_command(session, response, entity)
 end
 
 function Commands:select_storage_command(session, response, entity)
-   if not radiant.check.is_entity(entity) then
+   if not radiant.entities.is_entity(entity) then
       response:reject('unknown entity')
       return
    end
@@ -572,7 +572,7 @@ function Commands:toggle_profiler(session, response, long_ticks)
 end
 
 function Commands:print_ai_stack_command(session, response, entity)
-   if not radiant.check.is_entity(entity) then
+   if not radiant.entities.is_entity(entity) then
       response:reject('unknown entity')
       return
    end
