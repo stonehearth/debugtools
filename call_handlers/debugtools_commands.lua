@@ -187,8 +187,8 @@ function Commands:remove_buff_command(session, response, entity, buff_name)
 end
 
 function Commands:add_thought_command(session, response, entity, thought_key)
-   local happiness_component = entity:get_component('stonehearth:happiness')
-   if happiness_component then
+   local thoughts_component = entity:get_component('stonehearth:thoughts')
+   if thoughts_component then
       radiant.entities.add_thought(entity, thought_key)
       return true
    end
@@ -196,10 +196,7 @@ function Commands:add_thought_command(session, response, entity, thought_key)
 end
 
 function Commands:remove_thought_command(session, response, entity, thought_key)
-   local happiness_component = entity:get_component('stonehearth:happiness')
-   if happiness_component then
-      radiant.entities.remove_thought(entity, thought_key)
-   end
+   radiant.entities.remove_thought(entity, thought_key)
    return true
 end
 
@@ -601,7 +598,7 @@ function Commands:print_ai_stack_command(session, response, entity)
       response:reject('no trace back obtained for coroutine')
       return
    end
-   
+
    _host:report_error("AI Stack", trace_back)
    response:resolve({'reported traceback for entity '..tostring(entity)})
 end
