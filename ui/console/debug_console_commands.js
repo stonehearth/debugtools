@@ -439,14 +439,14 @@ $(document).ready(function(){
          if (!selected) {
             return "must select something";
          }
-         var attribute = 'calories';
+         var resource = 'calories';
          var val = 0;
-         return radiant.call('debugtools:set_attr_command', selected, attribute, val);
+         return radiant.call('debugtools:set_expendable_resource_command', selected, resource, val);
       },
       description: "Makes the selected entity hungry if the entity has the calories attribute. The entity will try to eat if it has a calorie observer. Usage: make_hungry",
       test: function(entity) {
-         var attributes = entity.get('stonehearth:attributes');
-         if (attributes && attributes.attributes && attributes.attributes.calories) {
+         var resources = entity.get('stonehearth:expendable_resources');
+         if (resources && resources.resources && resources.resources.calories) {
             return true;
          }
          return false;
@@ -456,17 +456,17 @@ $(document).ready(function(){
 
    radiant.console.register('make_full', {
       call: function(cmdobj, fn, args) {
-         var attribute = 'calories';
+         var resource = 'calories';
          var val = 100;
          if (!selected) {
-            return radiant.call('debugtools:set_attr_to_all_citizens_command', attribute, val);
+            return radiant.call('debugtools:set_expendable_resource_to_all_citizens_command', resource, val);
          }
-         return radiant.call('debugtools:set_attr_command', selected, attribute, val);
+         return radiant.call('debugtools:set_expendable_resource_command', selected, resource, val);
       },
-      description: "Makes the selected entity full if the entity has the calories attribute. If no entity selected, sets attribute to every citizen in your town. Usage: make_full",
+      description: "Makes the selected entity full if the entity has the calories resource. If no entity selected, everyone is made full. Usage: make_full",
       test: function(entity) {
-         var attributes = entity.get('stonehearth:attributes');
-         if (attributes && attributes.attributes && attributes.attributes.calories) {
+         var resources = entity.get('stonehearth:expendable_resources');
+         if (resources && resources.resources && resources.resources.calories) {
             return true;
          }
          return false;

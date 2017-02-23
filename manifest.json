@@ -84,6 +84,14 @@
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"
       },
+      "set_expendable_resource_command": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"
+      },
+      "set_expendable_resource_to_all_citizens_command": {
+         "controller" : "file(call_handlers/debugtools_commands.lua)",
+         "endpoint" : "server"
+      },
       "set_game_speed_command": {
          "controller" : "file(call_handlers/debugtools_commands.lua)",
          "endpoint" : "server"
