@@ -601,8 +601,8 @@ function Commands:print_ai_stack_command(session, response, entity)
       response:reject('no trace back obtained for coroutine')
       return
    end
-
-   radiant.report_traceback(trace_back)
+   
+   _host:report_error("AI Stack", trace_back)
    response:resolve({'reported traceback for entity '..tostring(entity)})
 end
 
