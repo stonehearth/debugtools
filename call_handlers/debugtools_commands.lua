@@ -97,7 +97,7 @@ end
 function Commands:set_expendable_resource_command(session, response, entity, resource, value)
    local erc = entity:add_component('stonehearth:expendable_resources')
    local old_value = erc:get_value(resource)
-   erc:modify_resource(resource, value - old_value)
+   erc:modify_value(resource, value - old_value)
 end
 
 function Commands:set_expendable_resource_to_all_citizens_command(session, response, resource, value)
@@ -108,7 +108,7 @@ function Commands:set_expendable_resource_to_all_citizens_command(session, respo
          for _, citizen in citizens:each() do
             local erc = citizen:add_component('stonehearth:expendable_resources')
             local old_value = erc:get_value(resource)
-            erc:modify_resource(resource, value - old_value)
+            erc:modify_value(resource, value - old_value)
          end
       end
       return true
