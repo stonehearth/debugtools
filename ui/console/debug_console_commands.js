@@ -466,7 +466,7 @@ $(document).ready(function(){
       description: "Makes the selected entity full if the entity has the calories resource. If no entity selected, everyone is made full. Usage: make_full",
       test: function(entity) {
          var resources = entity.get('stonehearth:expendable_resources');
-         if (resources && resources.resources && resources.resources.calories) {
+         if (resources && resources.resources && (resources.resources.calories != null)) {
             return true;
          }
          return false;
@@ -479,14 +479,15 @@ $(document).ready(function(){
          if (!selected) {
             return "must select something";
          }
-         var attribute = 'sleepiness';
+         var resource = 'sleepiness';
          var val = 25;
-         return radiant.call('debugtools:set_attr_command', selected, attribute, val);
+         return radiant.call('debugtools:set_expendable_resource_command', selected, resource, val);
       },
       description: "Makes the selected entity exhaustedly sleepy if the entity has the sleepiness attribute. The entity will try to sleep if it has a sleepiness observer. Usage: make_sleepy",
+
       test: function(entity) {
-         var attributes = entity.get('stonehearth:attributes');
-         if (attributes && attributes.attributes && attributes.attributes.sleepiness) {
+         var resources = entity.get('stonehearth:expendable_resources');
+         if (resources && resources.resources && (resources.resources.sleepiness != null)) {
             return true;
          }
          return false;
