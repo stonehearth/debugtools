@@ -676,9 +676,9 @@ $(document).ready(function(){
    radiant.console.register('spawn_encounter', {
       call: function(cmdobjs, fn, args) {
          for (var i = 0; i < args._.length; i++) {
-            var result = args[i].trim();
+            var result = args._[i].trim();
             result = result.length === 0 ? null : result;
-            args[i] = result;
+            args._[i] = result;
          }
          var campaign = args._[0];
          var name = args._[1];
