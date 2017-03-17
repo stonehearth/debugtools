@@ -769,6 +769,13 @@ $(document).ready(function(){
       description : "Displays spatial cache stats."
    });
 
+   radiant.console.register('dump_lua_heaps', {
+      call: function(smdobjs, fn, args) {
+         return radiant.call('radiant:dump_lua_heaps');
+      },
+      description : "Dumps lua heaps (make sure lua.enable_memory_profiler is set to true in user_settings.)"
+   });
+
    radiant.console.register('dump_memory_stats', {
       call: function(fn, args) {
          return radiant.call('radiant:dump_memory_stats');
