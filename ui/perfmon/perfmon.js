@@ -110,6 +110,11 @@ App.StonehearthPerfmonView = App.View.extend({
       });
    },
 
+   willDestroyElement: function() {
+      this.$().find('.tooltipstered').tooltipster('destroy');
+      this._super();
+   },
+
    destroy: function() {
       if (this._perf_trace) {
          // XXX, I would really like to destroy this, but _perf_trace apparently
