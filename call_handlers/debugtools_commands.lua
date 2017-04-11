@@ -247,7 +247,7 @@ function Commands:promote_to_command(session, response, entity, job)
       job = 'stonehearth:jobs:' .. job
    end
 
-   radiant.entities.drop_carrying_on_ground(entity)
+   --radiant.entities.drop_carrying_on_ground(entity)
    entity:get_component('stonehearth:job')
          :promote_to(job)
    return true
