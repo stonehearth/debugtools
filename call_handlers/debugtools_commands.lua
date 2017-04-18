@@ -267,7 +267,7 @@ function Commands:add_citizen_command(session, response, job)
                :promote_to(job)
 
    local explored_region = stonehearth.terrain:get_visible_region(player_id):get()
-   local centroid = _radiant.csg.get_region_centroid(explored_region):to_closest_int()
+   local centroid = explored_region:get_centroid():to_closest_int()
    local town_center = radiant.terrain.get_point_on_terrain(Point3(centroid.x, 0, centroid.y))
 
    local spawn_point = radiant.terrain.find_placement_point(town_center, 20, 30)
