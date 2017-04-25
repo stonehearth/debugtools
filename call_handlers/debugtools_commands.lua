@@ -618,4 +618,37 @@ function Commands:print_ai_stack_command(session, response, entity)
    response:resolve({'reported traceback for entity '..tostring(entity)})
 end
 
+function Commands:add_conversation_subject_command(session, response, entity, subject, sentiment_override)
+   local conversation_component = entity:get_component('stonehearth:conversation')
+
+   if conversation_component then
+      local subject = conversation_component:add_conversation_subject(subject, sentiment_override)
+      response:resolve(subject)
+   else
+      return false
+   end
+end
+
+function Commands:get_conversation_subject_command(session, response, entity, subject)
+   local conversation_component = entity:get_component('stonehearth:conversation')
+
+   if conversation_component then
+      local subject = conversation_component:get_conversation_subject(subject)
+      response:resolve(subject)
+   else
+      return false
+   end
+end
+
+function Commands:get_conversation_actives_command(session, response, entity)
+   local conversation_component = entity:get_component('stonehearth:conversation')
+
+   if conversation_component then
+      local actives = conversation_component:get_actives()
+      response:resolve(actives)
+   else
+      return false
+   end
+end
+
 return Commands

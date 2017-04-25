@@ -840,6 +840,34 @@ $(document).ready(function(){
       description : "Dumps a table of all tracked client and server memory"
    });
 
+   radiant.console.register('add_conversation_subject', {
+      call: function(cmdobj, fn, args) {
+         var subject = args._[0];
+         var sentiment = args.sentiment;
+         if (sentiment) {
+            sentiment = parseInt(sentiment);
+         }
+         window.console.log("in add_conversation_subject with subject: " + subject);
+         return radiant.call('debugtools:add_conversation_subject_command', selected, subject, sentiment);
+      },
+      description: "Adds a conversation subject with optional sentiment into the entity's social component. Usage: set_conversation_subject goblins --sentiment=1"
+   });
+
+   radiant.console.register('get_conversation_subject', {
+      call: function(cmdobj, fn, args) {
+         var subject = args._[0];
+         return radiant.call('debugtools:get_conversation_subject_command', selected, subject);
+      },
+      description: "Gets a conversation subject with optional sentiment into the entity's social component. Usage: get_conversation_subject goblins"
+   });
+
+   radiant.console.register('get_conversation_actives', {
+      call: function(cmdobj, fn, args) {
+         return radiant.call('debugtools:get_conversation_actives_command', selected);
+      },
+      description: "Gets all active conversation subjects for an entity."
+   });
+
    /* -- this is dangerous, but useful for memory profiling*/
    radiant.console.register('destroy_all', {
       call: function(cmdobj, fn, args) {
