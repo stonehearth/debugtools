@@ -541,7 +541,7 @@ $(document).ready(function(){
          var amenity = 'neutral';
          return radiant.call_obj('stonehearth.player', 'debug_set_amenity_command', selected, amenity);
       },
-      description: "Makes the player hostile with the selected entity's faction",
+      description: "Makes the player neutral with the selected entity's faction",
       debugMenuNameOverride: "Make Neutral",
       test: function(entity) {
          var player_id = entity.get('player_id');
@@ -560,7 +560,7 @@ $(document).ready(function(){
          var amenity = 'friendly';
          return radiant.call_obj('stonehearth.player', 'debug_set_amenity_command', selected, amenity);
       },
-      description: "Makes the player hostile with the selected entity's faction",
+      description: "Makes the player friendly with the selected entity's faction",
       debugMenuNameOverride: "Make Friendly",
       test: function(entity) {
          var player_id = entity.get('player_id');
