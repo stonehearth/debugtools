@@ -86,6 +86,7 @@ App.StonehearthEntityInspectorView = App.View.extend({
 
    didInsertElement: function() {
       var self = this;
+      self.$().draggable();
       var selected = App.stonehearthClient.getSelectedEntity();
       if (selected) {
          self.set('uri', selected)

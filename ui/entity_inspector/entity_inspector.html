@@ -60,15 +60,20 @@
          {{/if}}
       </div>
       <div id="legend">
-         Key:
-         <span class="thinking">thinking</span>,
-         <span class="ready">ready</span>,
-         <span class="stopped-waiting">stopped (waiting)</span>,
-         <span class="stopped-not_selected">stopped (not selected)</span>,
-         <span class="started">started</span>,
-         <span class="running">running</span>,
-         <span class="finished">finished</span>,
-         <span class="dead">dead</span>
+         {{i18n debugtools:ui.entity_inspector.key}}:
+         <span class="thinking">{{i18n debugtools:ui.entity_inspector.thinking}}</span>,
+         <span class="ready">{{i18n debugtools:ui.entity_inspector.ready}}</span>,
+         <span class="stopped-waiting">{{i18n debugtools:ui.entity_inspector.stopped_waiting}}</span>,
+         <span class="stopped-not_selected">{{i18n debugtools:ui.entity_inspector.stopped_not_selected}}</span>,
+         <span class="started">{{i18n debugtools:ui.entity_inspector.started}}</span>,
+         <span class="running">{{i18n debugtools:ui.entity_inspector.running}}</span>,
+         <span class="finished">{{i18n debugtools:ui.entity_inspector.finished}}</span>,
+         <span class="dead">{{i18n debugtools:ui.entity_inspector.dead}}</span>
+         <br>
+         {{i18n debugtools:ui.entity_inspector.row_key}}:
+         <span>f = {{i18n debugtools:ui.entity_inspector.execution_frame}},</span>
+         <span>u = {{i18n debugtools:ui.entity_inspector.execution_unit}},</span>
+         <span>ca = {{i18n debugtools:ui.entity_inspector.compound_action}}</span>
       </div>
    </div> 
 </script>

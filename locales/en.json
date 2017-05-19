@@ -29,5 +29,22 @@
             "description": "Send the ai back to stonehearth:top"
          }
       }
+   },
+   "ui": {
+      "entity_inspector": {
+         "thinking": "thinking",
+         "ready": "ready",
+         "stopped_waiting": "stopped (waiting)",
+         "stopped_not_selected": "stoped (not selected)",
+         "started": "started",
+         "running": "running",
+         "finished": "finished",
+         "dead": "dead",
+         "execution_frame": "Execution Frame",
+         "execution_unit": "Execution Unit",
+         "compound_action": "Compound Action",
+         "key": "Key",
+         "row_key": "Row Key"
+      }
    }
 }
