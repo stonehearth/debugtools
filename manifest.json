@@ -1,21 +1,22 @@
 {
-   "info" :{
-      "name" : "debugtools",
+   "info": {
+      "name": "debugtools",
       "display_name": "Stonehearth Debug Tools",
-      "version" : 3,
+      "version": 3,
       "default_enabled": false
    },
-
-   "server_init_script" : "file(debugtools_server)",
-
-   "mixintos_" : {
-      "stonehearth:mixins:base_human" : [
-         "file(mixintos/interrupt_ai)"
-      ]
+   "server_init_script": "file(debugtools_server)",
+   "mixintos": {
+      "stonehearth:mixins:base_human": "file(mixintos/base_human/base_human.json)"
    },
-
-   "ui" :  {
-      "html" : [
+   "components": {
+      "animation_debug_text": "file(components/animation_debug_text/animation_debug_text_component.lua)"
+   },
+   "component_renderers": {
+      "animation_debug_text": "file(renderers/animation_debug_text/animation_debug_text_renderer.lua)"
+   },
+   "ui": {
+      "html": [
          "file(/ui/campaign_browser/campaign_browser.html)",
          "file(/ui/entity_inspector/entity_inspector.html)",
          "file(/ui/object_browser/object_browser.html)",
@@ -26,7 +27,7 @@
          "file(/ui/trace_monitor/trace_monitor.html)",
          "file(/ui/item_dropper/item_dropper.html)"
       ],
-      "js" : [
+      "js": [
          "file(ui/debug_dock/debug_dock.js)",
          "file(/ui/console/debug_console_commands.js)",
          "file(/ui/campaign_browser/campaign_browser.js)",
@@ -39,7 +40,7 @@
          "file(/ui/trace_monitor/trace_monitor.js)",
          "file(/ui/item_dropper/item_dropper.js)"
       ],
-      "less" : [
+      "less": [
          "file(/html/font-awesome-4.3.0/css/font-awesome.min.css)",
          "file(/ui/debug_dock/debug_dock.less)",
          "file(/ui/campaign_browser/campaign_browser.less)",
@@ -53,204 +54,202 @@
          "file(/ui/item_dropper/item_dropper.less)"
       ]
    },
-
-
-   "functions" : {
+   "functions": {
       "interrupt_ai": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "create_and_place_entity": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "client"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "client"
       },
       "destroy_npc_stockpiles": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "create_entity": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "add_exp_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "set_attr_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "set_attr_to_all_citizens_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "set_expendable_resource_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "set_expendable_resource_to_all_citizens_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "set_game_speed_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "spawn_encounter_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "get_current_interaction_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "reset_location_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "change_score_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "get_score_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "reset_scores_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "add_buff_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "remove_buff_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "add_thought_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "remove_thought_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "set_happiness_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "add_trait_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "remove_trait_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "promote_to_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "add_citizen_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "add_gold_console_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "dump_backpack_command" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "dump_backpack_command": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "hot_reload_server" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "hot_reload_server": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "hot_reload_client" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "client"
+      "hot_reload_client": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "client"
       },
-      "add_journal_command" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "add_journal_command": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "pasture_reproduce_command" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "pasture_reproduce_command": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "renew_resource_command" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "renew_resource_command": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "grow_command" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "grow_command": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "get_all_item_uris_command" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "get_all_item_uris_command": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "decay_command" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "decay_command": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "start_game_master_command" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "start_game_master_command": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "update_entity_command" : {
-         "controller" : "file(call_handlers/entity_editor_commands.lua)",
-         "endpoint" : "server"
+      "update_entity_command": {
+         "controller": "file(call_handlers/entity_editor_commands.lua)",
+         "endpoint": "server"
       },
-      "rotate_entity_command" : {
-         "controller" : "file(call_handlers/entity_editor_commands.lua)",
-         "endpoint" : "server"
+      "rotate_entity_command": {
+         "controller": "file(call_handlers/entity_editor_commands.lua)",
+         "endpoint": "server"
       },
-      "get_mod_controller_command" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "get_mod_controller_command": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "get_all_data" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "get_all_data": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
-      "call_component_function_command" : {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+      "call_component_function_command": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "ai_reconsider_entity_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "fill_storage_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "set_ai_log_override_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "get_gamestate_now_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "fixup_components_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "select_storage_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "toggle_profiler": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "print_ai_stack_command": {
-         "controller" : "file(call_handlers/debugtools_commands.lua)",
-         "endpoint" : "server"
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
       },
       "add_conversation_subject_command": {
          "controller": "file(call_handlers/debugtools_commands.lua)",
@@ -261,6 +260,10 @@
          "endpoint": "server"
       },
       "get_conversation_actives_command": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
+      },
+      "set_enable_animation_text_command": {
          "controller": "file(call_handlers/debugtools_commands.lua)",
          "endpoint": "server"
       }

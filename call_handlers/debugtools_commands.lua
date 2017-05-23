@@ -651,4 +651,8 @@ function Commands:get_conversation_actives_command(session, response, entity)
    end
 end
 
+function Commands:set_enable_animation_text_command(session, response, bool)
+   radiant.util.set_global_config('enable_effect_triggers', bool)
+end
+
 return Commands

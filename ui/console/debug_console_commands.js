@@ -868,6 +868,15 @@ $(document).ready(function(){
       description: "Gets all active conversation subjects for an entity."
    });
 
+   radiant.console.register('enable_animation_text', {
+      call: function(cmdobj, fn, args) {
+         var value = args._[0];
+         value = (value == "false") ? false : true;
+         return radiant.call('debugtools:set_enable_animation_text_command', value);
+      },
+      description: "Enable to display text over a hearthling's head that shows what animation they are currently playing. Need to restart / reload game to have it take effect. Usage: enable_animation_text true/false"
+   });
+
    /* -- this is dangerous, but useful for memory profiling*/
    radiant.console.register('destroy_all', {
       call: function(cmdobj, fn, args) {
