@@ -95,9 +95,13 @@ function Commands:add_exp_command(session, response, entity, exp)
 end
 
 function Commands:set_expendable_resource_command(session, response, entity, resource, value)
-   local erc = entity:add_component('stonehearth:expendable_resources')
-   local old_value = erc:get_value(resource)
-   erc:modify_value(resource, value - old_value)
+   local erc = entity:get_component('stonehearth:expendable_resources')
+   if not erc then
+      return false
+   end
+
+   erc:set_value(resource, value)
+   return true
 end
 
 function Commands:set_expendable_resource_to_all_citizens_command(session, response, resource, value)
@@ -106,9 +110,7 @@ function Commands:set_expendable_resource_to_all_citizens_command(session, respo
       local citizens = town:get_citizens()
       if citizens then
          for _, citizen in citizens:each() do
-            local erc = citizen:add_component('stonehearth:expendable_resources')
-            local old_value = erc:get_value(resource)
-            erc:modify_value(resource, value - old_value)
+            self:set_expendable_resource_command(session, response, citizen, resource, value)
          end
       end
       return true

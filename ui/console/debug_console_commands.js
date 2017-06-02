@@ -116,6 +116,18 @@ $(document).ready(function(){
       description: "Sets the attribute on the selected entity to the specified value. Usage: set health 10"
    });
 
+   radiant.console.register('set_resource', {
+      call: function(cmdobj, fn, args) {
+         var resource = args._[0];
+         var val = parseInt(args._[1]);
+         if (selected && resource && val != NaN) {
+            return radiant.call('debugtools:set_expendable_resource_command', selected, resource, val);
+         }
+         return false;
+      },
+      description: "Sets the expendable resource on the selected entity to the specified value. Usage: set_resource health 10"
+   });
+
    radiant.console.register('set_game_speed', {
       call: function(cmdobj, fn, args) {
          var val = parseInt(args._[0]);
