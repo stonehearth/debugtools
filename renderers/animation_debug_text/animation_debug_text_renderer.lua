@@ -40,7 +40,7 @@ function AnimationRenderer:_update_animation()
 
    if self._current_animation and self._current_animation ~= '' then
       local over_cog_node = self._render_entity:get_skeleton():get_bone_node('ATTOVERCOG')
-      self._text_node = _radiant.client.create_text_node(over_cog_node, self._current_animation)
+      self._text_node = RenderRootNode.create_text_node(over_cog_node, self._current_animation)
    end
 end
 
