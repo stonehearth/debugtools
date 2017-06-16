@@ -643,10 +643,10 @@ function Commands:get_conversation_subject_command(session, response, entity, su
 end
 
 function Commands:get_conversation_actives_command(session, response, entity)
-   local conversation_component = entity:get_component('stonehearth:conversation')
+   local sjc = entity:get_component('stonehearth:subject_matter')
 
-   if conversation_component then
-      local actives = conversation_component:get_actives()
+   if sjc then
+      local actives = sjc:get_actives()
       response:resolve(actives)
    else
       return false
