@@ -507,6 +507,27 @@ $(document).ready(function(){
       debugMenuNameOverride: "Make Sleepy"
    });
 
+   radiant.console.register('make_hurt', {
+      call: function(cmdobj, fn, args) {
+         if (!selected) {
+            return "must select something";
+         }
+         var resource = 'health';
+         var val = 1;
+         return radiant.call('debugtools:set_expendable_resource_command', selected, resource, val);
+      },
+      description: "Makes the selected entity have low health. Usage: make_hurt",
+
+      test: function(entity) {
+         var resources = entity.get('stonehearth:expendable_resources');
+         if (resources && resources.resources && (resources.resources.health != null)) {
+            return true;
+         }
+         return false;
+      },
+      debugMenuNameOverride: "Make Hurt"
+   });
+
    radiant.console.register('hotload_manifest', {
       call: function(cmdobj, fn, args) {
          var manifest = args._[0];
