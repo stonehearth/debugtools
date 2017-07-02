@@ -33,8 +33,8 @@ $(document).ready(function(){
    $(document).click(function(e) {
       if (e.shiftKey) {
          shiftHeld = true;
-         mouseClickPosX = e.screenX;
-         mouseClickPosY = e.screenY;
+         mouseClickPosX = e.pageX;
+         mouseClickPosY = e.pageY;
          if (selected) {
             showDebugMenu();
          }
