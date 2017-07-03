@@ -1,6 +1,4 @@
-var topElement;
 $(document).on('stonehearthReady', function(){
-   topElement = $(top);
    App.debugDock.addToDock(App.StonehearthLuaConsoleIcon);
 });
 
@@ -29,14 +27,10 @@ App.StonehearthLuaConsoleView = App.View.extend({
    uriProperty: 'model',
    envContainer: Ember.ContainerView.extend(),
 
-   init: function() {
-      this._super();
-   },
-
    didInsertElement: function() {
       var self = this;
 
-      this.$().draggable();
+      this.$().draggable({ handle: '.header' });
 
       this.$('.button').tooltipster({
          theme: 'tooltipster-shdt',
@@ -53,12 +47,7 @@ App.StonehearthLuaConsoleView = App.View.extend({
       self.get('envContainerInstance').pushObject(self.serverEnv);
       self.get('envContainerInstance').pushObject(self.clientEnv);
 
-      setTimeout(function () { self.switchEnv(false); }, 1);
-   },
-
-   destroy: function() {
-      topElement.off("radiant_selection_changed.object_browser");
-      this._super();
+      setTimeout(function () { self.switchEnv(true); }, 1);
    },
 
    switchEnv: function (isClient) {
@@ -104,18 +93,10 @@ App.StonehearthLuaConsoleEnvironmentView = App.View.extend({
       this._history = [];
       this._curHistoryIdx = 0;
       this._curCommand = '';
-      this.currentEntity = null;
    },
 
    didInsertElement: function() {
       var self = this;
-
-      topElement.on("radiant_selection_changed.object_browser", function (_, data) {
-         self.currentEntity = App.stonehearthClient.getSubSelectedEntity();
-         if (!self.currentEntity) {
-            self.currentEntity = App.stonehearthClient.getSelectedEntity();
-         }
-      });
 
       self.$('#input').keydown(function(e) {
          if (e.keyCode == 13 && !e.originalEvent.repeat) {  // Enter
@@ -131,9 +112,14 @@ App.StonehearthLuaConsoleEnvironmentView = App.View.extend({
             var resultContainer = $('<div class="cmdOut progress">').text('...');
             outputArea.append(resultContainer);
 
-            radiant.call('debugtools:exec_script_' + self.env, command, self.currentEntity)
+            var currentEntity = App.stonehearthClient.getSubSelectedEntity();
+            if (!currentEntity) {
+               currentEntity = App.stonehearthClient.getSelectedEntity();
+            }
+            radiant.call('debugtools:exec_script_' + self.env, command, currentEntity)
                .done(function (o) {
                   resultContainer.removeClass('progress').text(o.result);
+                  outputArea.scrollTop(outputArea[0].scrollHeight);
                })
                .fail(function (o) {
                   if (typeof o.error == 'string') {
@@ -141,9 +127,14 @@ App.StonehearthLuaConsoleEnvironmentView = App.View.extend({
                      o = JSON.parse(o.error)
                   }
                   resultContainer.removeClass('progress').addClass('error').text(o.result);
+                  outputArea.scrollTop(outputArea[0].scrollHeight);
                });
 
             outputArea.scrollTop(outputArea[0].scrollHeight);
+         } else if (e.keyCode == 27) {  // Esc
+            App.debugView.getView(App.StonehearthLuaConsoleIcon).$().click();
+            e.preventDefault();
+            e.stopPropagation();
          }
       });
 

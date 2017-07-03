@@ -6,27 +6,34 @@
 #luaConsole {
    .debug;
    position: absolute;
-   top: 10px;
-   left: 420px;
-   width: 1000px;
-   font-family: "Consolas", monospace;
+   top: 9px;
+   left: 655px;
+   font-family: "Lucida Console", monospace;
    padding: 0;
+   font-size: 15px;
 
    .header {
       margin-bottom: 1px;
       font-size: 125%;
+      height: 24px;
+      line-height: 28px;
+
+      #toolbar {
+         display: inline-block;
+         margin-left: 100px;
+         font-size: 90%;
+         position: relative;
+         top: -1px;
+      }
 
       #closeConsoleButton {
          float: right;
          width: 16px;
          height: 16px;
-         padding: 1px;
+         padding: 5px;
          background: url(images/x-2x.png) no-repeat center;
+         opacity: .5;
       }
-   }
-
-   #toolbar {
-      display: inline-block;
    }
 
    .button {
@@ -82,11 +89,11 @@
 
 #stonehearthLuaConsoleEnvironment {
    .output {
-      -webkit-user-select: all;
+      -webkit-user-select: text;
       height: 250px;
+      width: 1000px;
       overflow: auto;
-      resize: vertical;
-      font-size: 110%;
+      resize: both;
 
       #title {
          padding: 6px;
@@ -100,8 +107,9 @@
       .cmdOut {
          font-weight: bold;
          margin-bottom: 4px;
-         margin-left: 14px;
          color: green;
+         margin-left: 2ch;
+         white-space: pre-wrap;
          &.progress {
             color: yellow;
          }
@@ -109,19 +117,30 @@
             color: #cc0000;
          }
       }
+
+      &::-webkit-resizer {
+          background: rgb(39, 40, 34) url(images/resizer.png);
+      }
    }
 
    .input {
-      width: 100%;
-
+      white-space: nowrap;
+      overflow-x: hidden;
+      &:before {
+         content: '> ';
+         display: inline;
+         background: #000;
+         color: #ffc000;
+         padding: 2px 0px;
+      }
       input {
          width: 100%;
-         left: 4px;
-         right: 4px;
          border: 0px;
          background: #000;
          color: #ffc000;
-         padding: 4px;
+         padding: 2px 0px;
+         font-size: inherit;
+         font-family: inherit;
       }
    }
 }

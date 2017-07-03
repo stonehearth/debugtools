@@ -680,13 +680,23 @@ function Commands:exec_script(session, response, script, entity)
    -- let executed code set global vars. We could instead compile the expression as a
    -- function with an entity argument, but if it's a statement, it won't be able to
    -- normally set global vars, so no REPL state.
-   local saved_entity = rawget(_G, 'entity')
-   rawset(_G, 'entity', entity)
+   local saved_entity = rawget(_G, 'e')
+   rawset(_G, 'e', entity)
    local success, result = pcall(expr)
-   rawset(_G, 'entity', saved_entity)
+   rawset(_G, 'e', saved_entity)
 
    if success then
-      response:resolve(tostring(result == nil and '<nil>' or result))
+      local output
+      if result == nil then
+         output = '<nil>'
+      elseif type(result) == 'string' then
+         output = string.gsub(string.format('%q', result), '\n', 'n')
+      elseif type(result) == 'table' then
+         output = radiant.util.table_tostring(result, 40, 0)
+      else
+         output = tostring(result)
+      end
+      response:resolve(output)
    else
       response:reject('ERROR: ' .. result)
    end
