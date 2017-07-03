@@ -1,0 +1,127 @@
+#luaConsoleIcon {
+   .debugDockIcon;
+   background: url('./images/icon.png');
+}
+
+#luaConsole {
+   .debug;
+   position: absolute;
+   top: 10px;
+   left: 420px;
+   width: 1000px;
+   font-family: "Consolas", monospace;
+   padding: 0;
+
+   .header {
+      margin-bottom: 1px;
+      font-size: 125%;
+
+      #closeConsoleButton {
+         float: right;
+         width: 16px;
+         height: 16px;
+         padding: 1px;
+         background: url(images/x-2x.png) no-repeat center;
+      }
+   }
+
+   #toolbar {
+      display: inline-block;
+   }
+
+   .button {
+      position: relative;
+      color: #fff;
+      margin-left: 30px;
+      font-weight: bold;
+
+      &:hover {
+         color: #fc0;
+      }
+   }
+
+   .selected {
+      color: #fc0;
+   }
+
+   #close {
+      position: absolute;
+      top: 8px;
+      right: 4px;
+   }
+
+   .title {
+      font-size: 16px;
+      color: white;
+   }
+   .subtitle {
+      font-size: 12px;
+      color: white;
+   }
+
+   .menu {
+      li {
+         margin-left: 0px;
+         padding-left: 0px;
+         list-style-type: none;
+         i {
+            color: #fc0;
+         }
+         &:hover {
+            color: #fc0;
+         }
+      }
+   }
+}
+
+.tooltipster-shdt {
+   .tooltipster-content {
+      .debug;
+   }   
+}
+
+#stonehearthLuaConsoleEnvironment {
+   .output {
+      -webkit-user-select: all;
+      height: 250px;
+      overflow: auto;
+      resize: vertical;
+      font-size: 110%;
+
+      #title {
+         padding: 6px;
+         background: #3d3f36;
+      }
+
+      .cmdIn {
+         font-weight: bold;
+      }
+
+      .cmdOut {
+         font-weight: bold;
+         margin-bottom: 4px;
+         margin-left: 14px;
+         color: green;
+         &.progress {
+            color: yellow;
+         }
+         &.error  {
+            color: #cc0000;
+         }
+      }
+   }
+
+   .input {
+      width: 100%;
+
+      input {
+         width: 100%;
+         left: 4px;
+         right: 4px;
+         border: 0px;
+         background: #000;
+         color: #ffc000;
+         padding: 4px;
+      }
+   }
+}
