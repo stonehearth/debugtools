@@ -1,5 +1,17 @@
 $(document).on('stonehearthReady', function(){
    App.debugDock.addToDock(App.StonehearthLuaConsoleIcon);
+   radiant.call('radiant:get_config', 'mods.debugtools.enable_lua_console_hotkey')
+      .done(function (o) {
+         if (o['mods.debugtools.enable_lua_console_hotkey']) {
+            $(top).bind('keydown', function (e) {
+               if (e.keyCode == 192 && !e.originalEvent.repeat) { // Tilde/backtick
+                  App.debugView.getView(App.StonehearthLuaConsoleIcon).$().click();
+                  e.preventDefault();
+                  e.stopPropagation();
+               }
+            });
+         }
+      });
 });
 
 App.StonehearthLuaConsoleIcon = App.View.extend({
