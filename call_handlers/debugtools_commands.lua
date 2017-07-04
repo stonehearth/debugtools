@@ -692,7 +692,7 @@ function Commands:exec_script(session, response, script, entity)
       elseif type(result) == 'string' then
          output = string.gsub(string.format('%q', result), '\n', 'n')
       elseif type(result) == 'table' then
-         output = radiant.util.table_tostring(result, 40, 0)
+         output = radiant.util.table_tostring(result)
       else
          output = tostring(result)
       end
