@@ -1,0 +1,146 @@
+#luaConsoleIcon {
+   .debugDockIcon;
+   background: url('./images/icon.png');
+}
+
+#luaConsole {
+   .debug;
+   position: absolute;
+   top: 9px;
+   left: 655px;
+   font-family: @debugFontFamily;
+   padding: 0;
+   font-size: 14px;
+
+   .header {
+      margin-bottom: 1px;
+      font-size: 125%;
+      height: 24px;
+      line-height: 28px;
+
+      #toolbar {
+         display: inline-block;
+         margin-left: 100px;
+         font-size: 90%;
+         position: relative;
+         top: -1px;
+      }
+
+      #closeConsoleButton {
+         float: right;
+         width: 16px;
+         height: 16px;
+         padding: 5px;
+         background: url(images/x-2x.png) no-repeat center;
+         opacity: .5;
+      }
+   }
+
+   .button {
+      position: relative;
+      color: #fff;
+      margin-left: 30px;
+      font-weight: bold;
+
+      &:hover {
+         color: #fc0;
+      }
+   }
+
+   .selected {
+      color: #fc0;
+   }
+
+   #close {
+      position: absolute;
+      top: 8px;
+      right: 4px;
+   }
+
+   .title {
+      font-size: 16px;
+      color: white;
+   }
+   .subtitle {
+      font-size: 12px;
+      color: white;
+   }
+
+   .menu {
+      li {
+         margin-left: 0px;
+         padding-left: 0px;
+         list-style-type: none;
+         i {
+            color: #fc0;
+         }
+         &:hover {
+            color: #fc0;
+         }
+      }
+   }
+}
+
+.tooltipster-shdt {
+   .tooltipster-content {
+      .debug;
+   }   
+}
+
+#stonehearthLuaConsoleEnvironment {
+   .output {
+      -webkit-user-select: text;
+      height: 250px;
+      width: 1000px;
+      overflow: auto;
+      resize: both;
+
+      #title {
+         padding: 6px;
+         background: #3d3f36;
+      }
+
+      .cmdIn {
+         font-weight: bold;
+      }
+
+      .cmdOut {
+         font-weight: bold;
+         margin-bottom: 4px;
+         color: #01b201;
+         margin-left: 2ch;
+         white-space: pre-wrap;
+         &.progress {
+            color: yellow;
+         }
+         &.error  {
+            color: #cc0000;
+         }
+      }
+
+      &::-webkit-resizer {
+          background: rgb(39, 40, 34) url(images/resizer.png) bottom right no-repeat;
+      }
+   }
+
+   .input {
+      white-space: nowrap;
+      overflow-x: hidden;
+      &:before {
+         content: '> ';
+         display: inline;
+         background: #000;
+         color: #ffc000;
+         padding: 2px 0px;
+      }
+      input {
+         width: 100%;
+         border: 0px;
+         background: #000;
+         color: #ffc000;
+         padding: 2px 0px;
+         font-size: inherit;
+         font-family: inherit;
+      }
+   }
+}

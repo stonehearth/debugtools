@@ -657,4 +657,50 @@ function Commands:set_enable_animation_text_command(session, response, bool)
    radiant.util.set_global_config('enable_effect_triggers', bool)
 end
 
+function Commands:exec_script_server(session, response, script, entity)
+   return self:exec_script(session, response, script, entity)
+end
+
+function Commands:exec_script_client(session, response, script, entity)
+   return self:exec_script(session, response, script, entity)
+end
+
+function Commands:exec_script(session, response, script, entity)
+   local expr, error
+   expr, error = loadstring('return ' .. script)
+   if not expr then
+      -- Maybe it's a statement?
+      expr, error = loadstring(script)
+   end
+   if error then
+      response:reject('ERROR: ' .. error)
+   end
+   
+   -- Set the entity as a global variable. This is terrible, but unavoidable if we want to
+   -- let executed code set global vars. We could instead compile the expression as a
+   -- function with an entity argument, but if it's a statement, it won't be able to
+   -- normally set global vars, so no REPL state.
+   local saved_entity = rawget(_G, 'e')
+   rawset(_G, 'e', entity)
+   local success, result = pcall(expr)
+   rawset(_G, 'e', saved_entity)
+
+   if success then
+      local output
+      if result == nil then
+         output = '<nil>'
+      elseif type(result) == 'string' then
+         output = string.gsub(string.format('%q', result), '\n', 'n')
+      elseif type(result) == 'table' then
+         output = radiant.util.table_tostring(result)
+      else
+         output = tostring(result)
+      end
+      response:resolve(output)
+   else
+      response:reject('ERROR: ' .. result)
+   end
+   return true
+end
+
 return Commands

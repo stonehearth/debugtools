@@ -1,0 +1,34 @@
+<script type="text/x-handlebars" data-template-name="luaConsoleIcon">
+   <div id="luaConsoleIcon" title="Lua Console"></div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="luaConsole">
+   <div id="luaConsole">
+      <div class="header">
+         Lua Console
+         <div id="toolbar">
+            <a id="serverButton" href="#" {{action "switchToServer" target="view"}} class="button selected" title="Run commands on the server">
+               server
+            </a>
+            <a id="clientButton" href="#" {{action "switchToClient" target="view"}} class="button" title="Run commands on the client">
+               client
+            </a>
+         </div>
+         <div id="closeConsoleButton"></div>
+      </div>
+      <div id="body">
+         {{view view.envContainer viewName="envContainerInstance"}}
+      </div>
+   </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="stonehearthLuaConsoleEnvironment">
+   <div id="stonehearthLuaConsoleEnvironment">
+      <div class="output">
+         <div id="title">[{{view.env}}] If an entity is selected, it can be accessed through the global "e" variable.</div>
+      </div>
+      <div class="input">
+         <input id="input" />
+      </div>
+   </div>
+</script>

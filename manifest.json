@@ -25,7 +25,8 @@
          "file(/ui/entity_editor/entity_editor.html)",
          "file(/ui/job_monitor/job_monitor.html)",
          "file(/ui/trace_monitor/trace_monitor.html)",
-         "file(/ui/item_dropper/item_dropper.html)"
+         "file(/ui/item_dropper/item_dropper.html)",
+         "file(/ui/lua_console/lua_console.html)"
       ],
       "js": [
          "file(ui/debug_dock/debug_dock.js)",
@@ -38,7 +39,8 @@
          "file(/ui/entity_editor/entity_editor.js)",
          "file(/ui/job_monitor/job_monitor.js)",
          "file(/ui/trace_monitor/trace_monitor.js)",
-         "file(/ui/item_dropper/item_dropper.js)"
+         "file(/ui/item_dropper/item_dropper.js)",
+         "file(/ui/lua_console/lua_console.js)"
       ],
       "less": [
          "file(/html/font-awesome-4.3.0/css/font-awesome.min.css)",
@@ -51,7 +53,8 @@
          "file(/ui/entity_editor/entity_editor.less)",
          "file(/ui/job_monitor/job_monitor.less)",
          "file(/ui/trace_monitor/trace_monitor.less)",
-         "file(/ui/item_dropper/item_dropper.less)"
+         "file(/ui/item_dropper/item_dropper.less)",
+         "file(/ui/lua_console/lua_console.less)"
       ]
    },
    "functions": {
@@ -266,6 +269,14 @@
       "set_enable_animation_text_command": {
          "controller": "file(call_handlers/debugtools_commands.lua)",
          "endpoint": "server"
+      },
+      "exec_script_server": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "server"
+      },
+      "exec_script_client": {
+         "controller": "file(call_handlers/debugtools_commands.lua)",
+         "endpoint": "client"
       }
    },
    "default_locale": "en"
