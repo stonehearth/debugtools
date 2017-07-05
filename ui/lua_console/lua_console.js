@@ -28,7 +28,7 @@ App.StonehearthLuaConsoleIcon = App.View.extend({
                view.focus();
             }
          } else {
-            App.debugView.addView(App.StonehearthLuaConsoleView)
+            App.debugView.addView(App.StonehearthLuaConsoleView);
          }
       });
    }
